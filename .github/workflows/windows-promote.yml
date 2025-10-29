@@ -1,0 +1,125 @@
+name: windows-promote
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "internal branch to promote from"
+        required: true
+        default: "internal/win-v1.0-resin-2025-10-29"
+      tag:
+        description: "tag to create (e.g., v1.0-internal-2025.10.29)"
+        required: true
+      name:
+        description: "release name"
+        required: true
+        default: "AegisSlicer v1.0 (Internal)"
+      prerelease:
+        description: "mark as prerelease"
+        required: false
+        type: boolean
+        default: true
+      draft:
+        description: "create as draft"
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: windows-promote-${{ inputs.tag }}
+  cancel-in-progress: true
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (promotion branch for notes)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch }}
+
+      - name: Show context
+        run: |
+          echo "Promoting branch: ${{ inputs.branch }}"
+          echo "Release tag:     ${{ inputs.tag }}"
+          echo "Release name:    ${{ inputs.name }}"
+
+      - name: Download installer artifact from latest successful windows-release
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: windows-release.yml
+          workflow_conclusion: success
+          branch: ${{ inputs.branch }}
+          name: AegisSlicer-Windows-Installer
+          path: promote/installer
+
+      - name: Try to download smoke logs (optional)
+        id: smoke
+        continue-on-error: true
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: windows-smoke.yml
+          workflow_conclusion: success
+          branch: ${{ inputs.branch }}
+          name: AegisSlicer-Windows-SmokeLogs
+          path: promote/smoke
+
+      - name: Ensure optional files exist
+        run: |
+          mkdir -p promote/smoke
+          test -f promote/smoke/checksums.txt || echo "N/A" > promote/smoke/checksums.txt
+
+      - name: Build source bundle (AGPL convenience)
+        run: |
+          mkdir -p promote
+          git archive --format=tar --prefix=AegisSlicer-src/ HEAD | gzip > promote/aegis-slicer-source.tar.gz
+
+      - name: Compute checksums
+        run: |
+          shopt -s nullglob
+          echo "# SHA256 sums" > promote/SHA256SUMS.txt
+          for f in promote/installer/AegisSlicer-*.exe; do
+            sha256sum "$f" >> promote/SHA256SUMS.txt || true
+          done
+          sha256sum promote/aegis-slicer-source.tar.gz >> promote/SHA256SUMS.txt
+          cat promote/SHA256SUMS.txt
+
+      - name: Compose release notes
+        run: |
+          mkdir -p promote
+          SHORT=$(git rev-parse --short HEAD)
+          {
+            echo "### AegisSlicer — Internal Build"
+            echo ""
+            echo "- **Branch:** \`${{ inputs.branch }}\`"
+            echo "- **Commit:** \`$SHORT\`"
+            echo "- **Tag:** \`${{ inputs.tag }}\`"
+            echo ""
+            echo "Artifacts:"
+            echo "- Windows Installer \`AegisSlicer-*.exe\`"
+            echo "- Staged payload under \`dist/...\`"
+            echo "- Checksums: \`SHA256SUMS.txt\` and optional smoke \`checksums.txt\`"
+            echo ""
+            echo "> Compliance: Installer payload includes \`licenses/SOURCE_OFFER.md\`."
+          } > promote/RELEASE_NOTES.md
+          cat promote/RELEASE_NOTES.md
+
+      - name: Create/Update draft release (internal/private)
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ inputs.tag }}
+          name: ${{ inputs.name }}
+          draft: ${{ inputs.draft }}
+          prerelease: ${{ inputs.prerelease }}
+          body_path: promote/RELEASE_NOTES.md
+          files: |
+            promote/installer/AegisSlicer-*.exe
+            promote/installer/dist/**/*
+            promote/smoke/checksums.txt
+            promote/aegis-slicer-source.tar.gz
+            promote/SHA256SUMS.txt
