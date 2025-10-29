@@ -33,8 +33,17 @@ New-Item -ItemType Directory -Force -Path ".\dist\bin" | Out-Null
 if (Test-Path "$BuildDir\Release") { Copy-Item -Recurse -Force "$BuildDir\Release\*" ".\dist\bin\" }
 elseif (Test-Path "$BuildDir") { Copy-Item -Recurse -Force "$BuildDir\*" ".\dist\bin\" }
 if (Test-Path ".\resources") { Copy-Item -Recurse -Force ".\resources" ".\dist\" }
-if (Test-Path ".\profiles") { Copy-Item -Recurse -Force ".\profiles" ".\dist\"" }
-if (Test-Path ".\licenses") { Copy-Item -Recurse -Force ".\licenses" ".\dist\"" }
+if (Test-Path ".\profiles") { Copy-Item -Recurse -Force ".\profiles" ".\dist\" }
+if (Test-Path ".\licenses") { Copy-Item -Recurse -Force ".\licenses" ".\dist\" }
+
+# Normalize the main EXE name for the installer (AegisSlicer.exe)
+$exe = Get-ChildItem -Path "$BuildDir" -Recurse -Filter "*AegisSlicer*.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+if (-not $exe) {
+  $exe = Get-ChildItem -Path "$BuildDir" -Recurse -Filter "*.exe" | Where-Object { $_.Name -match "slicer" } | Select-Object -First 1
+}
+if ($exe) {
+  Copy-Item $exe.FullName ".\dist\bin\AegisSlicer.exe" -Force
+}
 
 # Build installer
 Write-Host "Packaging with NSIS..."
