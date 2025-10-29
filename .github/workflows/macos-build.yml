@@ -1,0 +1,79 @@
+name: macOS CI (V1 RC)
+
+on:
+  push:
+    branches: [ release/windows-v1-rc1 ]
+  workflow_dispatch: {}
+
+concurrency:
+  group: macos-rc
+  cancel-in-progress: true
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+    env:
+      VCPKG_DEFAULT_TRIPLET: x64-osx
+      VCPKG_TARGET_TRIPLET: x64-osx
+      CMAKE_BUILD_TYPE: Release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: brew install ninja cmake
+
+      - name: Cache vcpkg
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/vcpkg/installed
+            ${{ github.workspace }}/vcpkg/downloads
+          key: vcpkg-macos-${{ hashFiles('vcpkg.json') }}
+          restore-keys: vcpkg-macos-
+
+      - name: Bootstrap embedded vcpkg
+        run: ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
+
+      - name: Install deps (manifest)
+        run: ./vcpkg/vcpkg install --triplet $VCPKG_TARGET_TRIPLET
+
+      - name: Ensure VERSION file
+        run: |
+          [ -f VERSION ] || echo '1.0.0+100' > VERSION
+
+      - name: Configure (Ninja)
+        run: >
+          cmake -S . -B build/macos -G Ninja
+          -DCMAKE_BUILD_TYPE=${{ env.CMAKE_BUILD_TYPE }}
+          -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+          -DVCPKG_TARGET_TRIPLET=${{ env.VCPKG_TARGET_TRIPLET }}
+          -DVCPKG_APPLOCAL_DEPS=ON
+          -DCMAKE_FIND_PACKAGE_PREFER_CONFIG=ON
+          -DSLIC3R_STATIC=OFF -DSLIC3R_BUILD_TESTS=OFF
+          -DLIBRESLICER_BRAND=ON
+          -DOpenEXR_DIR="${{ github.workspace }}/vcpkg/installed/x64-osx/share/openexr"
+          -DImath_DIR="${{ github.workspace }}/vcpkg/installed/x64-osx/share/imath"
+          -DOPENVDB_ROOT="${{ github.workspace }}/vcpkg/installed/x64-osx"
+          -Dglew_DIR="${{ github.workspace }}/vcpkg/installed/x64-osx/share/glew"
+
+      - name: Build
+        run: cmake --build build/macos -j 2
+
+      - name: Create .dmg
+        run: |
+          mkdir -p dist
+          ver=$(head -n 1 VERSION)
+          appdir=dist/AegisSlicer.app
+          mkdir -p $appdir/Contents/MacOS
+          cp build/macos/AegisSlicer $appdir/Contents/MacOS/
+          cp LICENSE SOURCE_OFFER.md THIRD_PARTY_NOTICES.txt CREDITS.md $appdir/Contents/MacOS/ 2>/dev/null || true
+          hdiutil create -volname "AegisSlicer $ver" -srcfolder $appdir -ov -format UDZO dist/AegisSlicer_v${ver}.dmg
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-v1-rc1-artifacts
+          path: |
+            dist/AegisSlicer_v*.dmg
+          if-no-files-found: warn
