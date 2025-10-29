@@ -70,12 +70,31 @@ jobs:
       - name: Prepare Installer Staging
         shell: pwsh
         run: |
-          New-Item -ItemType Directory -Force -Path "dist\\bin" | Out-Null
-          if (Test-Path "build\\Release") { Copy-Item -Recurse -Force "build\\Release\\*" "dist\\bin\\" }
-          elseif (Test-Path "build") { Copy-Item -Recurse -Force "build\\*" "dist\\bin\\" }
-          if (Test-Path "resources") { Copy-Item -Recurse -Force "resources" "dist\\" }
-          if (Test-Path "profiles") { Copy-Item -Recurse -Force "profiles" "dist\\" }
-          if (Test-Path "licenses") { Copy-Item -Recurse -Force "licenses" "dist\\" }
+          New-Item -ItemType Directory -Force -Path "dist\bin" | Out-Null
+          if (Test-Path "build\Release") { Copy-Item -Recurse -Force "build\Release\*" "dist\bin\" }
+          elseif (Test-Path "build") { Copy-Item -Recurse -Force "build\*" "dist\bin\" }
+          if (Test-Path "resources") { Copy-Item -Recurse -Force "resources" "dist\" }
+          if (Test-Path "profiles") { Copy-Item -Recurse -Force "profiles" "dist\" }
+          if (Test-Path "licenses") { Copy-Item -Recurse -Force "licenses" "dist\" }
+          # Include AGPL source-offer in installer payload
+          if (Test-Path "COMPLIANCE") {
+            New-Item -ItemType Directory -Force -Path "dist\licenses" | Out-Null
+            Copy-Item -Recurse -Force "COMPLIANCE\*" "dist\licenses\"
+          }
+
+      - name: Normalize EXE name for installer
+        shell: pwsh
+        run: |
+          $candidate = Get-ChildItem -Path "build" -Recurse -Filter "*AegisSlicer*.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $candidate) {
+            $candidate = Get-ChildItem -Path "build" -Recurse -Filter "*.exe" | Where-Object { $_.Name -match "slicer" } | Select-Object -First 1
+          }
+          if ($candidate) {
+            New-Item -ItemType Directory -Force -Path "dist\bin" | Out-Null
+            Copy-Item $candidate.FullName "dist\bin\AegisSlicer.exe" -Force
+          } else {
+            Write-Host "Warning: No EXE found to normalize; NSIS may still succeed if a correct name is present."
+          }
 
       - name: Make Installer (NSIS)
         shell: pwsh
