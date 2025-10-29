@@ -1,18 +1,59 @@
-#/|/ Copyright (c) Prusa Research 2017 - 2023 Tomáš Mészáros @tamasmeszaros, Vojtěch Bubník @bubnikv, Lukáš Matěna @lukasmatena, Filip Sykala @Jony01, Oleksandra Iushchenko @YuSanka, Lukáš Hejl @hejllukas, David Kocík @kocikdav, Enrico Turri @enricoturri1966, Vojtěch Král @vojtechkral
-#/|/ Copyright (c) 2023 Ben Greiner
-#/|/ Copyright (c) 2021 D-mo @dimitry-ishenko
-#/|/ Copyright (c) 2020 Pascal de Bruijn @pmjdebruijn
-#/|/ Copyright (c) 2019 Sam Segers
-#/|/ Copyright (c) 2019 Colin Gilgenbach @hexane360
-#/|/ Copyright (c) 2018 Dan Kortschak
-#/|/
-#/|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
-#/|/
-cmake_minimum_required(VERSION 3.13)
-project(PrusaSlicer)
 
-include("version.inc")
-include(GNUInstallDirs)
+# ---- vcpkg prefix bootstrap (MUST be before project()) -----------------------
+cmake_minimum_required(VERSION 3.20)
+
+# Prefer config packages and honor *_ROOT variables
+cmake_policy(SET CMP0074 NEW)
+set(CMAKE_FIND_PACKAGE_PREFER_CONFIG TRUE)
+
+# Derive VCPKG_ROOT from the toolchain path if possible
+if(DEFINED CMAKE_TOOLCHAIN_FILE AND CMAKE_TOOLCHAIN_FILE MATCHES "vcpkg.cmake$")
+    # CMAKE_TOOLCHAIN_FILE = <VCPKG_ROOT>/scripts/buildsystems/vcpkg.cmake
+    get_filename_component(_bs_dir "${CMAKE_TOOLCHAIN_FILE}" DIRECTORY)   # .../scripts/buildsystems
+    get_filename_component(_scripts "${_bs_dir}" DIRECTORY)               # .../scripts
+    get_filename_component(VCPKG_ROOT "${_scripts}" DIRECTORY)            # <VCPKG_ROOT>
+endif()
+
+# Default triplet if not provided by caller/CI
+if(NOT VCPKG_TARGET_TRIPLET)
+    if(WIN32)
+        set(VCPKG_TARGET_TRIPLET "x64-windows" CACHE STRING "vcpkg triplet" FORCE)
+    elseif(APPLE)
+        if(CMAKE_OSX_ARCHITECTURES MATCHES "arm64")
+            set(VCPKG_TARGET_TRIPLET "arm64-osx" CACHE STRING "vcpkg triplet" FORCE)
+        else()
+            set(VCPKG_TARGET_TRIPLET "x64-osx" CACHE STRING "vcpkg triplet" FORCE)
+        endif()
+    else()
+        set(VCPKG_TARGET_TRIPLET "x64-linux" CACHE STRING "vcpkg triplet" FORCE)
+    endif()
+endif()
+
+# Prepend vcpkg install prefix to CMAKE_PREFIX_PATH so CONFIG packages (CGAL et al.) resolve
+if(VCPKG_ROOT)
+    set(_vcpkg_prefix "${VCPKG_ROOT}/installed/${VCPKG_TARGET_TRIPLET}")
+    if(EXISTS "${_vcpkg_prefix}")
+        # Prepend so it wins over system paths
+        list(PREPEND CMAKE_PREFIX_PATH
+            "${_vcpkg_prefix}"
+            "${_vcpkg_prefix}/share"
+            "${_vcpkg_prefix}/share/CGAL"
+        )
+    endif()
+endif()
+
+# ---- your project & packages --------------------------------------------------
+project(AegisSlicer LANGUAGES CXX)
+
+# CGAL (CONFIG mode). Add 'Core' if you depend on exact arithmetic kernels.
+find_package(CGAL CONFIG REQUIRED COMPONENTS Core)
+
+message(STATUS "CGAL_DIR     : ${CGAL_DIR}")
+message(STATUS "VCPKG_ROOT   : ${VCPKG_ROOT}")
+message(STATUS "Triplet      : ${VCPKG_TARGET_TRIPLET}")
+message(STATUS "Prefix path  : ${CMAKE_PREFIX_PATH}")
+
+# ...existing code...
 include(CMakeDependentOption)
 
 set(SLIC3R_RESOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/resources")
@@ -377,10 +418,18 @@ if (APPLE)
     target_compile_definitions(boost_headeronly INTERFACE BOOST_ASIO_DISABLE_KQUEUE)
 endif()
 
-if(NOT SLIC3R_STATIC)
-    target_compile_definitions(boost_headeronly INTERFACE BOOST_LOG_DYN_LINK)
-endif()
 
+if(SLIC3R_STATIC)
+    set(OPENVDB_USE_STATIC_LIBS ON)
+    set(USE_BLOSC TRUE)
+endif ()
+
+# Workaround for vcpkg/OpenEXR: libdeflate and openjph are private deps, but CMake expects config files
+set(libdeflate_DIR "D:/vcpkg/installed/x64-windows/share/libdeflate")
+set(openjph_DIR "D:/vcpkg/installed/x64-windows/share/openjph")
+
+# --- OpenVDB legacy finder compat shim (vcpkg / OpenEXR v3) ---
+include(cmake/modules/OpenVDBVcpkgShim.cmake)
 function(slic3r_remap_configs targets from_Cfg to_Cfg)
     if(MSVC)
         string(TOUPPER ${from_Cfg} from_CFG)
@@ -476,21 +525,28 @@ find_package(PNG REQUIRED)
 set(OpenGL_GL_PREFERENCE "LEGACY")
 find_package(OpenGL REQUIRED)
 
-# Find glew or use bundled version
-if (SLIC3R_STATIC AND NOT SLIC3R_STATIC_EXCLUDE_GLEW)
-    set(GLEW_USE_STATIC_LIBS ON)
-    set(GLEW_VERBOSE ON)
+# Prefer vcpkg config package first
+find_package(glew CONFIG QUIET)
+if (TARGET GLEW::GLEW)
+    message(STATUS "Using vcpkg GLEW config (GLEW::GLEW)")
+    set(GLEW_LIBRARIES GLEW::GLEW)
+else()
+    include(cmake/modules/FindGLEW.cmake) # fallback to legacy module
 endif()
 
-find_package(GLEW REQUIRED)
-
-# Find the Cereal serialization library
-find_package(cereal REQUIRED)
+# Find the Cereal serialization library (prefer config mode, fallback to legacy)
+find_package(cereal CONFIG QUIET)
 add_library(libcereal INTERFACE)
-if (NOT TARGET cereal::cereal)
-    target_link_libraries(libcereal INTERFACE cereal)
-else()
+if (TARGET cereal::cereal)
+    message(STATUS "Using vcpkg cereal config (cereal::cereal)")
     target_link_libraries(libcereal INTERFACE cereal::cereal)
+else()
+    include(cmake/modules/Findcereal.cmake) # fallback to legacy module
+    if (TARGET cereal)
+        target_link_libraries(libcereal INTERFACE cereal)
+    else()
+        message(FATAL_ERROR "Could not find cereal library (neither config nor module mode)")
+    endif()
 endif()
 
 # l10n
@@ -562,23 +618,54 @@ foreach(po_file ${L10N_PO_FILES})
     )
 endforeach()
 
-find_package(NLopt 1.4 REQUIRED)
-slic3r_remap_configs(NLopt::nlopt RelWithDebInfo Release)
+find_package(NLopt CONFIG QUIET)
+if (TARGET NLopt::nlopt)
+    message(STATUS "Using vcpkg NLopt config (NLopt::nlopt)")
+    slic3r_remap_configs(NLopt::nlopt RelWithDebInfo Release)
+else()
+    include(cmake/modules/FindNLopt.cmake) # fallback to legacy module
+    if (TARGET NLopt::nlopt)
+        slic3r_remap_configs(NLopt::nlopt RelWithDebInfo Release)
+    else()
+        message(FATAL_ERROR "Could not find NLopt library (neither config nor module mode)")
+    endif()
+endif()
 
 if(SLIC3R_STATIC)
     set(OPENVDB_USE_STATIC_LIBS ON)
     set(USE_BLOSC TRUE)
 endif ()
 
-find_package(OpenVDB 5.0 COMPONENTS openvdb)
-if(OpenVDB_FOUND)
-    slic3r_remap_configs(IlmBase::Half RelWithDebInfo Release)
-    slic3r_remap_configs(Blosc::blosc RelWithDebInfo Release)
-else ()
-    message(FATAL_ERROR "OpenVDB could not be found with the bundled find module. "
-                   "You can try to specify the find module location of your "
-                   "OpenVDB installation with the OPENVDB_FIND_MODULE_PATH cache variable.")
-endif ()
+
+find_package(OpenEXR CONFIG QUIET)
+if(NOT TARGET OpenEXR::OpenEXRCore)
+    # vcpkg OpenEXR does not provide this target, so create a fake one for OpenVDB finder compatibility
+    add_library(OpenEXR::OpenEXRCore UNKNOWN IMPORTED)
+    set_target_properties(OpenEXR::OpenEXRCore PROPERTIES
+        IMPORTED_LOCATION "D:/vcpkg/installed/x64-windows/lib/OpenEXRCore-3_4.lib"
+        INTERFACE_INCLUDE_DIRECTORIES "D:/vcpkg/installed/x64-windows/include/OpenEXR"
+    )
+endif()
+
+
+# Prefer vcpkg config package for OpenVDB
+find_package(OpenVDB CONFIG QUIET)
+if (TARGET OpenVDB::openvdb)
+    message(STATUS "Using vcpkg OpenVDB config (OpenVDB::openvdb)")
+    set(OPENVDB_LIBRARIES OpenVDB::openvdb)
+else()
+    # Legacy fallback (may expect IlmBase::Half etc.)
+    find_package(OpenVDB 5.0 COMPONENTS openvdb)
+    if(OpenVDB_FOUND)
+        slic3r_remap_configs(IlmBase::Half RelWithDebInfo Release)
+        slic3r_remap_configs(Blosc::blosc RelWithDebInfo Release)
+        set(OPENVDB_LIBRARIES ${OpenVDB_LIBRARIES})
+    else ()
+        message(FATAL_ERROR "OpenVDB could not be found with the bundled find module. "
+                       "You can try to specify the find module location of your "
+                       "OpenVDB installation with the OPENVDB_FIND_MODULE_PATH cache variable.")
+    endif ()
+endif()
 
 set(TOP_LEVEL_PROJECT_DIR ${PROJECT_SOURCE_DIR})
 function(prusaslicer_copy_dlls target)
