@@ -1,0 +1,92 @@
+name: windows-release
+on:
+  push:
+    branches:
+      - internal/*
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: MSVC Dev Cmd
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v1
+
+      - name: Setup Ninja
+        uses: seanmiddleditch/gha-setup-ninja@v4
+
+      - name: Install Tools (NSIS)
+        run: choco install -y nsis
+
+      - name: Cache vcpkg
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}\\vcpkg
+            C:\\vcpkg
+          key: vcpkg-win-${{ runner.os }}-${{ hashFiles('**/vcpkg.json') }}
+          restore-keys: |
+            vcpkg-win-${{ runner.os }}
+
+      - name: Bootstrap vcpkg (manifest mode if present)
+        shell: pwsh
+        run: |
+          if (Test-Path "$env:GITHUB_WORKSPACE\\vcpkg.json") {
+            if (!(Test-Path "$env:GITHUB_WORKSPACE\\vcpkg")) {
+              git clone https://github.com/microsoft/vcpkg "$env:GITHUB_WORKSPACE\\vcpkg"
+            }
+            & "$env:GITHUB_WORKSPACE\\vcpkg\\bootstrap-vcpkg.bat"
+            $env:VCPKG_FEATURE_FLAGS="versions,manifests"
+            $env:CMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
+          } else {
+            echo "No vcpkg.json found. Proceeding without manifest."
+          }
+
+      - name: Configure (Release, x64)
+        shell: pwsh
+        run: |
+          $toolchain = ""
+          if (Test-Path "$env:GITHUB_WORKSPACE\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake") {
+            $toolchain = "-DCMAKE_TOOLCHAIN_FILE=$env:GITHUB_WORKSPACE\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
+          }
+          cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release `
+            -DSLIC3R_STATIC=ON -DENABLE_SLA=ON -DUSE_OPENVDB=ON `
+            $toolchain
+
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      - name: Prepare Installer Staging
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path "dist\\bin" | Out-Null
+          if (Test-Path "build\\Release") { Copy-Item -Recurse -Force "build\\Release\\*" "dist\\bin\\" }
+          elseif (Test-Path "build") { Copy-Item -Recurse -Force "build\\*" "dist\\bin\\" }
+          if (Test-Path "resources") { Copy-Item -Recurse -Force "resources" "dist\\" }
+          if (Test-Path "profiles") { Copy-Item -Recurse -Force "profiles" "dist\\" }
+          if (Test-Path "licenses") { Copy-Item -Recurse -Force "licenses" "dist\\" }
+
+      - name: Make Installer (NSIS)
+        shell: pwsh
+        run: |
+          $env:AEGIS_VERSION = (Get-Date -Format \"yyyy.MM.dd.HHmm\")
+          makensis /DVERSION=$env:AEGIS_VERSION packaging\\nsis\\aegis.nsi
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AegisSlicer-Windows-Installer
+          path: |
+            AegisSlicer-*.exe
+            dist\\**\\*
