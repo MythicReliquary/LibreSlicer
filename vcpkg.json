@@ -1,0 +1,12 @@
+{
+  "name": "aegis-slicer",
+  "version": "1.0.0",
+  "builtin-baseline": "latest",
+  "dependencies": [
+    "tbb", "nlopt", "openvdb", "imath", "openexr", "blosc",
+    "glew", "eigen3", "libpng", "zlib", "bzip2", "curl",
+    "freetype", "harfbuzz", "libjpeg-turbo", "tiff",
+    "libzip", "expat", "libdeflate", "openjph"
+  ],
+  "features": {}
+}

@@ -1,0 +1,21 @@
+name: Bug report
+description: File a bug report
+labels: [bug]
+body:
+  - type: textarea
+    id: version
+    attributes: { label: Version, description: Output from Help → About and OS build }
+    validations: { required: true }
+  - type: textarea
+    id: repro
+    attributes: { label: Steps to reproduce, description: Minimal steps + sample model/link }
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: Expected behavior }
+  - type: textarea
+    id: actual
+    attributes: { label: Actual behavior (logs/screens) }
+  - type: textarea
+    id: notes
+    attributes: { label: Notes }
