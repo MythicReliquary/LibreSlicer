@@ -19,7 +19,7 @@ include(GenerateExportHeader)
 
 generate_export_header(OCCTWrapper)
 
-find_package(OpenCASCADE 7.6.2 REQUIRED)
+find_package(OpenCASCADE CONFIG REQUIRED)
 
 set(OCCT_LIBS
     TKXDESTEP
@@ -59,4 +59,3 @@ target_link_libraries(OCCTWrapper ${OCCT_LIBS})
 include(GNUInstallDirs)
 
 install(TARGETS OCCTWrapper DESTINATION "${CMAKE_INSTALL_BINDIR}")
-

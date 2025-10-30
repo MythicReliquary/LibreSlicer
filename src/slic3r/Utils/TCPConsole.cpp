@@ -160,10 +160,15 @@ bool TCPConsole::run_queue()
         m_io_context.restart();
 
         auto endpoints = m_resolver.resolve(m_host_name, m_port_name);
-
-        m_socket.async_connect(endpoints->endpoint(),
-            boost::bind(&TCPConsole::handle_connect, this, boost::placeholders::_1)
-        );
+        if (endpoints.empty()) {
+            m_error_code = make_error_code(boost::asio::error::host_not_found);
+            m_io_context.stop();
+        } else {
+            auto endpoint = *endpoints.begin();
+            m_socket.async_connect(endpoint.endpoint(),
+                boost::bind(&TCPConsole::handle_connect, this, boost::placeholders::_1)
+            );
+        }
 
         // Loop until we get any reasonable result. Negative result is also result.
         // TODO: Rewrite to more graceful way using deadlime_timer
@@ -208,3 +213,4 @@ bool TCPConsole::run_queue()
 
 } // namespace Utils
 } // namespace Slic3r
+

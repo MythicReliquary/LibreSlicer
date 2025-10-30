@@ -14,6 +14,7 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/button.h>
+#include <wx/arrstr.h>
 #include <wx/statbox.h>
 #include <wx/wupdlock.h>
 
@@ -467,7 +468,9 @@ void PhysicalPrinterDialog::build_printhost_settings(ConfigOptionsGroup* m_optgr
     // Always fill in the "printhost_port" combo box from the config and select it.
     {
         Choice* choice = dynamic_cast<Choice*>(m_optgroup->get_field("printhost_port"));
-        choice->set_values({ m_config->opt_string("printhost_port") });
+        wxArrayString vals;
+        vals.Add(from_u8(m_config->opt_string("printhost_port")));
+        choice->set_values(vals);
         choice->set_selection();
     }
 

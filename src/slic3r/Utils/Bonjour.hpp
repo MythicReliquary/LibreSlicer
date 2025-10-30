@@ -113,7 +113,7 @@ private:
 class LookupSocket;
 class ResolveSocket;
 
-// Session is created for each async_receive of socket. On receive, its handle_receive method is called (Thru io_service->post).
+// Session is created for each async_receive of socket. On receive, its handle_receive method is called (Thru io_context->post).
 // ReplyFn is called if correct datagram was received. 
 class UdpSession 
 {
@@ -147,7 +147,7 @@ protected:
 	const ResolveSocket* socket;
 };
 
-// Udp socket, starts receiving answers after first send() call until io_service is stopped.
+// Udp socket, starts receiving answers after first send() call until io_context is stopped.
 class UdpSocket
 {
 public:
@@ -155,11 +155,11 @@ public:
 	UdpSocket(Bonjour::ReplyFn replyfn
 		, const boost::asio::ip::address& multicast_address
 		, const boost::asio::ip::address& interface_address
-		, std::shared_ptr< boost::asio::io_service > io_service);
+		, std::shared_ptr< boost::asio::io_context > io_context);
 
 	UdpSocket(Bonjour::ReplyFn replyfn
 		, const boost::asio::ip::address& multicast_address
-		, std::shared_ptr< boost::asio::io_service > io_service);
+		, std::shared_ptr< boost::asio::io_context > io_context);
 
 	void send();
 	void async_receive();
@@ -172,7 +172,7 @@ protected:
 	boost::asio::ip::address					    multicast_address;
 	boost::asio::ip::udp::socket					socket;
 	boost::asio::ip::udp::endpoint					mcast_endpoint;
-	std::shared_ptr< boost::asio::io_service >	io_service;
+	std::shared_ptr< boost::asio::io_context >	io_context;
 	std::vector<BonjourRequest>						requests;
 };
 
@@ -186,8 +186,8 @@ public:
 		, Bonjour::ReplyFn replyfn
 		, const boost::asio::ip::address& multicast_address
 		, const boost::asio::ip::address& interface_address
-		, std::shared_ptr< boost::asio::io_service > io_service)
-		: UdpSocket(replyfn, multicast_address, interface_address, io_service)
+		, std::shared_ptr< boost::asio::io_context > io_context)
+		: UdpSocket(replyfn, multicast_address, interface_address, io_context)
 		, txt_keys(txt_keys)
 		, service(service)
 		, service_dn(service_dn)
@@ -203,8 +203,8 @@ public:
 		, std::string protocol
 		, Bonjour::ReplyFn replyfn
 		, const boost::asio::ip::address& multicast_address
-		, std::shared_ptr< boost::asio::io_service > io_service)
-		: UdpSocket(replyfn, multicast_address, io_service)
+		, std::shared_ptr< boost::asio::io_context > io_context)
+		: UdpSocket(replyfn, multicast_address, io_context)
 		, txt_keys(txt_keys)
 		, service(service)
 		, service_dn(service_dn)
@@ -241,8 +241,8 @@ public:
 		, Bonjour::ReplyFn replyfn
 		, const boost::asio::ip::address& multicast_address
 		, const boost::asio::ip::address& interface_address
-		, std::shared_ptr< boost::asio::io_service > io_service)
-		: UdpSocket(replyfn, multicast_address, interface_address, io_service)
+		, std::shared_ptr< boost::asio::io_context > io_context)
+		: UdpSocket(replyfn, multicast_address, interface_address, io_context)
 		, hostname(hostname)
 
 	{
@@ -253,8 +253,8 @@ public:
 	ResolveSocket(const std::string& hostname
 		, Bonjour::ReplyFn replyfn
 		, const boost::asio::ip::address& multicast_address
-		, std::shared_ptr< boost::asio::io_service > io_service)
-		: UdpSocket(replyfn, multicast_address, io_service)
+		, std::shared_ptr< boost::asio::io_context > io_context)
+		: UdpSocket(replyfn, multicast_address, io_context)
 		, hostname(hostname)
 
 	{

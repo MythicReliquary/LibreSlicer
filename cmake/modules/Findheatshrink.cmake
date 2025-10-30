@@ -1,0 +1,6 @@
+if(TARGET heatshrink::heatshrink AND TARGET heatshrink::heatshrink_dynalloc)
+    set(heatshrink_FOUND TRUE)
+    set(heatshrink_VERSION 0.4)
+else()
+    set(heatshrink_FOUND FALSE)
+endif()

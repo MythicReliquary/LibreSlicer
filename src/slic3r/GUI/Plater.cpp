@@ -5395,7 +5395,8 @@ void Plater::load_project(const wxString& filename)
 
     p->reset();
 
-    if (! load_files({ into_path(filename) }).empty()) {
+    const std::vector<fs::path> files_to_load{ into_path(filename) };
+    if (!load_files(files_to_load).empty()) {
         // At least one file was loaded.
         p->set_project_filename(filename);
         // Save the names of active presets and project specific config into ProjectDirtyStateManager.
@@ -5633,7 +5634,7 @@ void Plater::convert_gcode_to_ascii()
         if (res == EResult::InvalidMagicNumber) {
             in_file.close();
             out_file.close();
-            boost::filesystem::copy_file(input_path, output_path, boost::filesystem::copy_option::overwrite_if_exists);
+            boost::filesystem::copy_file(input_path, output_path, boost::filesystem::copy_options::overwrite_existing);
         }
         else if (res != EResult::Success) {
             MessageDialog msg_dlg(this, _L(std::string(translate_result(res))), _L("Error converting G-code file"), wxICON_INFORMATION | wxOK);
@@ -5712,7 +5713,7 @@ void Plater::convert_gcode_to_binary()
         if (res == EResult::AlreadyBinarized) {
             in_file.close();
             out_file.close();
-            boost::filesystem::copy_file(input_path, output_path, boost::filesystem::copy_option::overwrite_if_exists);
+            boost::filesystem::copy_file(input_path, output_path, boost::filesystem::copy_options::overwrite_existing);
         }
         else if (res != EResult::Success) {
             MessageDialog msg_dlg(this, _L(std::string(translate_result(res))), _L("Error converting G-code file"), wxICON_INFORMATION | wxOK);
@@ -5945,7 +5946,7 @@ bool Plater::preview_zip_archive(const boost::filesystem::path& archive_path)
                             std::replace(name.begin(), name.end(), '\\', '/');
                             // rename if file exists
                             std::string filename = path.filename().string();
-                            std::string extension = boost::filesystem::extension(path);
+                            std::string extension = path.extension().string();
                             std::string just_filename = filename.substr(0, filename.size() - extension.size());
                             std::string final_filename = just_filename;
 
@@ -7374,7 +7375,8 @@ void Plater::send_gcode()
     if (dlg.ShowModal() == wxID_OK) {
 
         if (printer_technology() == ptFFF) {
-            const std::string ext = boost::algorithm::to_lower_copy(dlg.filename().extension().string());
+            const auto chosen_path = dlg.filename();
+            const std::string ext = boost::algorithm::to_lower_copy(chosen_path.extension().string());
             const bool        binary_output = wxGetApp().preset_bundle->printers.get_edited_preset().config.opt_bool("binary_gcode") &&
                                        wxGetApp().app_config->get_bool("use_binary_gcode_when_supported");
             const wxString error_str = check_binary_vs_ascii_gcode_extension(printer_technology(), ext, binary_output);
@@ -8331,3 +8333,6 @@ PlaterAfterLoadAutoArrange::~PlaterAfterLoadAutoArrange()
 }
 
 }}    // namespace Slic3r::GUI
+
+
+

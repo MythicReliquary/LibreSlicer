@@ -21,7 +21,79 @@ if (TARGET OpenVDB::openvdb)
     set(OpenVDBUtils_SOURCES OpenVDBUtils.cpp OpenVDBUtils.hpp OpenVDBUtilsLegacy.hpp)
 endif()
 
-find_package(LibBGCode REQUIRED COMPONENTS Convert)
+find_package(LibBGCode CONFIG QUIET COMPONENTS Convert)
+if(NOT LibBGCode_FOUND)
+    message(STATUS "LibBGCode not found; fetching vendor snapshot")
+    include(FetchContent)
+    FetchContent_Declare(libbgcode_heatshrink
+        URL https://github.com/atomicobject/heatshrink/archive/refs/tags/v0.4.1.zip
+        URL_HASH SHA256=2e2db2366bdf36cb450f0b3229467cbc6ea81a8c690723e4227b0b46f92584fe
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    )
+    FetchContent_GetProperties(libbgcode_heatshrink)
+    if(NOT libbgcode_heatshrink_POPULATED)
+        FetchContent_Populate(libbgcode_heatshrink)
+        set(_heatshrink_stage_dir "${CMAKE_CURRENT_BINARY_DIR}/vendor/heatshrink")
+        set(_heatshrink_public_dir "${_heatshrink_stage_dir}/include")
+        file(MAKE_DIRECTORY "${_heatshrink_public_dir}/heatshrink")
+        foreach(_hdr IN ITEMS heatshrink_encoder.h heatshrink_decoder.h heatshrink_common.h heatshrink_config.h)
+            configure_file(
+                ${libbgcode_heatshrink_SOURCE_DIR}/${_hdr}
+                ${_heatshrink_public_dir}/heatshrink/${_hdr}
+                COPYONLY
+            )
+        endforeach()
+        add_library(libbgcode_heatshrink STATIC
+            ${libbgcode_heatshrink_SOURCE_DIR}/heatshrink_encoder.c
+            ${libbgcode_heatshrink_SOURCE_DIR}/heatshrink_decoder.c
+        )
+        add_library(libbgcode_heatshrink_dynalloc STATIC
+            ${libbgcode_heatshrink_SOURCE_DIR}/heatshrink_encoder.c
+            ${libbgcode_heatshrink_SOURCE_DIR}/heatshrink_decoder.c
+        )
+        target_compile_definitions(libbgcode_heatshrink PRIVATE HEATSHRINK_DYNAMIC_ALLOC=0)
+        target_compile_definitions(libbgcode_heatshrink_dynalloc PRIVATE HEATSHRINK_DYNAMIC_ALLOC=1)
+        target_include_directories(libbgcode_heatshrink PUBLIC ${_heatshrink_public_dir})
+        target_include_directories(libbgcode_heatshrink_dynalloc PUBLIC ${_heatshrink_public_dir})
+        set(heatshrink_INCLUDE_DIR ${_heatshrink_public_dir} CACHE INTERNAL "")
+        set(heatshrink_INCLUDE_DIRS ${_heatshrink_public_dir} CACHE INTERNAL "")
+        if(NOT TARGET heatshrink::heatshrink)
+            add_library(heatshrink::heatshrink INTERFACE IMPORTED)
+            set_target_properties(heatshrink::heatshrink PROPERTIES
+                INTERFACE_LINK_LIBRARIES libbgcode_heatshrink
+                INTERFACE_INCLUDE_DIRECTORIES ${_heatshrink_public_dir}
+            )
+        endif()
+        if(NOT TARGET heatshrink::heatshrink_dynalloc)
+            add_library(heatshrink::heatshrink_dynalloc INTERFACE IMPORTED)
+            set_target_properties(heatshrink::heatshrink_dynalloc PROPERTIES
+                INTERFACE_LINK_LIBRARIES libbgcode_heatshrink_dynalloc
+                INTERFACE_INCLUDE_DIRECTORIES ${_heatshrink_public_dir}
+            )
+        endif()
+    endif()
+    set(LibBGCode_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+    set(LibBGCode_BUILD_CMD_TOOL OFF CACHE BOOL "" FORCE)
+    set(LibBGCode_BUILD_COMPONENT_Binarize ON CACHE BOOL "" FORCE)
+    set(LibBGCode_BUILD_COMPONENT_Convert ON CACHE BOOL "" FORCE)
+    FetchContent_Declare(libbgcode
+        URL https://github.com/prusa3d/libbgcode/archive/bc390aab4427589a6402b4c7f65cf4d0a8f987ec.zip
+        URL_HASH SHA256=0c86cb67232089728233014f937e2a07d133a61e31dd8811a9c905e563a49f24
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+        CMAKE_ARGS
+            -DLibBGCode_BUILD_TESTS=OFF
+            -DLibBGCode_BUILD_CMD_TOOL=OFF
+            -DLibBGCode_BUILD_WASM=OFF
+            -DLibBGCode_BUILD_PYTHON_BINDING=OFF
+    )
+    FetchContent_MakeAvailable(libbgcode)
+    if(TARGET LibBGCode::bgcode_convert)
+        set(LibBGCode_FOUND TRUE CACHE INTERNAL "")
+    endif()
+endif()
+if(NOT TARGET LibBGCode::bgcode_convert)
+    message(FATAL_ERROR "LibBGCode::bgcode_convert target is required but could not be configured.")
+endif()
 slic3r_remap_configs(LibBGCode::bgcode_core RelWithDebInfo Release)
 slic3r_remap_configs(LibBGCode::bgcode_binarize RelWithDebInfo Release)
 slic3r_remap_configs(LibBGCode::bgcode_convert RelWithDebInfo Release)
@@ -519,9 +591,12 @@ if(ENABLE_SLA)
         target_sources(libslic3r PRIVATE ${SLA_SOURCES})
     endif()
 
+    find_package(CGAL CONFIG REQUIRED)
+    add_definitions(-DCGAL_DO_NOT_WARN_ABOUT_CMAKE_BUILD_TYPE)
+
     find_package(ZLIB REQUIRED)
     find_package(PNG REQUIRED)
-    target_link_libraries(libslic3r PRIVATE ZLIB::ZLIB PNG::PNG)
+    target_link_libraries(libslic3r CGAL::CGAL ZLIB::ZLIB PNG::PNG)
 endif()
 
 if (WIN32)

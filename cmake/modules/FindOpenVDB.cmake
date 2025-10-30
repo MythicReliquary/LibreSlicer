@@ -351,6 +351,43 @@ find_package(IlmBase QUIET)
 if(NOT IlmBase_FOUND)
   pkg_check_modules(IlmBase QUIET IlmBase)
 endif()
+if(NOT IlmBase_FOUND)
+  if(TARGET Imath::Imath)
+    get_target_property(_openvdb_imath_includes Imath::Imath INTERFACE_INCLUDE_DIRECTORIES)
+    if(NOT TARGET IlmBase::Imath)
+      add_library(IlmBase::Imath INTERFACE IMPORTED)
+      target_link_libraries(IlmBase::Imath INTERFACE Imath::Imath)
+      if(_openvdb_imath_includes)
+        set_target_properties(IlmBase::Imath PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_openvdb_imath_includes}")
+      endif()
+    endif()
+    if(NOT TARGET IlmBase::Half)
+      add_library(IlmBase::Half INTERFACE IMPORTED)
+      target_link_libraries(IlmBase::Half INTERFACE Imath::Imath)
+      if(_openvdb_imath_includes)
+        set_target_properties(IlmBase::Half PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_openvdb_imath_includes}")
+      endif()
+    endif()
+    set(IlmBase_INCLUDE_DIRS "${_openvdb_imath_includes}")
+    set(IlmBase_FOUND TRUE)
+  endif()
+  if(TARGET OpenEXR::Iex AND NOT TARGET IlmBase::Iex)
+    add_library(IlmBase::Iex INTERFACE IMPORTED)
+    target_link_libraries(IlmBase::Iex INTERFACE OpenEXR::Iex)
+    get_target_property(_openvdb_iex_includes OpenEXR::Iex INTERFACE_INCLUDE_DIRECTORIES)
+    if(_openvdb_iex_includes)
+      set_target_properties(IlmBase::Iex PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_openvdb_iex_includes}")
+    endif()
+  endif()
+  if(TARGET OpenEXR::IlmThread AND NOT TARGET IlmBase::IlmThread)
+    add_library(IlmBase::IlmThread INTERFACE IMPORTED)
+    target_link_libraries(IlmBase::IlmThread INTERFACE OpenEXR::IlmThread)
+    get_target_property(_openvdb_ilmthread_includes OpenEXR::IlmThread INTERFACE_INCLUDE_DIRECTORIES)
+    if(_openvdb_ilmthread_includes)
+      set_target_properties(IlmBase::IlmThread PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_openvdb_ilmthread_includes}")
+    endif()
+  endif()
+endif()
 if (IlmBase_FOUND AND NOT TARGET IlmBase::Half)
   message(STATUS "Falling back to IlmBase found by pkg-config...")
 
@@ -381,14 +418,14 @@ set(_EXCLUDE_SYSTEM_PREREQUISITES 1)
 set(_RECURSE_PREREQUISITES 0)
 set(_OPENVDB_PREREQUISITE_LIST)
 
-if(NOT OPENVDB_USE_STATIC_LIBS)
-get_prerequisites(${OpenVDB_openvdb_LIBRARY}
-  _OPENVDB_PREREQUISITE_LIST
-  ${_EXCLUDE_SYSTEM_PREREQUISITES}
-  ${_RECURSE_PREREQUISITES}
-  ""
-  "${SYSTEM_LIBRARY_PATHS}"
-)
+if(NOT OPENVDB_USE_STATIC_LIBS AND NOT WIN32)
+  get_prerequisites(${OpenVDB_openvdb_LIBRARY}
+    _OPENVDB_PREREQUISITE_LIST
+    ${_EXCLUDE_SYSTEM_PREREQUISITES}
+    ${_RECURSE_PREREQUISITES}
+    ""
+    "${SYSTEM_LIBRARY_PATHS}"
+  )
 endif()
 
 unset(_EXCLUDE_SYSTEM_PREREQUISITES)

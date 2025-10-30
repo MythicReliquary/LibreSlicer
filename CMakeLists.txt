@@ -47,6 +47,14 @@ project(AegisSlicer LANGUAGES CXX)
 
 option(ENABLE_SLA "Enable resin/SLA slicing features" ON)
 
+if(WIN32)
+    add_compile_definitions(
+        WINVER=0x0A00
+        _WIN32_WINNT=0x0A00
+        BOOST_USE_WINAPI_VERSION=0x0A00
+    )
+endif()
+
 # CGAL (CONFIG mode). Add 'Core' if you depend on exact arithmetic kernels.
 find_package(CGAL CONFIG REQUIRED COMPONENTS Core)
 
@@ -414,6 +422,16 @@ find_package(Boost ${MINIMUM_BOOST_VERSION} REQUIRED COMPONENTS ${_boost_compone
 
 add_library(boost_libs INTERFACE)
 add_library(boost_headeronly INTERFACE)
+target_compile_definitions(boost_headeronly INTERFACE BOOST_USE_WINAPI_VERSION=0x0A00)
+target_compile_definitions(boost_libs INTERFACE BOOST_USE_WINAPI_VERSION=0x0A00)
+target_compile_options(boost_libs INTERFACE
+    $<$<CXX_COMPILER_ID:MSVC>:/UBOOST_USE_WINAPI_VERSION>
+    $<$<CXX_COMPILER_ID:MSVC>:/DBOOST_USE_WINAPI_VERSION=0x0A00>
+)
+target_compile_options(boost_headeronly INTERFACE
+    $<$<CXX_COMPILER_ID:MSVC>:/UBOOST_USE_WINAPI_VERSION>
+    $<$<CXX_COMPILER_ID:MSVC>:/DBOOST_USE_WINAPI_VERSION=0x0A00>
+)
 
 if (APPLE)
     # BOOST_ASIO_DISABLE_KQUEUE : prevents a Boost ASIO bug on OS X: https://svn.boost.org/trac/boost/ticket/5339
@@ -438,7 +456,13 @@ function(slic3r_remap_configs targets from_Cfg to_Cfg)
     
         foreach(tgt ${targets})
             if(TARGET ${tgt})
-                set_target_properties(${tgt} PROPERTIES MAP_IMPORTED_CONFIG_${from_CFG} ${to_Cfg})
+                get_target_property(_aliased_target ${tgt} ALIASED_TARGET)
+                if(_aliased_target AND TARGET "${_aliased_target}")
+                    set(_remap_target "${_aliased_target}")
+                else()
+                    set(_remap_target "${tgt}")
+                endif()
+                set_target_properties(${_remap_target} PROPERTIES MAP_IMPORTED_CONFIG_${from_CFG} ${to_Cfg})
             endif()
         endforeach()
     endif()
@@ -453,6 +477,18 @@ if(TARGET Boost::system)
     set(_boost_targets "")
     foreach(comp ${_boost_components})
         list(APPEND _boost_targets "Boost::${comp}")
+    endforeach()
+
+    # Boost config from vcpkg defaults to Windows 7 APIs; bump to Windows 10 so WaitOnAddress is declared.
+    set(_boost_winapi_targets "${_boost_targets};Boost::boost")
+    foreach(_boost_tgt ${_boost_winapi_targets})
+        if(TARGET ${_boost_tgt})
+            get_target_property(_boost_defs ${_boost_tgt} INTERFACE_COMPILE_DEFINITIONS)
+            if(_boost_defs)
+                list(REMOVE_ITEM _boost_defs "BOOST_USE_WINAPI_VERSION=0x601" "BOOST_USE_WINAPI_VERSION=0x0601")
+                set_target_properties(${_boost_tgt} PROPERTIES INTERFACE_COMPILE_DEFINITIONS "${_boost_defs}")
+            endif()
+        endif()
     endforeach()
 
     target_link_libraries(boost_libs INTERFACE
@@ -640,6 +676,40 @@ endif ()
 
 
 find_package(OpenEXR CONFIG QUIET)
+find_package(Imath CONFIG QUIET)
+if(TARGET Imath::Imath)
+    get_target_property(_imath_includes Imath::Imath INTERFACE_INCLUDE_DIRECTORIES)
+    if(NOT TARGET IlmBase::Half)
+        add_library(IlmBase::Half INTERFACE IMPORTED)
+        target_link_libraries(IlmBase::Half INTERFACE Imath::Imath)
+        if(_imath_includes)
+            set_target_properties(IlmBase::Half PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_imath_includes}")
+        endif()
+    endif()
+    if(NOT TARGET IlmBase::Imath)
+        add_library(IlmBase::Imath INTERFACE IMPORTED)
+        target_link_libraries(IlmBase::Imath INTERFACE Imath::Imath)
+        if(_imath_includes)
+            set_target_properties(IlmBase::Imath PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_imath_includes}")
+        endif()
+    endif()
+endif()
+if(TARGET OpenEXR::Iex AND NOT TARGET IlmBase::Iex)
+    add_library(IlmBase::Iex INTERFACE IMPORTED)
+    target_link_libraries(IlmBase::Iex INTERFACE OpenEXR::Iex)
+    get_target_property(_iex_includes OpenEXR::Iex INTERFACE_INCLUDE_DIRECTORIES)
+    if(_iex_includes)
+        set_target_properties(IlmBase::Iex PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_iex_includes}")
+    endif()
+endif()
+if(TARGET OpenEXR::IlmThread AND NOT TARGET IlmBase::IlmThread)
+    add_library(IlmBase::IlmThread INTERFACE IMPORTED)
+    target_link_libraries(IlmBase::IlmThread INTERFACE OpenEXR::IlmThread)
+    get_target_property(_ilmthread_includes OpenEXR::IlmThread INTERFACE_INCLUDE_DIRECTORIES)
+    if(_ilmthread_includes)
+        set_target_properties(IlmBase::IlmThread PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_ilmthread_includes}")
+    endif()
+endif()
 if(NOT TARGET OpenEXR::OpenEXRCore)
     # vcpkg OpenEXR does not provide this target, so create a fake one for OpenVDB finder compatibility
     add_library(OpenEXR::OpenEXRCore UNKNOWN IMPORTED)

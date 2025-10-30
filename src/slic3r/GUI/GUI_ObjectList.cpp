@@ -30,6 +30,7 @@
 #include "format.hpp"
 #include "NotificationManager.hpp"
 #include "MsgDialog.hpp"
+#include <wx/uiaction.h>
 
 #include <boost/algorithm/string.hpp>
 #include <wx/progdlg.h>
@@ -150,8 +151,10 @@ ObjectList::ObjectList(wxWindow* parent) :
 		    new_selected_column = (col == nullptr) ? -1 : (int)col->GetModelColumn();
 	        if (new_selected_item == m_last_selected_item && m_last_selected_column != -1 && m_last_selected_column != new_selected_column) {
 	        	// Mouse clicked on another column of the active row. Simulate keyboard enter to enter the editing mode of the current column.
-	        	wxUIActionSimulator sim;
-				sim.Char(WXK_RETURN);
+#if wxUSE_UIACTIONSIMULATOR
+	        	wxUIActionSimulator ui_sim;
+				ui_sim.Char(WXK_RETURN);
+#endif
 	        }
 #endif //__WXMSW__
 	        m_last_selected_item = new_selected_item;

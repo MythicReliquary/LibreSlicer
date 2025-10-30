@@ -5,10 +5,14 @@
   "dependencies": [
     "tbb", "nlopt", "openvdb", "imath", "openexr", "blosc",
     "glew", "eigen3", "libpng", "zlib", "bzip2", "curl",
-  "freetype", "harfbuzz", "libjpeg-turbo", "tiff",
-  "libzip", "expat", "libdeflate", "openjph",
-  "qhull",
-  "cgal"
+    "boost-assign", "boost-beast", "boost-dll", "boost-log", "boost-locale",
+    "cereal",
+    "freetype", "harfbuzz", "libjpeg-turbo", "tiff",
+    "libzip", "expat", "libdeflate", "openjph",
+    "qhull",
+    "cgal",
+    "opencascade",
+    "wxwidgets"
   ],
   "features": {}
 }

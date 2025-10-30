@@ -624,11 +624,11 @@ UdpSession::UdpSession(Bonjour::ReplyFn rfn) : replyfn(rfn)
 	buffer.resize(DnsMessage::MAX_SIZE);
 }
 
-UdpSocket::UdpSocket( Bonjour::ReplyFn replyfn, const asio::ip::address& multicast_address, const asio::ip::address& interface_address, std::shared_ptr< boost::asio::io_service > io_service)
+UdpSocket::UdpSocket( Bonjour::ReplyFn replyfn, const asio::ip::address& multicast_address, const asio::ip::address& interface_address, std::shared_ptr< asio::io_context > io_ctx)
 	: replyfn(replyfn)
 	, multicast_address(multicast_address)
-	, socket(*io_service)
-	, io_service(io_service)
+	, socket(*io_ctx)
+	, io_context(std::move(io_ctx))
 {
 	try {
 		// open socket
@@ -658,11 +658,11 @@ UdpSocket::UdpSocket( Bonjour::ReplyFn replyfn, const asio::ip::address& multica
 }
 
 
-UdpSocket::UdpSocket( Bonjour::ReplyFn replyfn, const asio::ip::address& multicast_address, std::shared_ptr< boost::asio::io_service > io_service)
+UdpSocket::UdpSocket( Bonjour::ReplyFn replyfn, const asio::ip::address& multicast_address, std::shared_ptr< asio::io_context > io_ctx)
 	: replyfn(replyfn)
 	, multicast_address(multicast_address)
-	, socket(*io_service)
-	, io_service(io_service)
+	, socket(*io_ctx)
+	, io_context(std::move(io_ctx))
 {
 	try {
 		// open socket
@@ -711,10 +711,10 @@ void UdpSocket::async_receive()
 
 void UdpSocket::receive_handler(SharedSession session, const boost::system::error_code& error, size_t bytes)
 {
-	// let io_service to handle the datagram on session
-	// from boost documentation io_service::post:
-	// The io_service guarantees that the handler will only be called in a thread in which the run(), run_one(), poll() or poll_one() member functions is currently being invoked.
-	io_service->post(boost::bind(&UdpSession::handle_receive, session, error, bytes));
+	// let io_context handle the datagram on session
+	// from boost documentation io_context::post:
+	// The io_context guarantees that the handler will only be called in a thread in which the run(), run_one(), poll() or poll_one() member functions is currently being invoked.
+	io_context->post(boost::bind(&UdpSession::handle_receive, session, error, bytes));
 	// immediately accept new datagrams
 	async_receive();
 }
@@ -871,7 +871,7 @@ void Bonjour::priv::lookup_perform()
 {
 	service_dn = (boost::format("_%1%._%2%.local") % service % protocol).str();
 
-	std::shared_ptr< boost::asio::io_service > io_service(new boost::asio::io_service);
+	auto io_service = std::make_shared<asio::io_context>();
 
 	std::vector<LookupSocket*> sockets;
 
@@ -966,7 +966,7 @@ void Bonjour::priv::resolve_perform()
 			rpls.push_back(reply);
 	};
 
-	std::shared_ptr< boost::asio::io_service > io_service(new boost::asio::io_service);
+	auto io_service = std::make_shared<asio::io_context>();
 	std::vector<ResolveSocket*> sockets;
 
 	// resolve interfaces - from PR#6646
@@ -1207,4 +1207,3 @@ void Bonjour::resolve_sync()
 
 
 }
-
