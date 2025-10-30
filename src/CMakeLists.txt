@@ -1,3 +1,11 @@
+
+# Ensure CMake can find Qhull from vcpkg (force absolute path for Windows)
+if(WIN32)
+    set(_qhull_vcpkg_dir "D:/Aegis_slicer_V1/Aegis-Slicer/vcpkg_installed/x64-windows/share/qhull")
+    set(Qhull_DIR "${_qhull_vcpkg_dir}" CACHE PATH "Path to QhullConfig.cmake" FORCE)
+    list(PREPEND CMAKE_PREFIX_PATH "${_qhull_vcpkg_dir}")
+endif()
+
 cmake_minimum_required(VERSION 3.13)
 project(PrusaSlicer-native)
 
@@ -50,9 +58,17 @@ if (SLIC3R_GUI)
     if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
         set (wxWidgets_CONFIG_OPTIONS "--toolkit=gtk${SLIC3R_GTK}")
     endif ()
-    find_package(wxWidgets 3.2 MODULE REQUIRED COMPONENTS base core adv html gl)
 
-    include(${wxWidgets_USE_FILE})
+        # Prefer vcpkg config mode first
+        find_package(wxWidgets CONFIG QUIET COMPONENTS base core adv html gl)
+        if(TARGET wxWidgets::wxWidgets)
+            message(STATUS "Using vcpkg wxWidgets config (wxWidgets::wxWidgets)")
+            set(WXWIDGETS_LIBRARIES wxWidgets::wxWidgets)
+        else()
+            find_package(wxWidgets 3.2 MODULE REQUIRED COMPONENTS base core adv html gl)
+            include(${wxWidgets_USE_FILE})
+            set(WXWIDGETS_LIBRARIES ${wxWidgets_LIBRARIES})
+        endif()
 
     slic3r_remap_configs(wx::wxhtml wx::wxadv wx::wxgl wx::wxcore wx::wxbase RelWithDebInfo Release)
 
@@ -111,7 +127,8 @@ endif()
 
 # Create a slic3r executable
 # Process mainfests for various platforms.
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/PrusaSlicer.rc.in ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer.rc @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/LibreSlicer.rc.in ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer.rc @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/LibreSlicer.manifest ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer.manifest @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/PrusaSlicer-gcodeviewer.rc.in ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer-gcodeviewer.rc @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/PrusaSlicer.manifest.in ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer.manifest @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/osx/Info.plist.in ${CMAKE_CURRENT_BINARY_DIR}/Info.plist @ONLY)
@@ -174,7 +191,7 @@ if (WIN32)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -municode")
     endif()
 
-    add_executable(PrusaSlicer_app_gui WIN32 PrusaSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer.rc)
+    add_executable(PrusaSlicer_app_gui WIN32 PrusaSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer.rc ${CMAKE_BINARY_DIR}/winver.rc)
     # Generate debug symbols even in release mode.
     if(MSVC)
         target_link_options(PrusaSlicer_app_gui PUBLIC "$<$<CONFIG:RELEASE>:/DEBUG>")
