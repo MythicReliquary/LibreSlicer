@@ -5056,6 +5056,11 @@ CLIMiscConfigDef::CLIMiscConfigDef()
     def->tooltip = L("The file where the output will be written (if not specified, it will be based on the input file).");
     def->cli = "output|o";
 
+    def = this->add("sla_export", coString);
+    def->label = L("SLA export directory");
+    def->tooltip = L("Writes sliced SLA layers as PNG images into the specified directory.");
+    def->cli = "sla-export";
+
     def = this->add("single_instance", coBool);
     def->label = L("Single instance mode");
     def->tooltip = L("If enabled, the command line arguments are sent to an existing instance of GUI PrusaSlicer, "

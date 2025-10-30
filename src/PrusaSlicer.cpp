@@ -25,6 +25,7 @@
 #include <string>
 #include <cstring>
 #include <iostream>
+#include <algorithm>
 #include <math.h>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
@@ -582,6 +583,8 @@ int CLI::run(int argc, char **argv)
                 // is supplied); if any object has no instances, it will get a default one
                 // and all instances will be rearranged (unless --dont-arrange is supplied).
                 std::string outfile = m_config.opt_string("output");
+                std::string png_export_dir = sla_export_dir;
+                bool        exported_png_stack = false;
                 Print       fff_print;
                 SLAPrint    sla_print;
                 sla_print.set_status_callback(
@@ -623,18 +626,25 @@ int CLI::run(int argc, char **argv)
                             outfile = sla_print.output_filepath(outfile);
                             // We need to finalize the filename beforehand because the export function sets the filename inside the zip metadata
                             outfile_final = sla_print.print_statistics().finalize_output_path(outfile);
-                            sla_print.export_print(outfile_final);
+                            if (!png_export_dir.empty()) {
+                                sla_print.export_png_layers(png_export_dir);
+                                outfile_final = png_export_dir;
+                                exported_png_stack = true;
+                            } else {
+                                sla_print.export_print(outfile_final);
+                            }
                         }
-                        if (outfile != outfile_final) {
+                        if (!exported_png_stack && outfile != outfile_final) {
                             if (Slic3r::rename_file(outfile, outfile_final)) {
                                 boost::nowide::cerr << "Renaming file " << outfile << " to " << outfile_final << " failed" << std::endl;
                                 return 1;
                             }
-                            outfile = outfile_final;
                         }
-                        // Run the post-processing scripts if defined.
-                        run_post_process_scripts(outfile, fff_print.full_print_config());
-                        boost::nowide::cout << "Slicing result exported to " << outfile << std::endl;
+                        if (!exported_png_stack)
+                            run_post_process_scripts(outfile_final, fff_print.full_print_config());
+                        boost::nowide::cout
+                            << (exported_png_stack ? "SLA layers exported to " : "Slicing result exported to ")
+                            << outfile_final << std::endl;
                     } catch (const std::exception &ex) {
                         boost::nowide::cerr << ex.what() << std::endl;
                         return 1;
@@ -821,6 +831,11 @@ bool CLI::setup(int argc, char **argv)
     if (!validity.empty()) {
         boost::nowide::cerr << "error: " << validity << std::endl;
         return false;
+    }
+
+    if (!m_config.opt_string("sla_export").empty()) {
+        if (std::find(m_actions.begin(), m_actions.end(), "export_sla") == m_actions.end())
+            m_actions.emplace_back("export_sla");
     }
 
     return true;

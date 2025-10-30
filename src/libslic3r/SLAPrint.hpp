@@ -552,6 +552,8 @@ public:
     void export_print(const std::string    &fname,
                       const ThumbnailsList &thumbnails,
                       const std::string    &projectname = "");
+
+    void export_png_layers(const std::string &directory) const;
     
 private:
     

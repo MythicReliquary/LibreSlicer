@@ -17,8 +17,13 @@
 #include <unordered_set>
 #include <numeric>
 
+#include <fstream>
+#include <iomanip>
+#include <sstream>
+
 #include <tbb/parallel_for.h>
 #include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <boost/log/trivial.hpp>
 
 // #define SLAPRINT_DO_BENCHMARK
@@ -612,6 +617,37 @@ void SLAPrint::export_print(const std::string &fname, const ThumbnailsList &thum
         m_archiver->export_print(fname, *this, thumbnails, projectname);
     else {
         throw ExportError(format(_u8L("Unknown archive format: %s"), m_printer_config.sla_archive_format.value));
+    }
+}
+
+void SLAPrint::export_png_layers(const std::string &directory) const
+{
+    if (!m_archiver)
+        throw ExportError(_u8L("SLA archiver is not initialized."));
+
+    namespace fs = boost::filesystem;
+    fs::path dir_path(directory.empty() ? "." : directory);
+
+    boost::system::error_code ec;
+    fs::create_directories(dir_path, ec);
+    if (ec && !fs::exists(dir_path))
+        throw ExportError(format(_u8L("Failed to create directory %s: %s"), dir_path.string(), ec.message()));
+
+    size_t idx = 0;
+    for (const sla::EncodedRaster &rst : m_archiver->layers()) {
+        std::ostringstream name;
+        name << std::setw(5) << std::setfill('0') << idx++;
+        const char *ext_cstr = rst.extension();
+        std::string ext = ext_cstr != nullptr ? ext_cstr : "";
+        if (ext.empty())
+            ext = "png";
+        fs::path out_path = dir_path / (name.str() + "." + ext);
+        std::ofstream out(out_path.string(), std::ios::binary);
+        if (!out)
+            throw ExportError(format(_u8L("Failed to open %s for writing"), out_path.string()));
+        out.write(static_cast<const char*>(rst.data()), static_cast<std::streamsize>(rst.size()));
+        if (!out)
+            throw ExportError(format(_u8L("Failed to write %s"), out_path.string()));
     }
 }
 
