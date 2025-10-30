@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=PrusaSlicer
+Name=LibreSlicer
 GenericName=3D Printing Software
-Icon=PrusaSlicer
-Exec=prusa-slicer %F
+Icon=LibreSlicer
+Exec=libreslicer %F
 Terminal=false
 Type=Application
 MimeType=model/stl;application/vnd.ms-3mfdocument;application/prs.wavefront-obj;application/x-amf;
