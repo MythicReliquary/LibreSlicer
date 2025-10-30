@@ -45,6 +45,8 @@ endif()
 # ---- your project & packages --------------------------------------------------
 project(AegisSlicer LANGUAGES CXX)
 
+option(ENABLE_SLA "Enable resin/SLA slicing features" ON)
+
 # CGAL (CONFIG mode). Add 'Core' if you depend on exact arithmetic kernels.
 find_package(CGAL CONFIG REQUIRED COMPONENTS Core)
 

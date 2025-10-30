@@ -509,6 +509,21 @@ set(SLIC3R_SOURCES
 
 add_library(libslic3r STATIC ${SLIC3R_SOURCES})
 
+if(ENABLE_SLA)
+    file(GLOB_RECURSE SLA_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/SLA/*.c"
+        "${CMAKE_CURRENT_SOURCE_DIR}/SLA/*.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/SLA/*.cxx"
+    )
+    if(SLA_SOURCES)
+        target_sources(libslic3r PRIVATE ${SLA_SOURCES})
+    endif()
+
+    find_package(ZLIB REQUIRED)
+    find_package(PNG REQUIRED)
+    target_link_libraries(libslic3r PRIVATE ZLIB::ZLIB PNG::PNG)
+endif()
+
 if (WIN32)
     target_compile_definitions(libslic3r PUBLIC NOMINMAX)
 endif()
