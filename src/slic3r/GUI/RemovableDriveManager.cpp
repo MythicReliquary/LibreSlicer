@@ -23,9 +23,10 @@
 #include <devpkey.h>
 #include <usbioctl.h>
 
-#include <atlbase.h>
-#include <atlcom.h>
+#include <wrl/client.h>
 #include <shldisp.h>
+
+using Microsoft::WRL::ComPtr;
 #else
 // unix, linux & OSX includes
 #include <errno.h>
@@ -601,14 +602,14 @@ bool eject_inner(const std::string& path)
 {
 	std::wstring wpath = boost::nowide::widen(path);
 	CoInitialize(nullptr);
-	CComPtr<IShellDispatch> pShellDisp;
-	HRESULT hr = pShellDisp.CoCreateInstance(CLSID_Shell, nullptr, CLSCTX_INPROC_SERVER);
+	ComPtr<IShellDispatch> pShellDisp;
+	HRESULT hr = ::CoCreateInstance(CLSID_Shell, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(pShellDisp.GetAddressOf()));
 	if (!SUCCEEDED(hr)) {
 		BOOST_LOG_TRIVIAL(error) << GUI::format("Ejecting of %1% has failed: Attempt to get Shell pointer has failed.", path);
 		CoUninitialize();
 		return false;
 	}
-	CComPtr<Folder> pFolder;
+	ComPtr<Folder> pFolder;
 	VARIANT vtDrives;
 	VariantInit(&vtDrives);
 	vtDrives.vt = VT_I4;
@@ -619,7 +620,7 @@ bool eject_inner(const std::string& path)
 		CoUninitialize();
 		return false;
 	}
-	CComPtr<FolderItem> pItem;
+	ComPtr<FolderItem> pItem;
 	hr = pFolder->ParseName(static_cast<BSTR>(const_cast<wchar_t*>(wpath.c_str())), &pItem);
 	if (!SUCCEEDED(hr)) {
 		BOOST_LOG_TRIVIAL(error) << GUI::format("Ejecting of %1% has failed: Attempt to Parse name has failed.", path);

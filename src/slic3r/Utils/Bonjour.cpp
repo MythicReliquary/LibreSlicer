@@ -11,6 +11,7 @@
 #include <string>
 #include <map>
 #include <thread>
+#include <chrono>
 #include <boost/endian/conversion.hpp>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
 #include <boost/format.hpp>
@@ -712,9 +713,9 @@ void UdpSocket::async_receive()
 void UdpSocket::receive_handler(SharedSession session, const boost::system::error_code& error, size_t bytes)
 {
 	// let io_context handle the datagram on session
-	// from boost documentation io_context::post:
+	// from boost documentation boost::asio::post:
 	// The io_context guarantees that the handler will only be called in a thread in which the run(), run_one(), poll() or poll_one() member functions is currently being invoked.
-	io_context->post(boost::bind(&UdpSession::handle_receive, session, error, bytes));
+	boost::asio::post(*io_context, boost::bind(&UdpSession::handle_receive, session, error, bytes));
 	// immediately accept new datagrams
 	async_receive();
 }
@@ -871,13 +872,13 @@ void Bonjour::priv::lookup_perform()
 {
 	service_dn = (boost::format("_%1%._%2%.local") % service % protocol).str();
 
-	auto io_service = std::make_shared<asio::io_context>();
+	auto io_ctx = std::make_shared<asio::io_context>();
 
 	std::vector<LookupSocket*> sockets;
 
 	// resolve intefaces - from PR#6646
 	std::vector<boost::asio::ip::address> interfaces;
-	asio::ip::udp::resolver resolver(*io_service);
+	asio::ip::udp::resolver resolver(*io_ctx);
 	boost::system::error_code ec;
 	// ipv4 interfaces
 	auto results = resolver.resolve(udp::v4(), asio::ip::host_name(), "", ec);
@@ -890,12 +891,12 @@ void Bonjour::priv::lookup_perform()
 		// create ipv4 socket for each interface
 		// each will send to querry to for both ipv4 and ipv6
 		for (const auto& intrfc : interfaces) 		
-			sockets.emplace_back(new LookupSocket(txt_keys, service, service_dn, protocol, replyfn, BonjourRequest::MCAST_IP4, intrfc, io_service));
+			sockets.emplace_back(new LookupSocket(txt_keys, service, service_dn, protocol, replyfn, BonjourRequest::MCAST_IP4, intrfc, io_ctx));
 	} else {
 		BOOST_LOG_TRIVIAL(info) << "Failed to resolve ipv4 interfaces: " << ec.message();
 	}
 	if (sockets.empty())
-		sockets.emplace_back(new LookupSocket(txt_keys, service, service_dn, protocol, replyfn, BonjourRequest::MCAST_IP4, io_service));
+		sockets.emplace_back(new LookupSocket(txt_keys, service, service_dn, protocol, replyfn, BonjourRequest::MCAST_IP4, io_ctx));
 	// ipv6 interfaces
 	interfaces.clear();
 	//udp::resolver::query query(host, PORT, boost::asio::ip::resolver_query_base::numeric_service);
@@ -910,9 +911,9 @@ void Bonjour::priv::lookup_perform()
 		// create ipv6 socket for each interface
 		// each will send to querry to for both ipv4 and ipv6
 		for (const auto& intrfc : interfaces)
-			sockets.emplace_back(new LookupSocket(txt_keys, service, service_dn, protocol, replyfn, BonjourRequest::MCAST_IP6, intrfc, io_service));
+			sockets.emplace_back(new LookupSocket(txt_keys, service, service_dn, protocol, replyfn, BonjourRequest::MCAST_IP6, intrfc, io_ctx));
 		if (interfaces.empty())
-			sockets.emplace_back(new LookupSocket(txt_keys, service, service_dn, protocol, replyfn, BonjourRequest::MCAST_IP6, io_service));
+			sockets.emplace_back(new LookupSocket(txt_keys, service, service_dn, protocol, replyfn, BonjourRequest::MCAST_IP6, io_ctx));
 	} else {
 		BOOST_LOG_TRIVIAL(info)<< "Failed to resolve ipv6 interfaces: " << ec.message();
 	}
@@ -923,20 +924,20 @@ void Bonjour::priv::lookup_perform()
 			socket->send();
 
 		// timer settings
-		asio::deadline_timer timer(*io_service);
+		asio::steady_timer timer(*io_ctx);
 		retries--;
 		std::function<void(const error_code&)> timer_handler = [&](const error_code& error) {
 			// end 
 			if (retries == 0 || error) {
 				// is this correct ending?
-				io_service->stop();
+				io_ctx->stop();
 				if (completefn) {
 					completefn();
 				}
 			// restart timer
 			} else {
 				retries--;
-				timer.expires_from_now(boost::posix_time::seconds(timeout));
+				timer.expires_after(std::chrono::seconds(timeout));
 				timer.async_wait(timer_handler);
 				// trigger another round of queries
 				for (auto * socket : sockets)
@@ -944,10 +945,10 @@ void Bonjour::priv::lookup_perform()
 			}
 		};
 		// start timer
-		timer.expires_from_now(boost::posix_time::seconds(timeout));
+		timer.expires_after(std::chrono::seconds(timeout));
 		timer.async_wait(timer_handler);
-		// start io_service, it will run until it has something to do - so in this case until stop is called in timer
-		io_service->run();
+		// start io_context, it will run until it has something to do - so in this case until stop is called in timer
+		io_ctx->run();
 	}
 	catch (std::exception& e) {
 		BOOST_LOG_TRIVIAL(error) << e.what();
@@ -956,7 +957,7 @@ void Bonjour::priv::lookup_perform()
 
 void Bonjour::priv::resolve_perform()
 {
-	// reply callback is shared to every UDPSession which is called on same thread as io_service->run();
+	// reply callback is shared to every UDPSession which is called on same thread as io_context->run();
 	// thus no need to mutex replies in reply_callback, same should go with the timer
 	std::vector<BonjourReply> replies;
 	// examples would store [self] to the lambda (and the timer one), is it ok not to do it? (Should be c++03)
@@ -966,12 +967,12 @@ void Bonjour::priv::resolve_perform()
 			rpls.push_back(reply);
 	};
 
-	auto io_service = std::make_shared<asio::io_context>();
+	auto io_ctx = std::make_shared<asio::io_context>();
 	std::vector<ResolveSocket*> sockets;
 
 	// resolve interfaces - from PR#6646
 	std::vector<boost::asio::ip::address> interfaces;
-	asio::ip::udp::resolver resolver(*io_service);
+	asio::ip::udp::resolver resolver(*io_ctx);
 	boost::system::error_code ec;
 	// ipv4 interfaces
 	auto results = resolver.resolve(udp::v4(), asio::ip::host_name(), "", ec);
@@ -984,12 +985,12 @@ void Bonjour::priv::resolve_perform()
 		// create ipv4 socket for each interface
 		// each will send to querry to for both ipv4 and ipv6
 		for (const auto& intrfc : interfaces)
-			sockets.emplace_back(new ResolveSocket(hostname, reply_callback, BonjourRequest::MCAST_IP4, intrfc, io_service));
+			sockets.emplace_back(new ResolveSocket(hostname, reply_callback, BonjourRequest::MCAST_IP4, intrfc, io_ctx));
 	} else {
 		BOOST_LOG_TRIVIAL(info) << "Failed to resolve ipv4 interfaces: " << ec.message();
 	}
 	if (sockets.empty())
-		sockets.emplace_back(new ResolveSocket(hostname, reply_callback, BonjourRequest::MCAST_IP4, io_service));
+		sockets.emplace_back(new ResolveSocket(hostname, reply_callback, BonjourRequest::MCAST_IP4, io_ctx));
 
 	// ipv6 interfaces
 	interfaces.clear();
@@ -1003,9 +1004,9 @@ void Bonjour::priv::resolve_perform()
 		// create ipv6 socket for each interface
 		// each will send to querry to for both ipv4 and ipv6
 		for (const auto& intrfc : interfaces) 
-			sockets.emplace_back(new ResolveSocket(hostname, reply_callback, BonjourRequest::MCAST_IP6, intrfc, io_service));
+			sockets.emplace_back(new ResolveSocket(hostname, reply_callback, BonjourRequest::MCAST_IP6, intrfc, io_ctx));
 		if (interfaces.empty())
-			sockets.emplace_back(new ResolveSocket(hostname, reply_callback, BonjourRequest::MCAST_IP6, io_service));
+			sockets.emplace_back(new ResolveSocket(hostname, reply_callback, BonjourRequest::MCAST_IP6, io_ctx));
 	} else {
 		BOOST_LOG_TRIVIAL(info) << "Failed to resolve ipv6 interfaces: " << ec.message();
 	}
@@ -1016,21 +1017,21 @@ void Bonjour::priv::resolve_perform()
 			socket->send();
 
 		// timer settings
-		asio::deadline_timer timer(*io_service);
+		asio::steady_timer timer(*io_ctx);
 		retries--;
 		std::function<void(const error_code&)> timer_handler = [&](const error_code& error) {
 			int replies_count = replies.size();
 			// end 
 			if (retries == 0 || error || replies_count > 0) {
 				// is this correct ending?
-				io_service->stop();
+				io_ctx->stop();
 				if (replies_count > 0 && resolvefn) {
 					resolvefn(replies);
 				}
 			// restart timer
 			} else {
 				retries--;
-				timer.expires_from_now(boost::posix_time::seconds(timeout));
+				timer.expires_after(std::chrono::seconds(timeout));
 				timer.async_wait(timer_handler);
 				// trigger another round of queries
 				for (auto * socket : sockets)
@@ -1038,10 +1039,10 @@ void Bonjour::priv::resolve_perform()
 			}
 		};
 		// start timer
-		timer.expires_from_now(boost::posix_time::seconds(timeout));
+		timer.expires_after(std::chrono::seconds(timeout));
 		timer.async_wait(timer_handler);
-		// start io_service, it will run until it has something to do - so in this case until stop is called in timer
-		io_service->run();
+		// start io_context, it will run until it has something to do - so in this case until stop is called in timer
+		io_ctx->run();
 	}
 	catch (std::exception& e) {
 		BOOST_LOG_TRIVIAL(error) << e.what();

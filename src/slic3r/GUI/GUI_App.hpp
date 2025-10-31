@@ -112,7 +112,13 @@ static wxString dots("…", wxConvUTF8);
 // Does our wxWidgets version support markup?
 // https://github.com/prusa3d/PrusaSlicer/issues/4282#issuecomment-634676371
 #if wxUSE_MARKUP && wxCHECK_VERSION(3, 1, 1)
-    #define SUPPORTS_MARKUP
+    #if defined(__has_include)
+        #if __has_include(<wx/generic/private/markuptext.h>) || __has_include(<wx/private/markuptext.h>)
+            #define SUPPORTS_MARKUP
+        #endif
+    #else
+        #define SUPPORTS_MARKUP
+    #endif
 #endif
 
 class GUI_App : public wxApp

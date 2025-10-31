@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(nowide)
 
-add_library(nowide STATIC
+add_library(nowide SHARED
     nowide/args.hpp
     nowide/cenv.hpp
     nowide/config.hpp
@@ -20,5 +20,6 @@ add_library(nowide STATIC
 )
 
 target_link_libraries(nowide PUBLIC boost_headeronly)
+target_compile_definitions(nowide PRIVATE BOOST_NOWIDE_SOURCE)
 
 

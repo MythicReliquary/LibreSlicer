@@ -393,7 +393,7 @@ if(WIN32)
     add_definitions(-D_USE_MATH_DEFINES -D_WIN32 -D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
     if(MSVC)
         # BOOST_ALL_NO_LIB: Avoid the automatic linking of Boost libraries on Windows. Rather rely on explicit linking.
-        add_definitions(-DBOOST_ALL_NO_LIB -DBOOST_USE_WINAPI_VERSION=0x601 -DBOOST_SYSTEM_USE_UTF8 )
+add_definitions(-DBOOST_ALL_NO_LIB -DBOOST_USE_WINAPI_VERSION=0x0A00 -DBOOST_SYSTEM_USE_UTF8 -DBOOST_NOWIDE_STATIC_LINK )
         # Force the source code encoding to UTF-8. See PrusaSlicer GH pull request #5583
         add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
         add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
@@ -423,15 +423,7 @@ find_package(Boost ${MINIMUM_BOOST_VERSION} REQUIRED COMPONENTS ${_boost_compone
 add_library(boost_libs INTERFACE)
 add_library(boost_headeronly INTERFACE)
 target_compile_definitions(boost_headeronly INTERFACE BOOST_USE_WINAPI_VERSION=0x0A00)
-target_compile_definitions(boost_libs INTERFACE BOOST_USE_WINAPI_VERSION=0x0A00)
-target_compile_options(boost_libs INTERFACE
-    $<$<CXX_COMPILER_ID:MSVC>:/UBOOST_USE_WINAPI_VERSION>
-    $<$<CXX_COMPILER_ID:MSVC>:/DBOOST_USE_WINAPI_VERSION=0x0A00>
-)
-target_compile_options(boost_headeronly INTERFACE
-    $<$<CXX_COMPILER_ID:MSVC>:/UBOOST_USE_WINAPI_VERSION>
-    $<$<CXX_COMPILER_ID:MSVC>:/DBOOST_USE_WINAPI_VERSION=0x0A00>
-)
+target_compile_definitions(boost_libs INTERFACE BOOST_USE_WINAPI_VERSION=0x0A00 BOOST_NOWIDE_STATIC_LINK)
 
 if (APPLE)
     # BOOST_ASIO_DISABLE_KQUEUE : prevents a Boost ASIO bug on OS X: https://svn.boost.org/trac/boost/ticket/5339
@@ -768,6 +760,13 @@ function(prusaslicer_copy_dlls target)
         COMMAND ${CMAKE_COMMAND} -E copy ${TOP_LEVEL_PROJECT_DIR}/deps/+MPFR/mpfr/lib/win${_bits}/libmpfr-4.dll ${_out_dir}
         COMMENT "Copy mpfr runtime to build tree"
         VERBATIM)
+
+    if(TARGET nowide)
+        add_custom_command(TARGET ${target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:nowide>" ${_out_dir}
+            COMMENT "Copy nowide runtime to build tree"
+            VERBATIM)
+    endif()
 
 endfunction()
 

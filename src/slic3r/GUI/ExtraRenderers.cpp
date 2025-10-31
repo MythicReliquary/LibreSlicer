@@ -12,9 +12,17 @@
 
 #include <wx/dc.h>
 #ifdef wxHAS_GENERIC_DATAVIEWCTRL
-#include "wx/generic/private/markuptext.h"
-#include "wx/generic/private/rowheightcache.h"
-#include "wx/generic/private/widthcalc.h"
+    #ifdef SUPPORTS_MARKUP
+        #if defined(__has_include)
+            #if __has_include(<wx/generic/private/markuptext.h>)
+                #include <wx/generic/private/markuptext.h>
+            #elif __has_include(<wx/private/markuptext.h>)
+                #include <wx/private/markuptext.h>
+            #endif
+        #else
+            #include <wx/generic/private/markuptext.h>
+        #endif
+    #endif
 #endif
 /*
 #ifdef __WXGTK__
@@ -22,8 +30,14 @@
 #include "wx/gtk/private/value.h"
 #endif
 */
-#if wxUSE_ACCESSIBILITY
-#include "wx/private/markupparser.h"
+#if wxUSE_ACCESSIBILITY && defined(SUPPORTS_MARKUP)
+    #if defined(__has_include)
+        #if __has_include(<wx/private/markupparser.h>)
+            #include <wx/private/markupparser.h>
+        #endif
+    #else
+        #include <wx/private/markupparser.h>
+    #endif
 #endif // wxUSE_ACCESSIBILITY
 
 using Slic3r::GUI::from_u8;
@@ -411,5 +425,3 @@ wxSize TextRenderer::GetSize() const
 {
     return GetTextExtent(m_value);
 }
-
-

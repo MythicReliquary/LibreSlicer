@@ -9,8 +9,14 @@
 
 #include <wx/dataview.h>
 
-#if wxUSE_MARKUP && wxCHECK_VERSION(3, 1, 1)
-    #define SUPPORTS_MARKUP
+#if !defined(SUPPORTS_MARKUP) && wxUSE_MARKUP && wxCHECK_VERSION(3, 1, 1)
+    #if defined(__has_include)
+        #if __has_include(<wx/generic/private/markuptext.h>) || __has_include(<wx/private/markuptext.h>)
+            #define SUPPORTS_MARKUP
+        #endif
+    #else
+        #define SUPPORTS_MARKUP
+    #endif
 #endif
 
 // ----------------------------------------------------------------------------

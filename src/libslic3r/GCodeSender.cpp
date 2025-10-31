@@ -108,12 +108,12 @@ GCodeSender::connect(std::string devname, unsigned int baud_rate)
     fs.open("serial.txt", std::fstream::out | std::fstream::trunc);
 #endif
     
-    // this gives some work to the io_service before it is started
+    // this gives some work to the io_context before it is started
     // (post() runs the supplied function in its thread)
     this->io.post(boost::bind(&GCodeSender::do_read, this));
-    
+
     // start reading in the background thread
-    boost::thread t(boost::bind(&boost::asio::io_service::run, &this->io));
+    boost::thread t(boost::bind(&asio::io_context::run, &this->io));
     this->background_thread.swap(t);
     
     // always send a M105 to check for connection because firmware might be silent on connect

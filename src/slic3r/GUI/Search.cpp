@@ -243,8 +243,9 @@ bool OptionsSearcher::search(const std::string& search, bool force/* = false*/)
 
     auto get_tooltip = [this, &sep](const Option& opt)
     {
+        const wchar_t marker = static_cast<wchar_t>(marker_by_type(opt.type, printer_technology));
         const std::wstring tooltip =
-            marker_by_type(opt.type, printer_technology) +
+            std::wstring(1, marker) +
             opt.category_local + sep +
             opt.group_local + sep + opt.label_local;
         return into_u8(tooltip);

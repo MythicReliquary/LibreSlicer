@@ -583,7 +583,7 @@ int CLI::run(int argc, char **argv)
                 // is supplied); if any object has no instances, it will get a default one
                 // and all instances will be rearranged (unless --dont-arrange is supplied).
                 std::string outfile = m_config.opt_string("output");
-                std::string png_export_dir = sla_export_dir;
+                std::string png_export_dir = m_config.opt_string("sla_export");
                 bool        exported_png_stack = false;
                 Print       fff_print;
                 SLAPrint    sla_print;
