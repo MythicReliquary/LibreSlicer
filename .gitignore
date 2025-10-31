@@ -40,3 +40,20 @@ CMakeUserPresets.json
 /*.msi
 /*.pdb
 /*.dll
+# --- build outputs (never commit) ---
+/build-*/
+/build*/
+/out/
+/bin/
+/obj/
+/x64/
+/dist/
+/CMakeFiles/
+/CMakeCache.txt
+/.cmake/
+/.vs/
+*.dll
+*.pdb
+*.zip
+*.msi
+*.exe
