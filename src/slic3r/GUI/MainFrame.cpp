@@ -38,6 +38,8 @@
 #include "3DScene.hpp"
 #include "PrintHostDialogs.hpp"
 #include "wxExtensions.hpp"
+#include "Accelerators.hpp"
+#include "GuiUtils.hpp"
 #include "GUI_ObjectList.hpp"
 #include "Mouse3DController.hpp"
 #include "RemovableDriveManager.hpp"
@@ -182,19 +184,6 @@ DPIFrame(NULL, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_S
         init_menubar_as_gcodeviewer();
     else
         init_menubar_as_editor();
-
-#if _WIN32
-    // This is needed on Windows to fake the CTRL+# of the window menu when using the numpad
-    wxAcceleratorEntry entries[6];
-    entries[0].Set(wxACCEL_CTRL, WXK_NUMPAD1, wxID_HIGHEST + 1);
-    entries[1].Set(wxACCEL_CTRL, WXK_NUMPAD2, wxID_HIGHEST + 2);
-    entries[2].Set(wxACCEL_CTRL, WXK_NUMPAD3, wxID_HIGHEST + 3);
-    entries[3].Set(wxACCEL_CTRL, WXK_NUMPAD4, wxID_HIGHEST + 4);
-    entries[4].Set(wxACCEL_CTRL, WXK_NUMPAD5, wxID_HIGHEST + 5);
-    entries[5].Set(wxACCEL_CTRL, WXK_NUMPAD6, wxID_HIGHEST + 6);
-    wxAcceleratorTable accel(6, entries);
-    SetAcceleratorTable(accel);
-#endif // _WIN32
 
     // set default tooltip timer in msec
     // SetAutoPop supposedly accepts long integers but some bug doesn't allow for larger values
@@ -1144,16 +1133,6 @@ void MainFrame::update_mode_markers()
         tab->update_mode_markers();
 }
 
-#ifdef _MSC_VER
-    // \xA0 is a non-breaking space. It is entered here to spoil the automatic accelerators,
-    // as the simple numeric accelerators spoil all numeric data entry.
-static const wxString sep = "\t\xA0";
-static const wxString sep_space = "\xA0";
-#else
-static const wxString sep = " - ";
-static const wxString sep_space = "";
-#endif
-
 static void append_about_menu_item(wxMenu* target_menu, int insert_pos = wxNOT_FOUND)
 {
     if (wxGetApp().is_editor())
@@ -1215,14 +1194,10 @@ static wxMenu* generate_help_menu()
 #ifndef __APPLE__
     append_about_menu_item(helpMenu);
 #endif // __APPLE__
-    append_menu_item(helpMenu, wxID_ANY, _L("Show Tip of the Day")
-#if 0//debug
-        + "\tCtrl+Shift+T"
-#endif
-        ,_L("Opens Tip of the day notification in bottom right corner or shows another tip if already opened."),
+    append_menu_item(helpMenu, wxID_ANY, _L("Show Tip of the Day"), _L("Opens Tip of the day notification in bottom right corner or shows another tip if already opened."),
         [](wxCommandEvent&) { wxGetApp().plater()->get_notification_manager()->push_hint_notification(false); });
     helpMenu->AppendSeparator();
-    append_menu_item(helpMenu, wxID_ANY, _L("Keyboard Shortcuts") + sep + "&?", _L("Show the list of the keyboard shortcuts"),
+    append_menu_item(helpMenu, wxID_ANY, _L("Keyboard Shortcuts"), _L("Show the list of the keyboard shortcuts"),
         [](wxCommandEvent&) { wxGetApp().keyboard_shortcuts(); });
 #if ENABLE_THUMBNAIL_GENERATOR_DEBUG
     helpMenu->AppendSeparator();
@@ -1235,24 +1210,24 @@ static wxMenu* generate_help_menu()
 
 static void add_common_view_menu_items(wxMenu* view_menu, MainFrame* mainFrame, std::function<bool(void)> can_change_view)
 {
-    // The camera control accelerators are captured by GLCanvas3D::on_char().
-    append_menu_item(view_menu, wxID_ANY, _L("Iso") + sep + "&0", _L("Iso View"), [mainFrame](wxCommandEvent&) { mainFrame->select_view("iso"); },
-        "", nullptr, [can_change_view]() { return can_change_view(); }, mainFrame);
+    auto append_view_item = [&](const wxString& label, const wxString& tooltip, const std::string& direction, int number) {
+        wxMenuItem* item = append_menu_item(
+            view_menu, wxID_ANY, label, tooltip,
+            [mainFrame, direction](wxCommandEvent&) { mainFrame->select_view(direction); },
+            "", nullptr, [can_change_view]() { return can_change_view(); }, mainFrame);
+        if (number >= 0)
+            AddGlobalAccelerator(wxACCEL_ALT, '0' + number, item->GetId());
+    };
+
+    append_view_item(_L("Iso"), _L("Iso View"), "iso", 0);
     view_menu->AppendSeparator();
-    //TRN Main menu: View->Top 
-    append_menu_item(view_menu, wxID_ANY, _L("Top") + sep + "&1", _L("Top View"), [mainFrame](wxCommandEvent&) { mainFrame->select_view("top"); },
-        "", nullptr, [can_change_view]() { return can_change_view(); }, mainFrame);
-    //TRN Main menu: View->Bottom 
-    append_menu_item(view_menu, wxID_ANY, _L("Bottom") + sep + "&2", _L("Bottom View"), [mainFrame](wxCommandEvent&) { mainFrame->select_view("bottom"); },
-        "", nullptr, [can_change_view]() { return can_change_view(); }, mainFrame);
-    append_menu_item(view_menu, wxID_ANY, _L("Front") + sep + "&3", _L("Front View"), [mainFrame](wxCommandEvent&) { mainFrame->select_view("front"); },
-        "", nullptr, [can_change_view]() { return can_change_view(); }, mainFrame);
-    append_menu_item(view_menu, wxID_ANY, _L("Rear") + sep + "&4", _L("Rear View"), [mainFrame](wxCommandEvent&) { mainFrame->select_view("rear"); },
-        "", nullptr, [can_change_view]() { return can_change_view(); }, mainFrame);
-    append_menu_item(view_menu, wxID_ANY, _L("Left") + sep + "&5", _L("Left View"), [mainFrame](wxCommandEvent&) { mainFrame->select_view("left"); },
-        "", nullptr, [can_change_view]() { return can_change_view(); }, mainFrame);
-    append_menu_item(view_menu, wxID_ANY, _L("Right") + sep + "&6", _L("Right View"), [mainFrame](wxCommandEvent&) { mainFrame->select_view("right"); },
-        "", nullptr, [can_change_view]() { return can_change_view(); }, mainFrame);
+
+    append_view_item(_L("Top"), _L("Top View"), "top", 1);
+    append_view_item(_L("Bottom"), _L("Bottom View"), "bottom", 2);
+    append_view_item(_L("Front"), _L("Front View"), "front", 3);
+    append_view_item(_L("Rear"), _L("Rear View"), "rear", 4);
+    append_view_item(_L("Left"), _L("Left View"), "left", 5);
+    append_view_item(_L("Right"), _L("Right View"), "right", 6);
 }
 
 void MainFrame::init_menubar_as_editor()
@@ -1261,15 +1236,20 @@ void MainFrame::init_menubar_as_editor()
     wxMenuBar::SetAutoWindowMenu(false);
 #endif
 
+    ResetGlobalAccelerators();
+
     // File menu
     wxMenu* fileMenu = new wxMenu;
     {
-        append_menu_item(fileMenu, wxID_ANY, _L("&New Project") + "\tCtrl+N", _L("Start a new project"),
+        wxMenuItem* item_new_project = append_menu_item(fileMenu, wxID_ANY, _L("&New Project"), _L("Start a new project"),
             [this](wxCommandEvent&) { if (m_plater) m_plater->new_project(); }, "", nullptr,
-            [this](){return m_plater != nullptr && can_start_new_project(); }, this);
-        append_menu_item(fileMenu, wxID_ANY, _L("&Open Project") + dots + "\tCtrl+O", _L("Open a project file"),
+            [this]() { return m_plater != nullptr && can_start_new_project(); }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, 'N', item_new_project->GetId());
+
+        wxMenuItem* item_open_project = append_menu_item(fileMenu, wxID_ANY, _L("&Open Project") + dots, _L("Open a project file"),
             [this](wxCommandEvent&) { if (m_plater) m_plater->load_project(); }, "open", nullptr,
-            [this](){return m_plater != nullptr; }, this);
+            [this]() { return m_plater != nullptr; }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, 'O', item_open_project->GetId());
 
         wxMenu* recent_projects_menu = new wxMenu();
         wxMenuItem* recent_projects_submenu = append_submenu(fileMenu, recent_projects_menu, wxID_ANY, _L("Recent projects"), "");
@@ -1308,23 +1288,30 @@ void MainFrame::init_menubar_as_editor()
 
         Bind(wxEVT_UPDATE_UI, [this](wxUpdateUIEvent& evt) { evt.Enable(m_recent_projects.GetCount() > 0); }, recent_projects_submenu->GetId());
 
-        append_menu_item(fileMenu, wxID_ANY, _L("&Save Project") + "\tCtrl+S", _L("Save current project file"),
+        wxMenuItem* item_save_project = append_menu_item(fileMenu, wxID_ANY, _L("&Save Project"), _L("Save current project file"),
             [this](wxCommandEvent&) { save_project(); }, "save", nullptr,
-            [this](){return m_plater != nullptr && can_save(); }, this);
+            [this]() { return m_plater != nullptr && can_save(); }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, 'S', item_save_project->GetId());
 #ifdef __APPLE__
-        append_menu_item(fileMenu, wxID_ANY, _L("Save Project &as") + dots + "\tCtrl+Shift+S", _L("Save current project file as"),
+        wxMenuItem* item_save_project_as = append_menu_item(fileMenu, wxID_ANY, _L("Save Project &as") + dots, _L("Save current project file as"),
 #else
-        append_menu_item(fileMenu, wxID_ANY, _L("Save Project &as") + dots + "\tCtrl+Alt+S", _L("Save current project file as"),
+        wxMenuItem* item_save_project_as = append_menu_item(fileMenu, wxID_ANY, _L("Save Project &as") + dots, _L("Save current project file as"),
 #endif // __APPLE__
             [this](wxCommandEvent&) { save_project_as(); }, "save", nullptr,
-            [this](){return m_plater != nullptr && can_save_as(); }, this);
+            [this]() { return m_plater != nullptr && can_save_as(); }, this);
+#ifdef __APPLE__
+        AddGlobalAccelerator(wxACCEL_CMD | wxACCEL_SHIFT, 'S', item_save_project_as->GetId());
+#else
+        AddGlobalAccelerator(wxACCEL_CMD | wxACCEL_ALT, 'S', item_save_project_as->GetId());
+#endif
 
         fileMenu->AppendSeparator();
 
         wxMenu* import_menu = new wxMenu();
-        append_menu_item(import_menu, wxID_ANY, _L("Import STL/3MF/STEP/OBJ/AM&F") + dots + "\tCtrl+I", _L("Load a model"),
+        wxMenuItem* item_import_model = append_menu_item(import_menu, wxID_ANY, _L("Import STL/3MF/STEP/OBJ/AM&F") + dots, _L("Load a model"),
             [this](wxCommandEvent&) { if (m_plater) m_plater->add_model(); }, "import_plater", nullptr,
             [this](){return m_plater != nullptr; }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, 'I', item_import_model->GetId());
         
         append_menu_item(import_menu, wxID_ANY, _L("Import STL (Imperial Units)"), _L("Load an model saved with imperial units"),
             [this](wxCommandEvent&) { if (m_plater) m_plater->add_model(true); }, "import_plater", nullptr,
@@ -1339,12 +1326,14 @@ void MainFrame::init_menubar_as_editor()
             [this]() {return m_plater != nullptr; }, this);
 
         import_menu->AppendSeparator();
-        append_menu_item(import_menu, wxID_ANY, _L("Import &Config") + dots + "\tCtrl+L", _L("Load exported configuration file"),
+        wxMenuItem* item_import_config = append_menu_item(import_menu, wxID_ANY, _L("Import &Config") + dots, _L("Load exported configuration file"),
             [this](wxCommandEvent&) { load_config_file(); }, "import_config", nullptr,
             []() {return true; }, this);
-        append_menu_item(import_menu, wxID_ANY, _L("Import Config from &Project") + dots +"\tCtrl+Alt+L", _L("Load configuration from project file"),
+        AddGlobalAccelerator(wxACCEL_CMD, 'L', item_import_config->GetId());
+        wxMenuItem* item_import_config_project = append_menu_item(import_menu, wxID_ANY, _L("Import Config from &Project") + dots, _L("Load configuration from project file"),
             [this](wxCommandEvent&) { if (m_plater) m_plater->extract_config_from_project(); }, "import_config", nullptr,
             []() {return true; }, this);
+        AddGlobalAccelerator(wxACCEL_CMD | wxACCEL_ALT, 'L', item_import_config_project->GetId());
         import_menu->AppendSeparator();
         append_menu_item(import_menu, wxID_ANY, _L("Import Config &Bundle") + dots, _L("Load presets from a bundle"),
             [this](wxCommandEvent&) { load_configbundle(); }, "import_config_bundle", nullptr,
@@ -1352,17 +1341,20 @@ void MainFrame::init_menubar_as_editor()
         append_submenu(fileMenu, import_menu, wxID_ANY, _L("&Import"), "");
 
         wxMenu* export_menu = new wxMenu();
-        wxMenuItem* item_export_gcode = append_menu_item(export_menu, wxID_ANY, _L("Export &G-code") + dots + "\tCtrl+G", _L("Export current plate as G-code"),
+        wxMenuItem* item_export_gcode = append_menu_item(export_menu, wxID_ANY, _L("Export &G-code") + dots, _L("Export current plate as G-code"),
             [this](wxCommandEvent&) { if (m_plater) m_plater->export_gcode(false); }, "export_gcode", nullptr,
             [this](){return can_export_gcode(); }, this);
         m_changeable_menu_items.push_back(item_export_gcode);
-        wxMenuItem* item_send_gcode = append_menu_item(export_menu, wxID_ANY, _L("S&end G-code") + dots + "\tCtrl+Shift+G", _L("Send to print current plate as G-code"),
+        AddGlobalAccelerator(wxACCEL_CMD, 'G', item_export_gcode->GetId());
+        wxMenuItem* item_send_gcode = append_menu_item(export_menu, wxID_ANY, _L("S&end G-code") + dots, _L("Send to print current plate as G-code"),
             [this](wxCommandEvent&) { if (m_plater) m_plater->send_gcode(); }, "export_gcode", nullptr,
             [this](){return can_send_gcode(); }, this);
         m_changeable_menu_items.push_back(item_send_gcode);
-		append_menu_item(export_menu, wxID_ANY, _L("Export G-code to SD Card / Flash Drive") + dots + "\tCtrl+U", _L("Export current plate as G-code to SD card / Flash drive"),
-			[this](wxCommandEvent&) { if (m_plater) m_plater->export_gcode(true); }, "export_to_sd", nullptr,
-			[this]() {return can_export_gcode_sd(); }, this);
+        AddGlobalAccelerator(wxACCEL_CMD | wxACCEL_SHIFT, 'G', item_send_gcode->GetId());
+        wxMenuItem* item_export_sd = append_menu_item(export_menu, wxID_ANY, _L("Export G-code to SD Card / Flash Drive") + dots, _L("Export current plate as G-code to SD card / Flash drive"),
+            [this](wxCommandEvent&) { if (m_plater) m_plater->export_gcode(true); }, "export_to_sd", nullptr,
+            [this]() {return can_export_gcode_sd(); }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, 'U', item_export_sd->GetId());
         export_menu->AppendSeparator();
         append_menu_item(export_menu, wxID_ANY, _L("Export Plate as &STL/OBJ") + dots, _L("Export current plate as STL/OBJ"),
             [this](wxCommandEvent&) { if (m_plater) m_plater->export_stl_obj(); }, "export_plater", nullptr,
@@ -1379,9 +1371,10 @@ void MainFrame::init_menubar_as_editor()
             [this](wxCommandEvent&) { if (m_plater) m_plater->export_toolpaths_to_obj(); }, "export_plater", nullptr,
             [this]() {return can_export_toolpaths(); }, this);
         export_menu->AppendSeparator();
-        append_menu_item(export_menu, wxID_ANY, _L("Export &Config") + dots +"\tCtrl+E", _L("Export current configuration to file"),
+        wxMenuItem* item_export_config = append_menu_item(export_menu, wxID_ANY, _L("Export &Config") + dots, _L("Export current configuration to file"),
             [this](wxCommandEvent&) { export_config(); }, "export_config", nullptr,
             []() {return true; }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, 'E', item_export_config->GetId());
         append_menu_item(export_menu, wxID_ANY, _L("Export Config &Bundle") + dots, _L("Export all presets to file"),
             [this](wxCommandEvent&) { export_configbundle(); }, "export_config_bundle", nullptr,
             []() {return true; }, this);
@@ -1399,15 +1392,17 @@ void MainFrame::init_menubar_as_editor()
             []() { return true; }, this);
         append_submenu(fileMenu, convert_menu, wxID_ANY, _L("&Convert"), "");
 
-		append_menu_item(fileMenu, wxID_ANY, _L("Ejec&t SD Card / Flash Drive") + dots + "\tCtrl+T", _L("Eject SD card / Flash drive after the G-code was exported to it."),
-			[this](wxCommandEvent&) { if (m_plater) m_plater->eject_drive(); }, "eject_sd", nullptr,
-			[this]() {return can_eject(); }, this);
+        wxMenuItem* item_eject = append_menu_item(fileMenu, wxID_ANY, _L("Ejec&t SD Card / Flash Drive") + dots, _L("Eject SD card / Flash drive after the G-code was exported to it."),
+            [this](wxCommandEvent&) { if (m_plater) m_plater->eject_drive(); }, "eject_sd", nullptr,
+            [this]() {return can_eject(); }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, 'T', item_eject->GetId());
 
         fileMenu->AppendSeparator();
 
-        m_menu_item_reslice_now = append_menu_item(fileMenu, wxID_ANY, _L("(Re)Slice No&w") + "\tCtrl+R", _L("Start new slicing process"),
+        m_menu_item_reslice_now = append_menu_item(fileMenu, wxID_ANY, _L("(Re)Slice No&w"), _L("Start new slicing process"),
             [this](wxCommandEvent&) { reslice_now(); }, "re_slice", nullptr,
             [this]() { return m_plater != nullptr && can_reslice(); }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, 'R', m_menu_item_reslice_now->GetId());
         fileMenu->AppendSeparator();
         append_menu_item(fileMenu, wxID_ANY, _L("&Repair STL file") + dots, _L("Automatically repair an STL file"),
             [this](wxCommandEvent&) { repair_stl(); }, "wrench", nullptr,
@@ -1429,87 +1424,99 @@ void MainFrame::init_menubar_as_editor()
     if (m_plater != nullptr)
     {
         editMenu = new wxMenu();
-    #ifdef __APPLE__
-        // Backspace sign
-        wxString hotkey_delete = "\u232b";
-    #else
-        wxString hotkey_delete = "Del";
-    #endif
-        append_menu_item(editMenu, wxID_ANY, _L("&Select All") + sep + GUI::shortkey_ctrl_prefix() + sep_space + "A",
+        wxMenuItem* item_select_all = append_menu_item(editMenu, wxID_ANY, _L("&Select All"),
             _L("Selects all objects"), [this](wxCommandEvent&) { m_plater->select_all(); },
             "", nullptr, [this](){return can_select(); }, this);
-        append_menu_item(editMenu, wxID_ANY, _L("D&eselect All") + sep + "Esc",
+        AddGlobalAccelerator(wxACCEL_CMD, 'A', item_select_all->GetId());
+        wxMenuItem* item_deselect_all = append_menu_item(editMenu, wxID_ANY, _L("D&eselect All"),
             _L("Deselects all objects"), [this](wxCommandEvent&) { m_plater->deselect_all(); },
             "", nullptr, [this](){return can_deselect(); }, this);
+        AddGlobalAccelerator(wxACCEL_NORMAL, WXK_ESCAPE, item_deselect_all->GetId());
         editMenu->AppendSeparator();
-        append_menu_item(editMenu, wxID_ANY, _L("&Delete Selected") + sep + hotkey_delete,
+        wxMenuItem* item_delete_selected = append_menu_item(editMenu, wxID_ANY, _L("&Delete Selected"),
             _L("Deletes the current selection"),[this](wxCommandEvent&) { m_plater->remove_selected(); },
             "remove_menu", nullptr, [this](){return can_delete(); }, this);
-        append_menu_item(editMenu, wxID_ANY, _L("Delete &All") + sep + GUI::shortkey_ctrl_prefix() + sep_space + hotkey_delete,
+        AddGlobalAccelerator(wxACCEL_NORMAL, WXK_DELETE, item_delete_selected->GetId());
+        AddGlobalAccelerator(wxACCEL_NORMAL, WXK_BACK, item_delete_selected->GetId());
+        wxMenuItem* item_delete_all = append_menu_item(editMenu, wxID_ANY, _L("Delete &All"),
             _L("Deletes all objects"), [this](wxCommandEvent&) { m_plater->reset_with_confirm(); },
             "delete_all_menu", nullptr, [this](){return can_delete_all(); }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, WXK_DELETE, item_delete_all->GetId());
 
         editMenu->AppendSeparator();
-        append_menu_item(editMenu, wxID_ANY, _L("&Undo") + sep + GUI::shortkey_ctrl_prefix() + sep_space + "Z",
+        wxMenuItem* item_undo = append_menu_item(editMenu, wxID_ANY, _L("&Undo"),
             _L("Undo"), [this](wxCommandEvent&) { m_plater->undo(); },
             "undo_menu", nullptr, [this](){return m_plater->can_undo(); }, this);
-        append_menu_item(editMenu, wxID_ANY, _L("&Redo") + sep + GUI::shortkey_ctrl_prefix() + sep_space + "Y",
+        AddGlobalAccelerator(wxACCEL_CMD, 'Z', item_undo->GetId());
+        wxMenuItem* item_redo = append_menu_item(editMenu, wxID_ANY, _L("&Redo"),
             _L("Redo"), [this](wxCommandEvent&) { m_plater->redo(); },
             "redo_menu", nullptr, [this](){return m_plater->can_redo(); }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, 'Y', item_redo->GetId());
 
         editMenu->AppendSeparator();
-        append_menu_item(editMenu, wxID_ANY, _L("&Copy") + sep + GUI::shortkey_ctrl_prefix() + sep_space + "C",
+        wxMenuItem* item_copy = append_menu_item(editMenu, wxID_ANY, _L("&Copy"),
             _L("Copy selection to clipboard"), [this](wxCommandEvent&) { m_plater->copy_selection_to_clipboard(); },
             "copy_menu", nullptr, [this](){return m_plater->can_copy_to_clipboard(); }, this);
-        append_menu_item(editMenu, wxID_ANY, _L("&Paste") + sep + GUI::shortkey_ctrl_prefix() + sep_space + "V",
+        AddGlobalAccelerator(wxACCEL_CMD, 'C', item_copy->GetId());
+        wxMenuItem* item_paste = append_menu_item(editMenu, wxID_ANY, _L("&Paste"),
             _L("Paste clipboard"), [this](wxCommandEvent&) { m_plater->paste_from_clipboard(); },
             "paste_menu", nullptr, [this](){return m_plater->can_paste_from_clipboard(); }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, 'V', item_paste->GetId());
         
         editMenu->AppendSeparator();
 #ifdef __APPLE__
-        append_menu_item(editMenu, wxID_ANY, _L("Re&load from Disk") + dots + "\tCtrl+Shift+R",
+        wxMenuItem* item_reload = append_menu_item(editMenu, wxID_ANY, _L("Re&load from Disk") + dots,
             _L("Reload the plater from disk"), [this](wxCommandEvent&) { m_plater->reload_all_from_disk(); },
             "", nullptr, [this]() {return !m_plater->model().objects.empty(); }, this);
+        AddGlobalAccelerator(wxACCEL_CMD | wxACCEL_SHIFT, 'R', item_reload->GetId());
 #else
-        append_menu_item(editMenu, wxID_ANY, _L("Re&load from Disk") + sep + "F5",
+        wxMenuItem* item_reload = append_menu_item(editMenu, wxID_ANY, _L("Re&load from Disk"),
             _L("Reload the plater from disk"), [this](wxCommandEvent&) { m_plater->reload_all_from_disk(); },
             "", nullptr, [this]() {return !m_plater->model().objects.empty(); }, this);
+        AddGlobalAccelerator(wxACCEL_NORMAL, WXK_F5, item_reload->GetId());
 #endif // __APPLE__
 
         editMenu->AppendSeparator();
-        append_menu_item(editMenu, wxID_ANY, _L("Searc&h") + "\tCtrl+F",
+        wxMenuItem* item_search = append_menu_item(editMenu, wxID_ANY, _L("Searc&h"),
             _L("Search in settings"), [this](wxCommandEvent&) { m_plater->search(m_plater->IsShown()); },
             "search", nullptr, []() {return true; }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, 'F', item_search->GetId());
     }
 
     // Window menu
     auto windowMenu = new wxMenu();
     {
         if (m_plater) {
-            append_menu_item(windowMenu, wxID_HIGHEST + 1, _L("&Plater Tab") + "\tCtrl+1", _L("Show the plater"),
+            append_menu_item(windowMenu, wxID_HIGHEST + 1, _L("&Plater Tab"), _L("Show the plater"),
                 [this](wxCommandEvent&) { select_tab(size_t(0)); }, "plater", nullptr,
                 []() {return true; }, this);
+            AddGlobalAccelerator(wxACCEL_CMD, '1', wxID_HIGHEST + 1);
             windowMenu->AppendSeparator();
         }
-        append_menu_item(windowMenu, wxID_HIGHEST + 2, _L("P&rint Settings Tab") + "\tCtrl+2", _L("Show the print settings"),
+        append_menu_item(windowMenu, wxID_HIGHEST + 2, _L("P&rint Settings Tab"), _L("Show the print settings"),
             [this/*, tab_offset*/](wxCommandEvent&) { select_tab(1); }, "cog", nullptr,
             []() {return true; }, this);
-        wxMenuItem* item_material_tab = append_menu_item(windowMenu, wxID_HIGHEST + 3, _L("&Filament Settings Tab") + "\tCtrl+3", _L("Show the filament settings"),
+        AddGlobalAccelerator(wxACCEL_CMD, '2', wxID_HIGHEST + 2);
+        wxMenuItem* item_material_tab = append_menu_item(windowMenu, wxID_HIGHEST + 3, _L("&Filament Settings Tab"), _L("Show the filament settings"),
             [this/*, tab_offset*/](wxCommandEvent&) { select_tab(2); }, "spool", nullptr,
             []() {return true; }, this);
         m_changeable_menu_items.push_back(item_material_tab);
-        wxMenuItem* item_printer_tab = append_menu_item(windowMenu, wxID_HIGHEST + 4, _L("Print&er Settings Tab") + "\tCtrl+4", _L("Show the printer settings"),
+        AddGlobalAccelerator(wxACCEL_CMD, '3', item_material_tab->GetId());
+        wxMenuItem* item_printer_tab = append_menu_item(windowMenu, wxID_HIGHEST + 4, _L("Print&er Settings Tab"), _L("Show the printer settings"),
             [this/*, tab_offset*/](wxCommandEvent&) { select_tab(3); }, "printer", nullptr,
             []() {return true; }, this);
         m_changeable_menu_items.push_back(item_printer_tab);
+        AddGlobalAccelerator(wxACCEL_CMD, '4', item_printer_tab->GetId());
         if (m_plater) {
             windowMenu->AppendSeparator();
-            append_menu_item(windowMenu, wxID_HIGHEST + 5, _L("3&D") + "\tCtrl+5", _L("Show the 3D editing view"),
+            append_menu_item(windowMenu, wxID_HIGHEST + 5, _L("3&D"), _L("Show the 3D editing view"),
                 [this](wxCommandEvent&) { m_plater->select_view_3D("3D"); }, "editor_menu", nullptr,
                 [this](){return can_change_view(); }, this);
-            append_menu_item(windowMenu, wxID_HIGHEST + 6, _L("Pre&view") + "\tCtrl+6", _L("Show the 3D slices preview"),
+            AddGlobalAccelerator(wxACCEL_CMD, '5', wxID_HIGHEST + 5);
+            append_menu_item(windowMenu, wxID_HIGHEST + 6, _L("Pre&view"), _L("Show the 3D slices preview"),
                 [this](wxCommandEvent&) { m_plater->select_view_3D("Preview"); }, "preview_menu", nullptr,
                 [this](){return can_change_view(); }, this);
+            AddGlobalAccelerator(wxACCEL_CMD, '6', wxID_HIGHEST + 6);
         }
 
         windowMenu->AppendSeparator();
@@ -1524,15 +1531,17 @@ void MainFrame::init_menubar_as_editor()
             }, "shape_gallery", nullptr, []() {return true; }, this);
         
         windowMenu->AppendSeparator();
-        append_menu_item(windowMenu, wxID_ANY, _L("Print &Host Upload Queue") + "\tCtrl+J", _L("Display the Print Host Upload Queue window"),
+        wxMenuItem* item_host_queue = append_menu_item(windowMenu, wxID_ANY, _L("Print &Host Upload Queue"), _L("Display the Print Host Upload Queue window"),
             [this](wxCommandEvent&) { m_printhost_queue_dlg->Show(); }, "upload_queue", nullptr, []() {return true; }, this);
-        
-        windowMenu->AppendSeparator();
-        append_menu_item(windowMenu, wxID_ANY, _L("Open New Instance") + "\tCtrl+Shift+I", _L("Open a new PrusaSlicer instance"),
-            [](wxCommandEvent&) { start_new_slicer(); }, "", nullptr, [this]() {return m_plater != nullptr && !wxGetApp().app_config->get_bool("single_instance"); }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, 'J', item_host_queue->GetId());
 
         windowMenu->AppendSeparator();
-        append_menu_item(windowMenu, wxID_ANY, _L("Compare Presets")/* + "\tCtrl+F"*/, _L("Compare presets"), 
+        wxMenuItem* item_open_instance = append_menu_item(windowMenu, wxID_ANY, _L("Open New Instance"), _L("Open a new PrusaSlicer instance"),
+            [](wxCommandEvent&) { start_new_slicer(); }, "", nullptr, [this]() {return m_plater != nullptr && !wxGetApp().app_config->get_bool("single_instance"); }, this);
+        AddGlobalAccelerator(wxACCEL_CMD | wxACCEL_SHIFT, 'I', item_open_instance->GetId());
+
+        windowMenu->AppendSeparator();
+        append_menu_item(windowMenu, wxID_ANY, _L("Compare Presets"), _L("Compare presets"), 
             [this](wxCommandEvent&) { diff_dialog.show();}, "compare", nullptr, []() {return true; }, this);
     }
 
@@ -1542,22 +1551,26 @@ void MainFrame::init_menubar_as_editor()
         viewMenu = new wxMenu();
         add_common_view_menu_items(viewMenu, this, std::bind(&MainFrame::can_change_view, this));
         viewMenu->AppendSeparator();
-        append_menu_check_item(viewMenu, wxID_ANY, _L("Show &Labels") + sep + "E", _L("Show object/instance labels in 3D scene"),
+        wxMenuItem* item_show_labels = append_menu_check_item(viewMenu, wxID_ANY, _L("Show &Labels"), _L("Show object/instance labels in 3D scene"),
             [this](wxCommandEvent&) { m_plater->show_view3D_labels(!m_plater->are_view3D_labels_shown()); }, this,
             [this]() { return m_plater->is_view3D_shown(); }, [this]() { return m_plater->are_view3D_labels_shown(); }, this);
-        append_menu_check_item(viewMenu, wxID_ANY, _L("Show Legen&d") + sep + "L", _L("Show legend in preview"),
+        AddGlobalAccelerator(wxACCEL_NORMAL, 'E', item_show_labels->GetId());
+        wxMenuItem* item_show_legend = append_menu_check_item(viewMenu, wxID_ANY, _L("Show Legen&d"), _L("Show legend in preview"),
             [this](wxCommandEvent&) { m_plater->show_legend(!m_plater->is_legend_shown()); }, this,
             [this]() { return m_plater->is_preview_shown(); }, [this]() { return m_plater->is_legend_shown(); }, this);
-        append_menu_check_item(viewMenu, wxID_ANY, _L("&Collapse Sidebar") + sep + "Shift+" + sep_space + "Tab", _L("Collapse sidebar"),
+        AddGlobalAccelerator(wxACCEL_NORMAL, 'L', item_show_legend->GetId());
+        wxMenuItem* item_collapse_sidebar = append_menu_check_item(viewMenu, wxID_ANY, _L("&Collapse Sidebar"), _L("Collapse sidebar"),
             [this](wxCommandEvent&) { m_plater->collapse_sidebar(!m_plater->is_sidebar_collapsed()); }, this,
             []() { return true; }, [this]() { return m_plater->is_sidebar_collapsed(); }, this);
+        AddGlobalAccelerator(wxACCEL_SHIFT, WXK_TAB, item_collapse_sidebar->GetId());
 #ifndef __APPLE__
         // OSX adds its own menu item to toggle fullscreen.
-        append_menu_check_item(viewMenu, wxID_ANY, _L("&Fullscreen") + "\t" + "F11", _L("Fullscreen"),
+        wxMenuItem* item_fullscreen = append_menu_check_item(viewMenu, wxID_ANY, _L("&Fullscreen"), _L("Fullscreen"),
             [this](wxCommandEvent&) { this->ShowFullScreen(!this->IsFullScreen(), 
                 // wxFULLSCREEN_ALL: wxFULLSCREEN_NOMENUBAR | wxFULLSCREEN_NOTOOLBAR | wxFULLSCREEN_NOSTATUSBAR | wxFULLSCREEN_NOBORDER | wxFULLSCREEN_NOCAPTION
                 wxFULLSCREEN_NOSTATUSBAR | wxFULLSCREEN_NOBORDER | wxFULLSCREEN_NOCAPTION); }, 
             this, []() { return true; }, [this]() { return this->IsFullScreen(); }, this);
+        AddGlobalAccelerator(wxACCEL_NORMAL, WXK_F11, item_fullscreen->GetId());
 #endif // __APPLE__
     }
 
@@ -1595,6 +1608,8 @@ void MainFrame::init_menubar_as_editor()
     init_macos_application_menu(m_menubar, this);
 #endif // __APPLE__
 
+    InstallGlobalAccelerators(this);
+
     if (plater()->printer_technology() == ptSLA)
         update_menubar();
 }
@@ -1628,19 +1643,24 @@ void MainFrame::open_menubar_item(const wxString& menu_name,const wxString& item
 
 void MainFrame::init_menubar_as_gcodeviewer()
 {
+    ResetGlobalAccelerators();
+
     wxMenu* fileMenu = new wxMenu;
     {
-        append_menu_item(fileMenu, wxID_ANY, _L("&Open G-code") + dots + "\tCtrl+O", _L("Open a G-code file"),
+        wxMenuItem* item_open_gcode = append_menu_item(fileMenu, wxID_ANY, _L("&Open G-code") + dots, _L("Open a G-code file"),
             [this](wxCommandEvent&) { if (m_plater != nullptr) m_plater->load_gcode(); }, "open", nullptr,
             [this]() {return m_plater != nullptr; }, this);
+        AddGlobalAccelerator(wxACCEL_CMD, 'O', item_open_gcode->GetId());
 #ifdef __APPLE__
-        append_menu_item(fileMenu, wxID_ANY, _L("Re&load from Disk") + dots + "\tCtrl+Shift+R",
+        wxMenuItem* item_reload = append_menu_item(fileMenu, wxID_ANY, _L("Re&load from Disk") + dots,
             _L("Reload the plater from disk"), [this](wxCommandEvent&) { m_plater->reload_gcode_from_disk(); },
             "", nullptr, [this]() { return !m_plater->get_last_loaded_gcode().empty(); }, this);
+        AddGlobalAccelerator(wxACCEL_CMD | wxACCEL_SHIFT, 'R', item_reload->GetId());
 #else
-        append_menu_item(fileMenu, wxID_ANY, _L("Re&load from Disk") + sep + "F5",
+        wxMenuItem* item_reload = append_menu_item(fileMenu, wxID_ANY, _L("Re&load from Disk"),
             _L("Reload the plater from disk"), [this](wxCommandEvent&) { m_plater->reload_gcode_from_disk(); },
             "", nullptr, [this]() { return !m_plater->get_last_loaded_gcode().empty(); }, this);
+        AddGlobalAccelerator(wxACCEL_NORMAL, WXK_F5, item_reload->GetId());
 #endif // __APPLE__
         fileMenu->AppendSeparator();
         append_menu_item(fileMenu, wxID_ANY, _L("Convert ASCII G-code to &binary") + dots, _L("Convert a G-code file from ASCII to binary format"),
@@ -1667,9 +1687,10 @@ void MainFrame::init_menubar_as_gcodeviewer()
         viewMenu = new wxMenu();
         add_common_view_menu_items(viewMenu, this, std::bind(&MainFrame::can_change_view, this));
         viewMenu->AppendSeparator();
-        append_menu_check_item(viewMenu, wxID_ANY, _L("Show Legen&d") + sep + "L", _L("Show legend"),
+        wxMenuItem* item_show_legend = append_menu_check_item(viewMenu, wxID_ANY, _L("Show Legen&d"), _L("Show legend"),
             [this](wxCommandEvent&) { m_plater->show_legend(!m_plater->is_legend_shown()); }, this,
             [this]() { return m_plater->is_preview_shown(); }, [this]() { return m_plater->is_legend_shown(); }, this);
+        AddGlobalAccelerator(wxACCEL_NORMAL, 'L', item_show_legend->GetId());
     }
 
     // helpmenu
@@ -1686,6 +1707,8 @@ void MainFrame::init_menubar_as_gcodeviewer()
 #ifdef __APPLE__
     init_macos_application_menu(m_menubar, this);
 #endif // __APPLE__
+
+    InstallGlobalAccelerators(this);
 }
 
 void MainFrame::update_menubar()
@@ -1695,10 +1718,10 @@ void MainFrame::update_menubar()
 
     const bool is_fff = plater()->printer_technology() == ptFFF;
 
-    m_changeable_menu_items[miExport]       ->SetItemLabel((is_fff ? _L("Export &G-code")         : _L("E&xport"))        + dots    + "\tCtrl+G");
-    m_changeable_menu_items[miSend]         ->SetItemLabel((is_fff ? _L("S&end G-code")           : _L("S&end to print")) + dots    + "\tCtrl+Shift+G");
+    m_changeable_menu_items[miExport]       ->SetItemLabel((is_fff ? _L("Export &G-code")         : _L("E&xport"))        + dots);
+    m_changeable_menu_items[miSend]         ->SetItemLabel((is_fff ? _L("S&end G-code")           : _L("S&end to print")) + dots);
 
-    m_changeable_menu_items[miMaterialTab]  ->SetItemLabel((is_fff ? _L("&Filament Settings Tab") : _L("Mate&rial Settings Tab"))   + "\tCtrl+3");
+    m_changeable_menu_items[miMaterialTab]  ->SetItemLabel((is_fff ? _L("&Filament Settings Tab") : _L("Mate&rial Settings Tab")));
     m_changeable_menu_items[miMaterialTab]  ->SetBitmap(*get_bmp_bundle(is_fff ? "spool"   : "resin"));
 
     m_changeable_menu_items[miPrinterTab]   ->SetBitmap(*get_bmp_bundle(is_fff ? "printer" : "sla_printer"));

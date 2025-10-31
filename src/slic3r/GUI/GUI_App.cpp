@@ -12,6 +12,8 @@
 #include "GUI_ObjectList.hpp"
 #include "GUI_ObjectManipulation.hpp"
 #include "GUI_Factories.hpp"
+#include "GuiUtils.hpp"
+#include "Accelerators.hpp"
 #include "format.hpp"
 
 // Localization headers: include libslic3r version first so everything in this file
@@ -2481,13 +2483,15 @@ void GUI_App::add_config_menu(wxMenuBar *menu)
 #endif //(__linux__) && defined(SLIC3R_DESKTOP_INTEGRATION)        
         local_menu->AppendSeparator();
     }
-    local_menu->Append(config_id_base + ConfigMenuPreferences, _L("&Preferences") + dots +
-#ifdef __APPLE__
-        "\tCtrl+,",
-#else
-        "\tCtrl+P",
-#endif
+    wxMenuItem* preferences_item = local_menu->Append(
+        config_id_base + ConfigMenuPreferences,
+        LabelNoAccel(_L("&Preferences") + dots),
         _L("Application preferences"));
+#ifdef __APPLE__
+    AddGlobalAccelerator(wxACCEL_CMD, ',', preferences_item->GetId());
+#else
+    AddGlobalAccelerator(wxACCEL_CMD, 'P', preferences_item->GetId());
+#endif
     wxMenu* mode_menu = nullptr;
     if (is_editor()) {
         local_menu->AppendSeparator();

@@ -18,6 +18,7 @@
 #include "GUI_ObjectList.hpp"
 #include "I18N.hpp"
 #include "GUI_Utils.hpp"
+#include "GuiUtils.hpp"
 #include "Plater.hpp"
 #include "../Utils/MacDarkMode.hpp"
 #include "BitmapComboBox.hpp"
@@ -64,7 +65,7 @@ wxMenuItem* append_menu_item(wxMenu* menu, int id, const wxString& string, const
     if (id == wxID_ANY)
         id = wxNewId();
 
-    auto *item = new wxMenuItem(menu, id, string, description);
+    auto* item = new wxMenuItem(menu, id, LabelNoAccel(string), description);
     if (icon && icon->IsOk()) {
         item->SetBitmap(*icon);
     }
@@ -111,7 +112,7 @@ wxMenuItem* append_submenu(wxMenu* menu, wxMenu* sub_menu, int id, const wxStrin
     if (id == wxID_ANY)
         id = wxNewId();
 
-    wxMenuItem* item = new wxMenuItem(menu, id, string, description);
+    wxMenuItem* item = new wxMenuItem(menu, id, LabelNoAccel(string), description);
     if (!icon.empty()) {
         item->SetBitmap(*get_bmp_bundle(icon));
 
@@ -137,7 +138,7 @@ wxMenuItem* append_menu_radio_item(wxMenu* menu, int id, const wxString& string,
     if (id == wxID_ANY)
         id = wxNewId();
 
-    wxMenuItem* item = menu->AppendRadioItem(id, string, description);
+    wxMenuItem* item = menu->AppendRadioItem(id, LabelNoAccel(string), description);
 
 #ifdef __WXMSW__
     if (event_handler != nullptr && event_handler != menu)
@@ -156,7 +157,7 @@ wxMenuItem* append_menu_check_item(wxMenu* menu, int id, const wxString& string,
     if (id == wxID_ANY)
         id = wxNewId();
 
-    wxMenuItem* item = menu->AppendCheckItem(id, string, description);
+    wxMenuItem* item = menu->AppendCheckItem(id, LabelNoAccel(string), description);
 
 #ifdef __WXMSW__
     if (event_handler != nullptr && event_handler != menu)
@@ -1042,7 +1043,6 @@ void HighlighterForWx::blink()
 
 }// GUI
 }//Slicer
-
 
 
 

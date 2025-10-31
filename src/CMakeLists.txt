@@ -16,10 +16,10 @@ else()
     message(WARNING "version.inc missing; falling back to default LibreSlicer metadata")
     set(SLIC3R_APP_NAME "LibreSlicer")
     set(SLIC3R_APP_KEY  "LibreSlicer")
-    set(SLIC3R_VERSION  "1.1.0")
+    set(SLIC3R_VERSION  "1.0.0")
     set(SLIC3R_BUILD_ID "LibreSlicer-${SLIC3R_VERSION}+UNKNOWN")
-    set(SLIC3R_RC_VERSION "1,1,0,0")
-    set(SLIC3R_RC_VERSION_DOTS "1.1.0.0")
+    set(SLIC3R_RC_VERSION "1,0,0,0")
+    set(SLIC3R_RC_VERSION_DOTS "1.0.0.0")
 endif()
 
 add_subdirectory(build-utils)
@@ -159,7 +159,7 @@ endif (MINGW)
 
 if (NOT WIN32 AND NOT APPLE)
     # Binary name on unix like systems (Linux, Unix)
-    set_target_properties(PrusaSlicer PROPERTIES OUTPUT_NAME "prusa-slicer")
+    set_target_properties(PrusaSlicer PROPERTIES OUTPUT_NAME "libreslicer")
 endif ()
 
 target_link_libraries(PrusaSlicer PRIVATE libslic3r libcereal nowide)
@@ -216,7 +216,7 @@ if (WIN32)
     endif()
     target_compile_definitions(PrusaSlicer_app_gui PRIVATE -DSLIC3R_WRAPPER_NOCONSOLE)
     add_dependencies(PrusaSlicer_app_gui PrusaSlicer)
-    set_target_properties(PrusaSlicer_app_gui PROPERTIES OUTPUT_NAME "prusa-slicer")
+    set_target_properties(PrusaSlicer_app_gui PROPERTIES OUTPUT_NAME "libreslicer")
     target_link_libraries(PrusaSlicer_app_gui PRIVATE boost_headeronly)
 
     add_executable(PrusaSlicer_app_console PrusaSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer.rc)
@@ -226,7 +226,7 @@ if (WIN32)
     endif ()
     target_compile_definitions(PrusaSlicer_app_console PRIVATE -DSLIC3R_WRAPPER_CONSOLE)
     add_dependencies(PrusaSlicer_app_console PrusaSlicer)
-    set_target_properties(PrusaSlicer_app_console PROPERTIES OUTPUT_NAME "prusa-slicer-console")
+    set_target_properties(PrusaSlicer_app_console PROPERTIES OUTPUT_NAME "libreslicer-console")
     target_link_libraries(PrusaSlicer_app_console PRIVATE boost_headeronly)
 
     add_executable(PrusaSlicer_app_gcodeviewer WIN32 PrusaSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer-gcodeviewer.rc)
@@ -236,7 +236,7 @@ if (WIN32)
     endif ()
     target_compile_definitions(PrusaSlicer_app_gcodeviewer PRIVATE -DSLIC3R_WRAPPER_NOCONSOLE -DSLIC3R_WRAPPER_GCODEVIEWER)
     add_dependencies(PrusaSlicer_app_gcodeviewer PrusaSlicer)
-    set_target_properties(PrusaSlicer_app_gcodeviewer PROPERTIES OUTPUT_NAME "prusa-gcodeviewer")
+    set_target_properties(PrusaSlicer_app_gcodeviewer PROPERTIES OUTPUT_NAME "libreslicer-gcodeviewer")
     target_link_libraries(PrusaSlicer_app_gcodeviewer PRIVATE boost_headeronly)
 endif ()
 
@@ -273,15 +273,15 @@ else ()
     if (APPLE)
         # On OSX, the name of the binary matches the name of the Application.
         add_custom_command(TARGET PrusaSlicer POST_BUILD
-            COMMAND ln -sf PrusaSlicer prusa-slicer
-            COMMAND ln -sf PrusaSlicer prusa-gcodeviewer
-            COMMAND ln -sf PrusaSlicer PrusaGCodeViewer
+            COMMAND ln -sf PrusaSlicer libreslicer
+            COMMAND ln -sf PrusaSlicer libreslicer-gcodeviewer
+            COMMAND ln -sf PrusaSlicer LibreSlicerGCodeViewer
             WORKING_DIRECTORY "$<TARGET_FILE_DIR:PrusaSlicer>"
-            COMMENT "Symlinking the G-code viewer to PrusaSlicer, symlinking to prusa-slicer and prusa-gcodeviewer"
+            COMMENT "Symlinking the G-code viewer to PrusaSlicer under LibreSlicer names"
             VERBATIM)
     else ()
         add_custom_command(TARGET PrusaSlicer POST_BUILD
-            COMMAND ln -sf prusa-slicer prusa-gcodeviewer
+            COMMAND ln -sf libreslicer libreslicer-gcodeviewer
             WORKING_DIRECTORY "$<TARGET_FILE_DIR:PrusaSlicer>"
             COMMENT "Symlinking the G-code viewer to PrusaSlicer"
             VERBATIM)
@@ -309,5 +309,5 @@ else ()
     install(TARGETS PrusaSlicer RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
 
     # Install the symlink for gcodeviewer
-    install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink prusa-slicer prusa-gcodeviewer WORKING_DIRECTORY \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})")
+    install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink libreslicer libreslicer-gcodeviewer WORKING_DIRECTORY \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})")
 endif ()

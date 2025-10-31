@@ -1,8 +1,10 @@
 
 ![PrusaSlicer logo](/resources/icons/PrusaSlicer.png?raw=true)
 
-# LibreSlicer (AGPLv3)
+# LibreSlicer 1.0.0 — Supporter Build (AGPLv3)
 > Creator-first resin slicer. No telemetry. Prusa/Orca lineage.
+
+LibreSlicer 1.0.0 is provided under the terms of AGPL-3.0-or-later. The corresponding source offer ships in `COMPLIANCE/SOURCE_OFFER.md` and every release artifact includes `SOURCE_OFFER.md`.
 
 You may want to check the [PrusaSlicer project page](https://www.prusa3d.com/prusaslicer/).
 Prebuilt binaries: see Releases. LibreSlicer is AGPLv3; a SOURCE_OFFER ships with each release.

@@ -477,7 +477,7 @@ std::vector<wxBitmapBundle*> MenuFactory::get_svg_volume_bitmaps()
 
 void MenuFactory::append_menu_item_delete(wxMenu* menu)
 {
-    append_menu_item(menu, wxID_ANY, _L("Delete") + "\tDel", _L("Remove the selected object"),
+    append_menu_item(menu, wxID_ANY, _L("Delete"), _L("Remove the selected object"),
         [](wxCommandEvent&) { plater()->remove_selected(); }, "delete", nullptr, 
         []() { return plater()->can_delete(); }, m_parent);
 
@@ -1340,10 +1340,10 @@ void MenuFactory::append_menu_items_instance_manipulation(wxMenu* menu)
 {
     MenuType type = menu == &m_object_menu ? mtObjectFFF : mtObjectSLA;
 
-    items_increase[type]                = append_menu_item(menu, wxID_ANY, _L("Add instance") + "\t+", _L("Add one more instance of the selected object"),
+    items_increase[type]                = append_menu_item(menu, wxID_ANY, _L("Add instance"), _L("Add one more instance of the selected object"),
         [](wxCommandEvent&) { plater()->increase_instances();      }, "add_copies", nullptr, 
         []() { return plater()->can_increase_instances(); }, m_parent);
-    items_decrease[type]                = append_menu_item(menu, wxID_ANY, _L("Remove instance") + "\t-", _L("Remove one instance of the selected object"),
+    items_decrease[type]                = append_menu_item(menu, wxID_ANY, _L("Remove instance"), _L("Remove one instance of the selected object"),
         [](wxCommandEvent&) { plater()->decrease_instances();      }, "remove_copies", nullptr, 
         []() { return plater()->can_decrease_instances(); }, m_parent);
     items_set_number_of_copies[type]    = append_menu_item(menu, wxID_ANY, _L("Set number of instances") + dots, _L("Change the number of instances of the selected object"),

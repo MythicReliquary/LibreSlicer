@@ -118,6 +118,8 @@ set(SLIC3R_GUI_SOURCES
     GUI/Plater.hpp
     GUI/PresetComboBoxes.hpp
     GUI/PresetComboBoxes.cpp
+    GUI/Accelerators.cpp
+    GUI/Accelerators.hpp
     GUI/BitmapComboBox.hpp
     GUI/BitmapComboBox.cpp
     GUI/EditGCodeDialog.hpp
@@ -128,6 +130,7 @@ set(SLIC3R_GUI_SOURCES
     GUI/PhysicalPrinterDialog.cpp
     GUI/GUI_Factories.cpp
     GUI/GUI_Factories.hpp
+    GUI/GuiUtils.hpp
     GUI/GUI_ObjectList.cpp
     GUI/GUI_ObjectList.hpp
     GUI/GalleryDialog.cpp
