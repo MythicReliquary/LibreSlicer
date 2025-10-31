@@ -22,3 +22,21 @@ deps/build-linux/*
 **/.idea/
 .pkg_cache
 CMakeUserPresets.json
+# --- build outputs (never commit) ---
+/build-*/
+/build*/
+/out/
+/bin/
+/obj/
+/x64/
+/CMakeFiles/
+/CMakeCache.txt
+/.cmake/
+/.vs/
+/dist/
+/*.zip
+/*.7z
+/*.exe
+/*.msi
+/*.pdb
+/*.dll
