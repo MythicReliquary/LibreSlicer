@@ -57,3 +57,8 @@ CMakeUserPresets.json
 *.zip
 *.msi
 *.exe
+# vcpkg build trees (never commit)
+ /vcpkg_installed/
+ /installed/
+ /.vcpkg-root
+ /packages/
