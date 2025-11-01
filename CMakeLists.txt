@@ -1,4 +1,7 @@
 
+if(POLICY CMP0175)
+    cmake_policy(SET CMP0175 NEW)
+endif()
 # ---- vcpkg prefix bootstrap (MUST be before project()) -----------------------
 cmake_minimum_required(VERSION 3.20)
 
@@ -46,6 +49,7 @@ endif()
 project(AegisSlicer LANGUAGES CXX)
 
 option(ENABLE_SLA "Enable resin/SLA slicing features" ON)
+add_compile_definitions(LS_DISABLE_UPDATE_CHECKER=1 LIBRESLICER_UPDATER=0)
 
 if(WIN32)
     add_compile_definitions(

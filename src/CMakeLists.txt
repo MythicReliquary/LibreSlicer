@@ -238,7 +238,35 @@ if (WIN32)
     add_dependencies(PrusaSlicer_app_gcodeviewer PrusaSlicer)
     set_target_properties(PrusaSlicer_app_gcodeviewer PROPERTIES OUTPUT_NAME "libreslicer-gcodeviewer")
     target_link_libraries(PrusaSlicer_app_gcodeviewer PRIVATE boost_headeronly)
+
+    if(DEFINED ENV{LS_BRAND_ASSETS})
+        set(LS_BRAND_ASSETS "$ENV{LS_BRAND_ASSETS}")
+        message(STATUS "Using external brand assets: ${LS_BRAND_ASSETS}")
+        if(TARGET PrusaSlicer_app_gui)
+            add_custom_command(TARGET PrusaSlicer_app_gui POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:PrusaSlicer_app_gui>/resources/icons"
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${LS_BRAND_ASSETS}/LibreSlicer.ico"
+                    "${LS_BRAND_ASSETS}/LibreSlicer_192px.png"
+                    "${LS_BRAND_ASSETS}/LibreSlicer_wizard_banner.png"
+                    "$<TARGET_FILE_DIR:PrusaSlicer_app_gui>/resources/icons"
+            )
+        endif()
+    endif()
 endif ()
+
+    # Conditionally add libreslicer.rc to the GUI target if it exists
+    set(_gui_target PrusaSlicer_app_gui)
+    if(NOT TARGET ${_gui_target})
+        set(_gui_target PrusaSlicer)
+    endif()
+
+    if(WIN32 AND TARGET ${_gui_target})
+        set(_rc "${CMAKE_SOURCE_DIR}/src/platform/win/libreslicer.rc")
+        if(EXISTS "${_rc}")
+            target_sources(${_gui_target} PRIVATE "${_rc}")
+        endif()
+    endif()
 
 # Link the resources dir to where Slic3r GUI expects it
 if (WIN32)

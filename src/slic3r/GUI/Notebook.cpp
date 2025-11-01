@@ -94,7 +94,8 @@ void ButtonsListCtrl::OnPaint(wxPaintEvent&)
 
 void ButtonsListCtrl::UpdateMode()
 {
-    m_mode_sizer->SetMode(Slic3r::GUI::wxGetApp().get_mode());
+    if (m_mode_sizer != nullptr)
+        m_mode_sizer->SetMode(Slic3r::GUI::wxGetApp().get_mode());
 }
 
 void ButtonsListCtrl::Rescale()
@@ -181,5 +182,4 @@ wxString ButtonsListCtrl::GetPageText(size_t n) const
 }
 
 #endif // _WIN32
-
 

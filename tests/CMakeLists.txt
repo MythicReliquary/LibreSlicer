@@ -1,7 +1,7 @@
 # TODO Add individual tests as executables in separate directories
 # add_subirectory(<testcase>)
 
-find_package(Catch2 2.9 REQUIRED)
+find_package(Catch2 3 REQUIRED)
 
 include(Catch)
 

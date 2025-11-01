@@ -396,3 +396,9 @@ endif ()
 
 # Add a definition so that we can tell we are compiling slic3r.
 target_compile_definitions(libslic3r_gui PRIVATE SLIC3R_CURRENTLY_COMPILING_GUI_MODULE)
+
+target_sources(libslic3r_gui PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/slic3r/Brand.hpp
+    ${CMAKE_SOURCE_DIR}/src/slic3r/BrandUrls.hpp
+    ${CMAKE_SOURCE_DIR}/src/slic3r/FeatureToggles.hpp
+)

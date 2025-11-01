@@ -3,6 +3,10 @@
 ///|/
 ///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
 ///|/
+#include "../FeatureToggles.hpp"
+
+#if FeatureToggles::kUpdaterEnabled
+
 #include "UpdateDialogs.hpp"
 
 #include <cstring>
@@ -524,3 +528,5 @@ MsgNoAppUpdates::~MsgNoAppUpdates() {}
 
 }
 }
+
+#endif // FeatureToggles::kUpdaterEnabled

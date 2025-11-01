@@ -1,5 +1,5 @@
 #include "libslic3r/Point.hpp"
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 #include <libslic3r/SupportSpotsGenerator.hpp>
 
 using namespace Slic3r;

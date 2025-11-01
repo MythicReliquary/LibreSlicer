@@ -59,13 +59,16 @@
 #include "GUI_Utils.hpp"
 #include "GUI_ObjectManipulation.hpp"
 #include "Field.hpp"
+#include "../FeatureToggles.hpp"
 #include "DesktopIntegrationDialog.hpp"
 #include "slic3r/Config/Snapshot.hpp"
 #include "slic3r/Utils/PresetUpdater.hpp"
 #include "format.hpp"
 #include "MsgDialog.hpp"
 #include "UnsavedChangesDialog.hpp"
+#if FeatureToggles::kUpdaterEnabled
 #include "slic3r/Utils/AppUpdater.hpp"
+#endif
 #include "slic3r/GUI/I18N.hpp"
 #include "slic3r/Config/Version.hpp"
 

@@ -1,4 +1,4 @@
-ï»¿#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <libslic3r/Emboss.hpp>
 #include <libslic3r/SVG.hpp> // only debug visualization
@@ -530,7 +530,7 @@ TEST_CASE("Cut surface", "[]")
 TEST_CASE("UndoRedo TextConfiguration serialization", "[Emboss]")
 {
     TextConfiguration tc;
-    tc.text = "Dovede-li se ÄlovÄ›k zasmÃ¡t sÃ¡m sobÄ›, nevyjde ze smÃ­chu po celÃ½ Å¾ivot.";
+    tc.text = "Dovede-li se clovek zasmát sám sobe, nevyjde ze smíchu po celý život.";
     EmbossStyle& es = tc.style;
     es.name      = "Seneca";
     es.path      = "Simply the best";
@@ -572,10 +572,10 @@ TEST_CASE("UndoRedo EmbossShape serialization", "[Emboss]")
  But people have always been dimly aware of the problem with the start of things.\
  They wonder how the snowplough driver gets to work,\
  or how the makers of dictionaries look up the spelling of words.";
-    emboss.svg_file->path_in_3mf = "VÅ¡echno nÄ›kde zaÄÃ­nÃ¡, i kdyÅ¾ mnoho fyzikÅ¯ nesouhlasÃ­.\
- Ale lidÃ© si vÅ¾dy jen matnÄ› uvÄ›domovali problÃ©m se zaÄÃ¡tkem vÄ›cÃ­.\
- ZajÃ­malo je, jak se Å™idiÄ snÄ›Å¾nÃ©ho pluhu dostane do prÃ¡ce\
- nebo jak tvÅ¯rci slovnÃ­kÅ¯ vyhledÃ¡vajÃ­ pravopis slov.";
+    emboss.svg_file->path_in_3mf = "Všechno nekde zacíná, i když mnoho fyziku nesouhlasí.\
+ Ale lidé si vždy jen matne uvedomovali problém se zacátkem vecí.\
+ Zajímalo je, jak se ridic snežného pluhu dostane do práce\
+ nebo jak tvurci slovníku vyhledávají pravopis slov.";
     emboss.svg_file->file_data = std::make_unique<std::string>("cite: Terry Pratchett");
 
     std::stringstream ss; // any stream can be used

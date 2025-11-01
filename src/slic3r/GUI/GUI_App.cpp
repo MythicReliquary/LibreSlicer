@@ -8,6 +8,8 @@
 ///|/
 #include "libslic3r/Technologies.hpp"
 #include "GUI_App.hpp"
+#include "../Brand.hpp"
+#include "../BrandUrls.hpp"
 #include "GUI_Init.hpp"
 #include "GUI_ObjectList.hpp"
 #include "GUI_ObjectManipulation.hpp"
@@ -77,7 +79,9 @@
 #include "../Utils/PrintHost.hpp"
 #include "../Utils/Process.hpp"
 #include "../Utils/MacDarkMode.hpp"
+#if FeatureToggles::kUpdaterEnabled
 #include "../Utils/AppUpdater.hpp"
+#endif
 #include "../Utils/WinRegistry.hpp"
 #include "slic3r/Config/Snapshot.hpp"
 #include "ConfigSnapshotDialog.hpp"
@@ -844,7 +848,9 @@ void GUI_App::post_init()
                 show_send_system_info_dialog_if_needed();   
             }  
             // app version check is asynchronous and triggers blocking dialog window, better call it last
+#if FeatureToggles::kUpdaterEnabled
             this->app_version_check(false);
+#endif
         });
     }
 
@@ -870,8 +876,10 @@ GUI_App::GUI_App(EAppMode mode)
 {
 	//app config initializes early becasuse it is used in instance checking in PrusaSlicer.cpp
 	this->init_app_config();
+#if FeatureToggles::kUpdaterEnabled
     // init app downloader after path to datadir is set
     m_app_updater = std::make_unique<AppUpdater>();
+#endif
 }
 
 GUI_App::~GUI_App()
@@ -1271,6 +1279,7 @@ bool GUI_App::on_init_inner()
 #endif // __WXMSW__
 
         preset_updater = new PresetUpdater();
+#if FeatureToggles::kUpdaterEnabled
         Bind(EVT_SLIC3R_VERSION_ONLINE, &GUI_App::on_version_read, this);
         Bind(EVT_SLIC3R_EXPERIMENTAL_VERSION_ONLINE, [this](const wxCommandEvent& evt) {
             if (this->plater_ != nullptr && (m_app_updater->get_triggered_by_user() || app_config->get("notify_release") == "all")) {
@@ -1302,6 +1311,7 @@ bool GUI_App::on_init_inner()
         Bind(EVT_SLIC3R_APP_OPEN_FAILED, [](const wxCommandEvent& evt) {
             show_error(nullptr, evt.GetString());
         }); 
+#endif // FeatureToggles::kUpdaterEnabled
 
         Bind(EVT_CONFIG_UPDATER_SYNC_DONE, [this](const wxCommandEvent& evt) {
             this->check_updates(false);
@@ -1382,7 +1392,10 @@ bool GUI_App::on_init_inner()
 
     obj_list()->set_min_height();
 
-    update_mode(); // update view mode after fix of the object_list size
+    CallAfter([this] {
+        if (this->mainframe != nullptr)
+            this->update_mode();
+    }); // update view mode after fix of the object_list size
 
 #ifdef __APPLE__
     other_instance_message_handler()->bring_instance_forward();
@@ -2452,8 +2465,12 @@ void GUI_App::update_mode()
     sidebar().update_mode();
 
 #ifdef _WIN32 //_MSW_DARK_MODE
-    if (!wxGetApp().tabs_as_menu())
-        dynamic_cast<Notebook*>(mainframe->m_tabpanel)->UpdateMode();
+    if (!wxGetApp().tabs_as_menu()) {
+        if (mainframe != nullptr && mainframe->m_tabpanel != nullptr) {
+            if (auto *notebook = dynamic_cast<Notebook*>(mainframe->m_tabpanel))
+                notebook->UpdateMode();
+        }
+    }
 #endif
 
     for (auto tab : tabs_list)
@@ -2476,7 +2493,9 @@ void GUI_App::add_config_menu(wxMenuBar *menu)
         local_menu->Append(config_id_base + ConfigMenuSnapshots, _L("&Configuration Snapshots") + dots, _L("Inspect / activate configuration snapshots"));
         local_menu->Append(config_id_base + ConfigMenuTakeSnapshot, _L("Take Configuration &Snapshot"), _L("Capture a configuration snapshot"));
         local_menu->Append(config_id_base + ConfigMenuUpdateConf, _L("Check for Configuration Updates"), _L("Check for configuration updates"));
+#if FeatureToggles::kUpdaterEnabled
         local_menu->Append(config_id_base + ConfigMenuUpdateApp, _L("Check for Application Updates"), _L("Check for new version of application"));
+#endif
 #if defined(__linux__) && defined(SLIC3R_DESKTOP_INTEGRATION) 
         //if (DesktopIntegrationDialog::integration_possible())
         local_menu->Append(config_id_base + ConfigMenuDesktopIntegration, _L("Desktop Integration"), _L("Desktop Integration"));    
@@ -2524,9 +2543,11 @@ void GUI_App::add_config_menu(wxMenuBar *menu)
 		case ConfigMenuUpdateConf:
 			check_updates(true);
 			break;
+#if FeatureToggles::kUpdaterEnabled
         case ConfigMenuUpdateApp:
             app_version_check(true);
             break;
+#endif
 #ifdef __linux__
         case ConfigMenuDesktopIntegration:
             show_desktop_integration_dialog();
@@ -3464,6 +3485,7 @@ void GUI_App::associate_bgcode_files()
 }
 #endif // __WXMSW__
 
+#if FeatureToggles::kUpdaterEnabled
 void GUI_App::on_version_read(wxCommandEvent& evt)
 {
     app_config->set("version_online", into_u8(evt.GetString()));
@@ -3559,6 +3581,7 @@ void GUI_App::app_version_check(bool from_user)
     std::string version_check_url = app_config->version_check_url();
     m_app_updater->sync_version(version_check_url, from_user);
 }
+#endif // FeatureToggles::kUpdaterEnabled
 
 void GUI_App::start_download(std::string url)
 {

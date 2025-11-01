@@ -9,8 +9,9 @@
     "cereal",
     "freetype", "harfbuzz", "libjpeg-turbo", "tiff",
     "libzip", "expat", "libdeflate", "openjph",
-    "qhull",
-    "cgal",
+  "qhull",
+  "cgal",
+  { "name": "catch2", "version>=" : "3.0.0" },
     "opencascade",
     "wxwidgets"
   ],
