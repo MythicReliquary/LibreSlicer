@@ -26,6 +26,7 @@
 #include "wxExtensions.hpp"
 #include "slic3r/GUI/MainFrame.hpp"
 #include "GUI_App.hpp"
+#include "slic3r/Brand.hpp"
 
 #include "Widgets/CheckBox.hpp"
 
@@ -228,7 +229,7 @@ void ErrorDialog::create(const HtmlContent& content, int icon_width)
     add_msg_content(this, content_sizer, content);
 
     // Use a small bitmap with monospaced font, as the error text will not be wrapped.
-    logo->SetBitmap(*get_bmp_bundle("PrusaSlicer_192px_grayscale.png", icon_width));
+    logo->SetBitmap(*get_bmp_bundle(Brand::kIconLargePng, icon_width));
 
     SetMaxSize(wxSize(-1, CONTENT_MAX_HEIGHT*wxGetApp().em_unit()));
 

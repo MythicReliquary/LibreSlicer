@@ -38,6 +38,7 @@
 #include "3DScene.hpp"
 #include "PrintHostDialogs.hpp"
 #include "wxExtensions.hpp"
+#include "slic3r/Brand.hpp"
 #include "Accelerators.hpp"
 #include "GuiUtils.hpp"
 #include "GUI_ObjectList.hpp"
@@ -131,7 +132,8 @@ static wxIcon main_frame_icon(GUI_App::EAppMode app_mode)
     }
     return wxIcon(path, wxBITMAP_TYPE_ICO);
 #else // _WIN32
-    return wxIcon(Slic3r::var(app_mode == GUI_App::EAppMode::Editor ? "PrusaSlicer_128px.png" : "PrusaSlicer-gcodeviewer_128px.png"), wxBITMAP_TYPE_PNG);
+    const char* icon_name = (app_mode == GUI_App::EAppMode::Editor) ? Brand::kIconSmallPng : Brand::kGcodeSmallPng;
+    return wxIcon(Slic3r::var(icon_name), wxBITMAP_TYPE_PNG);
 #endif // _WIN32
 }
 
@@ -2185,7 +2187,7 @@ SettingsDialog::SettingsDialog(MainFrame* mainframe)
         SetIcon(wxIcon(szExeFileName, wxBITMAP_TYPE_ICO));
     }
 #else
-    SetIcon(wxIcon(var("PrusaSlicer_128px.png"), wxBITMAP_TYPE_PNG));
+    SetIcon(wxIcon(var(Brand::kIconSmallPng), wxBITMAP_TYPE_PNG));
 #endif // _WIN32
 
     this->Bind(wxEVT_SHOW, [this](wxShowEvent& evt) {
