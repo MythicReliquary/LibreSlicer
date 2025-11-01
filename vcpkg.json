@@ -11,7 +11,7 @@
     "libzip", "expat", "libdeflate", "openjph",
   "qhull",
   "cgal",
-  { "name": "catch2", "version>=" : "3.0.0" },
+  { "name": "catch2", "version>=" : "3.0.1" },
     "opencascade",
     "wxwidgets"
   ],

@@ -79,7 +79,7 @@
 #include "../Utils/PrintHost.hpp"
 #include "../Utils/Process.hpp"
 #include "../Utils/MacDarkMode.hpp"
-#if FeatureToggles::kUpdaterEnabled
+#if LIBRESLICER_UPDATER && !LS_DISABLE_UPDATE_CHECKER
 #include "../Utils/AppUpdater.hpp"
 #endif
 #include "../Utils/WinRegistry.hpp"
@@ -848,7 +848,7 @@ void GUI_App::post_init()
                 show_send_system_info_dialog_if_needed();   
             }  
             // app version check is asynchronous and triggers blocking dialog window, better call it last
-#if FeatureToggles::kUpdaterEnabled
+#if LIBRESLICER_UPDATER && !LS_DISABLE_UPDATE_CHECKER
             this->app_version_check(false);
 #endif
         });
@@ -876,7 +876,7 @@ GUI_App::GUI_App(EAppMode mode)
 {
 	//app config initializes early becasuse it is used in instance checking in PrusaSlicer.cpp
 	this->init_app_config();
-#if FeatureToggles::kUpdaterEnabled
+#if LIBRESLICER_UPDATER && !LS_DISABLE_UPDATE_CHECKER
     // init app downloader after path to datadir is set
     m_app_updater = std::make_unique<AppUpdater>();
 #endif
@@ -1279,7 +1279,7 @@ bool GUI_App::on_init_inner()
 #endif // __WXMSW__
 
         preset_updater = new PresetUpdater();
-#if FeatureToggles::kUpdaterEnabled
+#if LIBRESLICER_UPDATER && !LS_DISABLE_UPDATE_CHECKER
         Bind(EVT_SLIC3R_VERSION_ONLINE, &GUI_App::on_version_read, this);
         Bind(EVT_SLIC3R_EXPERIMENTAL_VERSION_ONLINE, [this](const wxCommandEvent& evt) {
             if (this->plater_ != nullptr && (m_app_updater->get_triggered_by_user() || app_config->get("notify_release") == "all")) {
@@ -1311,7 +1311,7 @@ bool GUI_App::on_init_inner()
         Bind(EVT_SLIC3R_APP_OPEN_FAILED, [](const wxCommandEvent& evt) {
             show_error(nullptr, evt.GetString());
         }); 
-#endif // FeatureToggles::kUpdaterEnabled
+#endif // updater enabled
 
         Bind(EVT_CONFIG_UPDATER_SYNC_DONE, [this](const wxCommandEvent& evt) {
             this->check_updates(false);
@@ -2493,7 +2493,7 @@ void GUI_App::add_config_menu(wxMenuBar *menu)
         local_menu->Append(config_id_base + ConfigMenuSnapshots, _L("&Configuration Snapshots") + dots, _L("Inspect / activate configuration snapshots"));
         local_menu->Append(config_id_base + ConfigMenuTakeSnapshot, _L("Take Configuration &Snapshot"), _L("Capture a configuration snapshot"));
         local_menu->Append(config_id_base + ConfigMenuUpdateConf, _L("Check for Configuration Updates"), _L("Check for configuration updates"));
-#if FeatureToggles::kUpdaterEnabled
+#if LIBRESLICER_UPDATER && !LS_DISABLE_UPDATE_CHECKER
         local_menu->Append(config_id_base + ConfigMenuUpdateApp, _L("Check for Application Updates"), _L("Check for new version of application"));
 #endif
 #if defined(__linux__) && defined(SLIC3R_DESKTOP_INTEGRATION) 
@@ -2543,7 +2543,7 @@ void GUI_App::add_config_menu(wxMenuBar *menu)
 		case ConfigMenuUpdateConf:
 			check_updates(true);
 			break;
-#if FeatureToggles::kUpdaterEnabled
+#if LIBRESLICER_UPDATER && !LS_DISABLE_UPDATE_CHECKER
         case ConfigMenuUpdateApp:
             app_version_check(true);
             break;
@@ -3485,7 +3485,7 @@ void GUI_App::associate_bgcode_files()
 }
 #endif // __WXMSW__
 
-#if FeatureToggles::kUpdaterEnabled
+#if LIBRESLICER_UPDATER && !LS_DISABLE_UPDATE_CHECKER
 void GUI_App::on_version_read(wxCommandEvent& evt)
 {
     app_config->set("version_online", into_u8(evt.GetString()));
@@ -3581,7 +3581,7 @@ void GUI_App::app_version_check(bool from_user)
     std::string version_check_url = app_config->version_check_url();
     m_app_updater->sync_version(version_check_url, from_user);
 }
-#endif // FeatureToggles::kUpdaterEnabled
+#endif // updater enabled
 
 void GUI_App::start_download(std::string url)
 {

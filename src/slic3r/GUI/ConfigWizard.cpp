@@ -66,7 +66,7 @@
 #include "format.hpp"
 #include "MsgDialog.hpp"
 #include "UnsavedChangesDialog.hpp"
-#if FeatureToggles::kUpdaterEnabled
+#if LIBRESLICER_UPDATER && !LS_DISABLE_UPDATE_CHECKER
 #include "slic3r/Utils/AppUpdater.hpp"
 #endif
 #include "slic3r/GUI/I18N.hpp"

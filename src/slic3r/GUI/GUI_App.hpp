@@ -38,7 +38,7 @@ class PresetUpdater;
 class ModelObject;
 class PrintHostJobQueue;
 class Model;
-#if FeatureToggles::kUpdaterEnabled
+#if LIBRESLICER_UPDATER && !LS_DISABLE_UPDATE_CHECKER
 class AppUpdater;
 #endif
 
@@ -178,7 +178,7 @@ private:
     std::unique_ptr<ImGuiWrapper> m_imgui;
     std::unique_ptr<PrintHostJobQueue> m_printhost_job_queue;
 	std::unique_ptr <OtherInstanceMessageHandler> m_other_instance_message_handler;
-#if FeatureToggles::kUpdaterEnabled
+#if LIBRESLICER_UPDATER && !LS_DISABLE_UPDATE_CHECKER
     std::unique_ptr<AppUpdater> m_app_updater;
 #endif
     std::unique_ptr <wxSingleInstanceChecker> m_single_instance_checker;
@@ -407,7 +407,7 @@ private:
     // Returns true if the configuration is fine. 
     // Returns true if the configuration is not compatible and the user decided to rather close the slicer instead of reconfiguring.
     bool            check_updates(const bool verbose);
-#if FeatureToggles::kUpdaterEnabled
+#if LIBRESLICER_UPDATER && !LS_DISABLE_UPDATE_CHECKER
     void            on_version_read(wxCommandEvent& evt);
     // if the data from version file are already downloaded, shows dialogs to start download of new version of app
     void            app_updater(bool from_user);

@@ -1,4 +1,5 @@
 name: windows-release
+
 on:
   push:
     branches:
@@ -33,8 +34,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            ${{ github.workspace }}\\vcpkg
-            C:\\vcpkg
+            ${{ github.workspace }}\vcpkg
+            C:\vcpkg
           key: vcpkg-win-${{ runner.os }}-${{ hashFiles('**/vcpkg.json') }}
           restore-keys: |
             vcpkg-win-${{ runner.os }}
@@ -42,23 +43,23 @@ jobs:
       - name: Bootstrap vcpkg (manifest mode if present)
         shell: pwsh
         run: |
-          if (Test-Path "$env:GITHUB_WORKSPACE\\vcpkg.json") {
-            if (!(Test-Path "$env:GITHUB_WORKSPACE\\vcpkg")) {
-              git clone https://github.com/microsoft/vcpkg "$env:GITHUB_WORKSPACE\\vcpkg"
+          if (Test-Path "$env:GITHUB_WORKSPACE\vcpkg.json") {
+            if (!(Test-Path "$env:GITHUB_WORKSPACE\vcpkg")) {
+              git clone https://github.com/microsoft/vcpkg "$env:GITHUB_WORKSPACE\vcpkg"
             }
-            & "$env:GITHUB_WORKSPACE\\vcpkg\\bootstrap-vcpkg.bat"
+            & "$env:GITHUB_WORKSPACE\vcpkg\bootstrap-vcpkg.bat"
             $env:VCPKG_FEATURE_FLAGS="versions,manifests"
-            $env:CMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
+            $env:CMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake"
           } else {
-            echo "No vcpkg.json found. Proceeding without manifest."
+            Write-Host "No vcpkg manifest detected."
           }
 
       - name: Configure (Release, x64)
         shell: pwsh
         run: |
           $toolchain = ""
-          if (Test-Path "$env:GITHUB_WORKSPACE\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake") {
-            $toolchain = "-DCMAKE_TOOLCHAIN_FILE=$env:GITHUB_WORKSPACE\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
+          if (Test-Path "$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake") {
+            $toolchain = "-DCMAKE_TOOLCHAIN_FILE=$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake"
           }
           cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release `
             -DSLIC3R_STATIC=ON -DENABLE_SLA=ON -DUSE_OPENVDB=ON `
@@ -76,7 +77,6 @@ jobs:
           if (Test-Path "resources") { Copy-Item -Recurse -Force "resources" "dist\" }
           if (Test-Path "profiles") { Copy-Item -Recurse -Force "profiles" "dist\" }
           if (Test-Path "licenses") { Copy-Item -Recurse -Force "licenses" "dist\" }
-          # Include AGPL source-offer in installer payload
           if (Test-Path "COMPLIANCE") {
             New-Item -ItemType Directory -Force -Path "dist\licenses" | Out-Null
             Copy-Item -Recurse -Force "COMPLIANCE\*" "dist\licenses\"
@@ -85,13 +85,13 @@ jobs:
       - name: Normalize EXE name for installer
         shell: pwsh
         run: |
-          $candidate = Get-ChildItem -Path "build" -Recurse -Filter "*AegisSlicer*.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+          $candidate = Get-ChildItem -Path "build" -Recurse -Filter "*LibreSlicer*.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
           if (-not $candidate) {
             $candidate = Get-ChildItem -Path "build" -Recurse -Filter "*.exe" | Where-Object { $_.Name -match "slicer" } | Select-Object -First 1
           }
           if ($candidate) {
             New-Item -ItemType Directory -Force -Path "dist\bin" | Out-Null
-            Copy-Item $candidate.FullName "dist\bin\AegisSlicer.exe" -Force
+            Copy-Item $candidate.FullName "dist\bin\LibreSlicer.exe" -Force
           } else {
             Write-Host "Warning: No EXE found to normalize; NSIS may still succeed if a correct name is present."
           }
@@ -99,13 +99,29 @@ jobs:
       - name: Make Installer (NSIS)
         shell: pwsh
         run: |
-          $env:AEGIS_VERSION = (Get-Date -Format \"yyyy.MM.dd.HHmm\")
-          makensis /DVERSION=$env:AEGIS_VERSION packaging\\nsis\\aegis.nsi
+          $env:LIBRESLICER_VERSION = (Get-Date -Format "yyyy.MM.dd.HHmm")
+          makensis /DVERSION=$env:LIBRESLICER_VERSION packaging\nsis\libreslicer.nsi
+
+      - name: Sign Windows installer (optional)
+        if: ${{ secrets.CERT_PFX_BASE64 && secrets.CERT_PFX_PASSWORD }}
+        shell: pwsh
+        env:
+          PFX_PASSWORD: ${{ secrets.CERT_PFX_PASSWORD }}
+        run: |
+          $pfxBytes = [Convert]::FromBase64String("${{ secrets.CERT_PFX_BASE64 }}")
+          [IO.File]::WriteAllBytes('code_sign.pfx', $pfxBytes)
+          $signtool = "$env:ProgramFiles(x86)\Windows Kits\10\bin\x64\signtool.exe"
+          if (-not (Test-Path $signtool)) {
+            $signtool = Get-ChildItem -Path "$env:ProgramFiles(x86)\Windows Kits\10\bin" -Recurse -Filter signtool.exe | Select-Object -First 1
+            $signtool = $signtool.FullName
+          }
+          & $signtool sign /fd SHA256 /f code_sign.pfx /p $env:PFX_PASSWORD /tr http://timestamp.digicert.com /td SHA256 LibreSlicer-*.exe
+          & $signtool verify /pa /v LibreSlicer-*.exe
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: AegisSlicer-Windows-Installer
+          name: LibreSlicer-Windows-Installer
           path: |
-            AegisSlicer-*.exe
-            dist\\**\\*
+            LibreSlicer-*.exe
+            dist\**\*

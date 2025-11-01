@@ -1,0 +1,1 @@
+LibreSlicer bundles third-party software under their respective licenses. See the `deps/` subdirectories for individual COPYING files and the repository `LICENSE` for aggregated terms.

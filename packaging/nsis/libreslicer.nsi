@@ -1,14 +1,14 @@
 !include "MUI2.nsh"
 
-!define APPNAME "AegisSlicer"
+!define APPNAME "LibreSlicer"
 !ifndef VERSION
   !define VERSION "0.0.0-local"
 !endif
-!define COMPANY "Mythic Reliquary"
+!define COMPANY "Mythic Reliquary LLC"
 !define INSTALLDIR "$PROGRAMFILES64\${APPNAME}"
 
 Name "${APPNAME} ${VERSION}"
-OutFile "AegisSlicer-${VERSION}.exe"
+OutFile "LibreSlicer-${VERSION}.exe"
 InstallDir "${INSTALLDIR}"
 RequestExecutionLevel admin
 
@@ -17,12 +17,11 @@ RequestExecutionLevel admin
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_LANGUAGE "English"
 
-Section "AegisSlicer (required)"
+Section "LibreSlicer (required)"
   SectionIn RO
   SetOutPath "$INSTDIR"
   File /r "dist\bin\*.*"
 
-  # Resources / profiles if present
   IfFileExists "dist\resources\*.*" 0 +2
     File /r "dist\resources\*.*"
 
@@ -32,12 +31,12 @@ Section "AegisSlicer (required)"
   IfFileExists "dist\licenses\*.*" 0 +2
     File /r "dist\licenses\*.*"
 
-  CreateShortcut "$SMPROGRAMS\AegisSlicer.lnk" "$INSTDIR\AegisSlicer.exe"
-  CreateShortCut "$DESKTOP\AegisSlicer.lnk" "$INSTDIR\AegisSlicer.exe"
+  CreateShortcut "$SMPROGRAMS\LibreSlicer.lnk" "$INSTDIR\LibreSlicer.exe"
+  CreateShortCut "$DESKTOP\LibreSlicer.lnk" "$INSTDIR\LibreSlicer.exe"
 SectionEnd
 
 Section "Uninstall"
-  Delete "$SMPROGRAMS\AegisSlicer.lnk"
-  Delete "$DESKTOP\AegisSlicer.lnk"
+  Delete "$SMPROGRAMS\LibreSlicer.lnk"
+  Delete "$DESKTOP\LibreSlicer.lnk"
   RMDir /r "$INSTDIR"
 SectionEnd

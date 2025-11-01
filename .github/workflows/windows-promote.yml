@@ -13,7 +13,7 @@ on:
       name:
         description: "release name"
         required: true
-        default: "AegisSlicer v1.0 (Internal)"
+        default: "LibreSlicer v1.0 (Internal)"
       prerelease:
         description: "mark as prerelease"
         required: false
@@ -53,7 +53,7 @@ jobs:
           workflow: windows-release.yml
           workflow_conclusion: success
           branch: ${{ inputs.branch }}
-          name: AegisSlicer-Windows-Installer
+          name: LibreSlicer-Windows-Installer
           path: promote/installer
 
       - name: Try to download smoke logs (optional)
@@ -64,7 +64,7 @@ jobs:
           workflow: windows-smoke.yml
           workflow_conclusion: success
           branch: ${{ inputs.branch }}
-          name: AegisSlicer-Windows-SmokeLogs
+          name: LibreSlicer-Windows-SmokeLogs
           path: promote/smoke
 
       - name: Ensure optional files exist
@@ -75,16 +75,16 @@ jobs:
       - name: Build source bundle (AGPL convenience)
         run: |
           mkdir -p promote
-          git archive --format=tar --prefix=AegisSlicer-src/ HEAD | gzip > promote/aegis-slicer-source.tar.gz
+          git archive --format=tar --prefix=libreslicer-src/ HEAD | gzip > promote/libreslicer-source.tar.gz
 
       - name: Compute checksums
         run: |
           shopt -s nullglob
           echo "# SHA256 sums" > promote/SHA256SUMS.txt
-          for f in promote/installer/AegisSlicer-*.exe; do
+          for f in promote/installer/LibreSlicer-*.exe; do
             sha256sum "$f" >> promote/SHA256SUMS.txt || true
           done
-          sha256sum promote/aegis-slicer-source.tar.gz >> promote/SHA256SUMS.txt
+          sha256sum promote/libreslicer-source.tar.gz >> promote/SHA256SUMS.txt
           cat promote/SHA256SUMS.txt
 
       - name: Compose release notes
@@ -92,14 +92,14 @@ jobs:
           mkdir -p promote
           SHORT=$(git rev-parse --short HEAD)
           {
-            echo "### AegisSlicer — Internal Build"
+            echo "### LibreSlicer — Internal Build"
             echo ""
             echo "- **Branch:** \`${{ inputs.branch }}\`"
             echo "- **Commit:** \`$SHORT\`"
             echo "- **Tag:** \`${{ inputs.tag }}\`"
             echo ""
             echo "Artifacts:"
-            echo "- Windows Installer \`AegisSlicer-*.exe\`"
+            echo "- Windows Installer \`LibreSlicer-*.exe\`"
             echo "- Staged payload under \`dist/...\`"
             echo "- Checksums: \`SHA256SUMS.txt\` and optional smoke \`checksums.txt\`"
             echo ""
@@ -118,8 +118,8 @@ jobs:
           prerelease: ${{ inputs.prerelease }}
           body_path: promote/RELEASE_NOTES.md
           files: |
-            promote/installer/AegisSlicer-*.exe
+            promote/installer/LibreSlicer-*.exe
             promote/installer/dist/**/*
             promote/smoke/checksums.txt
-            promote/aegis-slicer-source.tar.gz
+            promote/libreslicer-source.tar.gz
             promote/SHA256SUMS.txt

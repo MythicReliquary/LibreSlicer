@@ -1,12 +1,12 @@
-# AegisSlicer — Windows Build (Release)
+# LibreSlicer — Windows Build (Release)
 
-This is the minimal, battle-tested path to produce a Windows `.exe` with **resin** features (SLA) enabled.
+This is the minimal, battle-tested path to produce a Windows `.exe` with resin (SLA) functionality enabled.
 
 ## Prereqs
 
 - Visual Studio 2022 Build Tools (MSVC, CMake, Ninja)
-- NSIS (for the installer) — `choco install nsis`
-- (Optional) vcpkg for dependencies (OpenVDB, TBB, Boost)
+- NSIS (`choco install nsis`)
+- Optional: vcpkg for dependency management (OpenVDB, TBB, Boost)
 
 ## One-liner (from repo root)
 
@@ -14,13 +14,14 @@ This is the minimal, battle-tested path to produce a Windows `.exe` with **resin
 powershell -ExecutionPolicy Bypass -File .\scripts\build_win_release.ps1
 ```
 
-This will:
-1. Configure (`Release`, x64) with `-DENABLE_SLA=ON -DUSE_OPENVDB=ON -DSLIC3R_STATIC=ON`.
-2. Build the app.
-3. Stage `dist/` and invoke NSIS to produce `AegisSlicer-<timestamp>.exe`.
+The script:
+
+1. Configures (Release, x64) with `-DENABLE_SLA=ON -DUSE_OPENVDB=ON -DSLIC3R_STATIC=ON`.
+2. Builds LibreSlicer.
+3. Stages `dist/` and invokes NSIS to produce `LibreSlicer-<timestamp>.exe`.
 
 ## Notes
 
-- If you use vcpkg, ensure `.\vcpkg\scripts\buildsystems\vcpkg.cmake` exists. The scripts auto-detect and wire it in.
-- OpenVDB + TBB are required for **hollowing** and **drainage holes**.
-- Keep the repo **internal** until public release; when distributing binaries, include `COMPLIANCE/SOURCE_OFFER.md` in your release files for AGPL compliance.
+- When vcpkg is present, the script auto-detects `.\vcpkg\scripts\buildsystems\vcpkg.cmake` and enables manifest mode.
+- OpenVDB + TBB are required for hollowing and drainage features.
+- Include `COMPLIANCE/SOURCE_OFFER.md` in release artifacts to stay AGPL compliant.
