@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="resources/icons/libreslicer_brand_wordmark.png" alt="LibreSlicer" width="520">
+</p>
+
 # LibreSlicer
 > Creator‑first resin slicer. No telemetry. Prusa / Orca lineage.
 

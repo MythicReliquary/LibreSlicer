@@ -1,0 +1,11 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0d1117" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="256" height="256" fill="#0d1117"/>
+  <rect width="256" height="256" fill="url(#glow)"/>
+  <text x="50%" y="55%" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="120" font-weight="bold" fill="#58a6ff">LS</text>
+</svg>

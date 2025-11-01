@@ -1,0 +1,16 @@
+﻿Proprietary LibreSlicer brand artwork
+-------------------------------------
+Files:
+  libreslicer_brand_wordmark.png
+  libreslicer_brand_mark.png
+
+These bitmap assets are proprietary to Mythic Reliquary LLC. They are
+included in this repository so official builds can embed the LibreSlicer
+wordmark and mark when `-DOFFICIAL_BRAND=ON` is used. Redistribution of
+these specific images is permitted only as part of unmodified LibreSlicer
+binaries produced from this repository. No trademark rights are granted
+for forks or downstream projects.
+
+Generic/community builds should rely on the CC0 placeholder artwork
+(libreslicer_logo_wordmark.svg, libreslicer_logo_mark.svg) by leaving
+`OFFICIAL_BRAND` at its default OFF value.

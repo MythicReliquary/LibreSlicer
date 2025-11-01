@@ -69,6 +69,7 @@ message(STATUS "Prefix path  : ${CMAKE_PREFIX_PATH}")
 
 # ...existing code...
 include(CMakeDependentOption)
+include(cmake/Branding.cmake)
 
 set(SLIC3R_RESOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/resources")
 file(TO_NATIVE_PATH "${SLIC3R_RESOURCES_DIR}" SLIC3R_RESOURCES_DIR_WIN)

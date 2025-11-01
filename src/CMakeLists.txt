@@ -253,8 +253,6 @@ if (WIN32)
             )
         endif()
     endif()
-endif ()
-
     # Conditionally add libreslicer.rc to the GUI target if it exists
     set(_gui_target PrusaSlicer_app_gui)
     if(NOT TARGET ${_gui_target})
@@ -267,6 +265,14 @@ endif ()
             target_sources(${_gui_target} PRIVATE "${_rc}")
         endif()
     endif()
+
+if(COMMAND brand_assets_for_target)
+    foreach(_brand_target PrusaSlicer PrusaSlicer_app_gui PrusaSlicer_app_console PrusaSlicer_app_gcodeviewer)
+        if(TARGET ${_brand_target})
+            brand_assets_for_target(${_brand_target})
+        endif()
+    endforeach()
+endif()
 
 # Link the resources dir to where Slic3r GUI expects it
 if (WIN32)
