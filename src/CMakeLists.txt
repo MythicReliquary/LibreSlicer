@@ -1,7 +1,7 @@
 
 # Ensure CMake can find Qhull from vcpkg (force absolute path for Windows)
 if(WIN32)
-    set(_qhull_vcpkg_dir "D:/Aegis_slicer_V1/Aegis-Slicer/vcpkg_installed/x64-windows/share/qhull")
+    set(_qhull_vcpkg_dir "${CMAKE_SOURCE_DIR}/vcpkg_installed/x64-windows/share/qhull")
     set(Qhull_DIR "${_qhull_vcpkg_dir}" CACHE PATH "Path to QhullConfig.cmake" FORCE)
     list(PREPEND CMAKE_PREFIX_PATH "${_qhull_vcpkg_dir}")
 endif()

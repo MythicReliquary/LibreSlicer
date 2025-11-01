@@ -6,7 +6,7 @@
 - **macOS** ❌ — community testing requested; initial build compiles but unverified runtime
 
 ## macOS community testing
-If you’re on macOS (Intel or Apple Silicon), please test Aegis Slicer v1.0.0:
+If you’re on macOS (Intel or Apple Silicon), please test LibreSlicer v1.0.0:
 - Download the `.dmg` from the release.
 - Drag to Applications.
 - Open via right-click → Open (to bypass unsigned app warning).

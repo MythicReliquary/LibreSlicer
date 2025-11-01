@@ -1,4 +1,4 @@
-# Aegis Slicer v1.0.0 Release Notes
+# LibreSlicer v1.0.0 Release Notes
 
 ## Highlights
 - Windows 10/11: Fully tested, stable
@@ -11,11 +11,11 @@
 - macOS ❌ (beta, see below)
 
 ## macOS community testing
-If you’re on macOS (Intel or Apple Silicon), please test Aegis Slicer v1.0.0:
+If you’re on macOS (Intel or Apple Silicon), please test LibreSlicer v1.0.0:
 - Download the `.dmg` from the release.
 - Drag to Applications.
 - Open via right-click → Open (to bypass unsigned app warning).
-- Report any startup or slicing errors here: https://github.com/MythicReliquary/Aegis-Slicer/issues
+- Report any startup or slicing errors here: https://github.com/MythicReliquary/LibreSlicer/issues
 
 ## Notes
 - No public release/tag yet; artifacts are for internal and community QA only.

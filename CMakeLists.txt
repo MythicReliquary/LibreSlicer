@@ -46,7 +46,7 @@ if(VCPKG_ROOT)
 endif()
 
 # ---- your project & packages --------------------------------------------------
-project(AegisSlicer LANGUAGES CXX)
+project(LibreSlicer LANGUAGES CXX)
 
 option(ENABLE_SLA "Enable resin/SLA slicing features" ON)
 add_compile_definitions(LS_DISABLE_UPDATE_CHECKER=1 LIBRESLICER_UPDATER=0)
