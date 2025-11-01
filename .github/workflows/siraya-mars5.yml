@@ -1,0 +1,109 @@
+name: Siraya Tech Mars 5 slicing
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/siraya-mars5.yml'
+      - 'ci_profiles/**'
+      - 'docs/ci/**'
+      - 'scripts/ci_slice_and_validate.sh'
+      - 'scripts/create_blank_preview.py'
+      - 'scripts/fetch_siraya_models.py'
+      - 'third_party/siraya_test_models/**'
+  pull_request:
+    paths:
+      - '.github/workflows/siraya-mars5.yml'
+      - 'ci_profiles/**'
+      - 'docs/ci/**'
+      - 'scripts/ci_slice_and_validate.sh'
+      - 'scripts/create_blank_preview.py'
+      - 'scripts/fetch_siraya_models.py'
+      - 'third_party/siraya_test_models/**'
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  id-token: write
+  packages: read
+  statuses: write
+
+jobs:
+  slice-validate:
+    name: Slice Siraya calibration set
+    runs-on: ubuntu-22.04
+    env:
+      PRUSASLICER_VERSION: "2.7.4"
+      PRUSASLICER_URL: "https://github.com/prusa3d/PrusaSlicer/releases/download/version_2.7.4/PrusaSlicer-2.7.4+linux-x64-GTK3.AppImage"
+      UVTOOLS_VERSION: "v5.22.0"
+      UVTOOLS_URL: "https://github.com/sn4k3/UVtools/releases/download/v5.22.0/UVtools_Linux_x64_v5.22.0.AppImage"
+    strategy:
+      fail-fast: false
+      matrix:
+        stl:
+          - id: siraya-tech-v5
+            path: third_party/siraya_test_models/v5_placeholder.stl
+        aa: [0, 2, 4]
+        resin:
+          - name: siraya_fast
+            profile: ci_profiles/mars5_resin_siraya.ini
+            exposure: 2.5
+            initial_exposure: 30
+            notes: Baseline Siraya Tech Fast resin tuning
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick libfuse2 python3 python3-pip
+
+      - name: Fetch calibration models (non-strict)
+        run: |
+          python3 scripts/fetch_siraya_models.py
+
+      - name: Prepare toolchain directory
+        run: mkdir -p tools
+
+      - name: Download PrusaSlicer ${{ env.PRUSASLICER_VERSION }}
+        run: |
+          curl -L "$PRUSASLICER_URL" -o tools/PrusaSlicer.AppImage
+          chmod +x tools/PrusaSlicer.AppImage
+
+      - name: Download UVTools ${{ env.UVTOOLS_VERSION }}
+        run: |
+          curl -L "$UVTOOLS_URL" -o tools/uvtools.AppImage
+          chmod +x tools/uvtools.AppImage
+
+      - name: Slice ${{ matrix.stl.id }} (AA=${{ matrix.aa }}, resin=${{ matrix.resin.name }})
+        run: |
+          ./scripts/ci_slice_and_validate.sh \
+            --stl "${{ matrix.stl.path }}" \
+            --aa "${{ matrix.aa }}" \
+            --variant "${{ matrix.stl.id }}-aa${{ matrix.aa }}-${{ matrix.resin.name }}" \
+            --resin-profile "${{ matrix.resin.profile }}" \
+            --set exposure_time=${{ matrix.resin.exposure }} \
+            --set initial_exposure_time=${{ matrix.resin.initial_exposure }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: siraya-${{ matrix.stl.id }}-aa${{ matrix.aa }}-${{ matrix.resin.name }}
+          path: |
+            out/**/*.ctb
+            out/**/reports/*.txt
+            out/**/previews/*.png
+            COMPLIANCE/SOURCE_OFFER.md
+
+      - name: Publish summary
+        run: |
+          echo "### Siraya Tech slicing results" >> "$GITHUB_STEP_SUMMARY"
+          echo "* Model: ${{ matrix.stl.id }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "* AA: ${{ matrix.aa }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "* Resin: ${{ matrix.resin.name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "* Exposure: ${{ matrix.resin.exposure }} s" >> "$GITHUB_STEP_SUMMARY"
+          echo "* Initial exposure: ${{ matrix.resin.initial_exposure }} s" >> "$GITHUB_STEP_SUMMARY"
