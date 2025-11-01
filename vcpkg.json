@@ -1,5 +1,5 @@
 {
-  "name": "aegis-slicer",
+  "name": "libreslicer",
   "version": "1.0.0",
   "builtin-baseline": "21b59421e47bc37b22a2572ddec39cc5924f5b3f",
   "dependencies": [

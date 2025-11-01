@@ -1559,7 +1559,7 @@ bool DownloaderUtils::Worker::perform_register(const std::string& path_override/
     BOOST_LOG_TRIVIAL(info) << "Downloader registration: Directory for downloads: " << chosen_dest.string();
     wxGetApp().app_config->set("url_downloader_dest", chosen_dest.string());
 #ifdef _WIN32
-    // Registry key creation for "prusaslicer://" URL
+    // Registry key creation for "libreslicer://" URL
 
     boost::filesystem::path binary_path(boost::filesystem::canonical(boost::dll::program_location()));
     // the path to binary needs to be correctly saved in string with respect to localized characters
@@ -1571,8 +1571,8 @@ bool DownloaderUtils::Worker::perform_register(const std::string& path_override/
     //std::string key_string = "\"" + binary_string + "\" \"%1\"";
     std::string key_string = "\"" + binary_string + "\" \"--single-instance\" \"%1\"";
 
-    wxRegKey key_first(wxRegKey::HKCU, "Software\\Classes\\prusaslicer");
-    wxRegKey key_full(wxRegKey::HKCU, "Software\\Classes\\prusaslicer\\shell\\open\\command");
+    wxRegKey key_first(wxRegKey::HKCU, "Software\\Classes\\libreslicer");
+    wxRegKey key_full(wxRegKey::HKCU, "Software\\Classes\\libreslicer\\shell\\open\\command");
     if (!key_first.Exists()) {
         key_first.Create(false);
     }
@@ -1585,7 +1585,7 @@ bool DownloaderUtils::Worker::perform_register(const std::string& path_override/
     key_full = key_string;
 #elif __APPLE__
     // Apple registers for custom url in info.plist thus it has to be already registered since build.
-    // The url will always trigger opening of prusaslicer and we have to check that user has allowed it. (GUI_App::MacOpenURL is the triggered method)
+    // The URL will always trigger opening of LibreSlicer and we have to check that the user has allowed it. (GUI_App::MacOpenURL is the triggered method)
 #else 
     // the performation should be called later during desktop integration
     perform_registration_linux = true;
@@ -1597,7 +1597,7 @@ void DownloaderUtils::Worker::deregister()
 {
 #ifdef _WIN32
     std::string key_string = "";
-    wxRegKey key_full(wxRegKey::HKCU, "Software\\Classes\\prusaslicer\\shell\\open\\command");
+    wxRegKey key_full(wxRegKey::HKCU, "Software\\Classes\\libreslicer\\shell\\open\\command");
     if (!key_full.Exists()) {
         return;
     }

@@ -515,9 +515,9 @@ void OtherInstanceMessageHandler::handle_message(const std::string& message)
 			paths.emplace_back(p);
 // TODO: There is a misterious slash appearing in recieved msg on windows
 #ifdef _WIN32
-		else if (it->rfind("prusaslicer://open/?file=", 0) == 0)
+		else if (it->rfind("libreslicer://open/?file=", 0) == 0)
 #else
-	    else if (it->rfind("prusaslicer://open?file=", 0) == 0)
+	    else if (it->rfind("libreslicer://open?file=", 0) == 0)
 #endif
 			downloads.emplace_back(*it);
 	}

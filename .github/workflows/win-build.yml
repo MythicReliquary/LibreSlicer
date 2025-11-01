@@ -89,19 +89,24 @@ jobs:
           $out  = Join-Path $root 'dist'
           New-Item -ItemType Directory -Force -Path $out | Out-Null
           $ver = Get-Content (Join-Path $root 'VERSION') | Select-Object -First 1
-          $stage = Join-Path $out 'AegisSlicer_Portable'
+          $stage = Join-Path $out 'LibreSlicer_Portable'
           Remove-Item $stage -Recurse -Force -ErrorAction SilentlyContinue
           New-Item -ItemType Directory -Force -Path $stage | Out-Null
-          Copy-Item 'build\win64\AegisSlicer.exe' $stage
+          $exe = Get-ChildItem 'build\win64' -Recurse -Filter '*LibreSlicer*.exe' | Select-Object -First 1
+          if (-not $exe) {
+            $exe = Get-ChildItem 'build\win64' -Recurse -Filter '*.exe' | Where-Object { $_.Name -match 'slicer' } | Select-Object -First 1
+          }
+          if (-not $exe) { throw 'Unable to locate LibreSlicer executable in build\win64' }
+          Copy-Item $exe.FullName (Join-Path $stage 'LibreSlicer.exe')
           Copy-Item 'LICENSE','SOURCE_OFFER.md','THIRD_PARTY_NOTICES.txt','CREDITS.md' -Destination $stage -ErrorAction SilentlyContinue
           if (Test-Path 'resources') { Copy-Item 'resources' -Destination (Join-Path $stage 'resources') -Recurse }
           if (Test-Path 'profiles')  { Copy-Item 'profiles'  -Destination (Join-Path $stage 'profiles')  -Recurse }
           if (Test-Path 'docs\FAQ.md'){ Copy-Item 'docs\FAQ.md' $stage }
           if (Test-Path 'scripts\post_slice_to_uvtools.bat'){ Copy-Item 'scripts\post_slice_to_uvtools.bat' $stage }
           Push-Location $out
-          $zip = "AegisSlicer_Portable_v$ver.zip"
+          $zip = "LibreSlicer_Portable_v$ver.zip"
           if (Test-Path $zip) { Remove-Item $zip -Force }
-          Compress-Archive -Path 'AegisSlicer_Portable\*' -DestinationPath $zip
+          Compress-Archive -Path 'LibreSlicer_Portable\*' -DestinationPath $zip
           Pop-Location
 
       - name: Build Inno installer
@@ -112,6 +117,6 @@ jobs:
         with:
           name: windows-v1-rc1-artifacts
           path: |
-            dist\AegisSlicer_Portable_v*.zip
+            dist\LibreSlicer_Portable_v*.zip
             build\win64\*.exe
           if-no-files-found: warn

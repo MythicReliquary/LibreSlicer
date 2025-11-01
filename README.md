@@ -3,9 +3,9 @@
 </p>
 
 # LibreSlicer
-> Creator‑first resin slicer. No telemetry. Prusa / Orca lineage.
+> Creator-first resin slicer. No telemetry. Prusa heritage.
 
-LibreSlicer is a Mythic Reliquary community build of the PrusaSlicer / OrcaSlicer
+LibreSlicer is a Mythic Reliquary community build of the PrusaSlicer
 line. We focus on SLA/resin workflows, predictable release cadence, and keeping
 the project compliant with the GNU Affero GPLv3. The binaries we distribute are
 built from this repository; every release contains the corresponding `SOURCE_OFFER.md`
@@ -22,7 +22,7 @@ alongside the installer.
 
 ## Feature Snapshot
 
-LibreSlicer inherits a large feature set from PrusaSlicer/OrcaSlicer, including:
+LibreSlicer inherits a large feature set from PrusaSlicer, including:
 
 - Cross-platform GUI (Windows / macOS / Linux) plus full command-line interface
 - Multi-material and multi-extruder support
@@ -57,7 +57,6 @@ as documented in [SECURITY.md](SECURITY.md).
 
 - Based on [PrusaSlicer](https://github.com/prusa3d/PrusaSlicer) and the original
   [Slic3r](https://github.com/Slic3r/Slic3r) by Alessandro Ranellucci.
-- Draws inspiration and fixes from the [OrcaSlicer](https://github.com/SoftFever/OrcaSlicer) community.
 - Some historical documentation lives in the upstream `doc/` directory; retain upstream
   references for advanced topics and macro syntax.
 

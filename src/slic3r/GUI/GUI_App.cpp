@@ -842,10 +842,7 @@ void GUI_App::post_init()
             bool cw_showed = this->config_wizard_startup();
             this->preset_updater->sync(preset_bundle, this);
             if (! cw_showed) {
-                // The CallAfter is needed as well, without it, GL extensions did not show.
-                // Also, we only want to show this when the wizard does not, so the new user
-                // sees something else than "we want something" on the first start.
-                show_send_system_info_dialog_if_needed();   
+                // Telemetry prompt disabled for LibreSlicer; preserve CallAfter for future hooks.
             }  
             // app version check is asynchronous and triggers blocking dialog window, better call it last
 #if LIBRESLICER_UPDATER && !LS_DISABLE_UPDATE_CHECKER
@@ -854,7 +851,7 @@ void GUI_App::post_init()
         });
     }
 
-    // Set PrusaSlicer version and save to PrusaSlicer.ini or PrusaSlicerGcodeViewer.ini.
+    // Set LibreSlicer version and save to LibreSlicer.ini or LibreSlicerGcodeViewer.ini.
     app_config->set("version", SLIC3R_VERSION);
 
 #ifdef _WIN32

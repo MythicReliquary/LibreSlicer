@@ -124,7 +124,7 @@ enum class NotificationType
 	RepairFinished,
 	// Short meesage to fill space between start and finish of export
 	ExportOngoing,
-	// Progressbar of download from prusaslicer:// url
+	// Progress bar of download from libreslicer:// URL
 	URLDownload,
 	// MacOS specific - PS comes forward even when downloader is not allowed
 	URLNotRegistered,

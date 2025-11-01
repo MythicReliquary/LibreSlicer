@@ -141,9 +141,9 @@ endif()
 
 # Create a slic3r executable
 # Process mainfests for various platforms.
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/LibreSlicer.rc.in ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer.rc @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/LibreSlicer.rc.in ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer.rc @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/LibreSlicer.manifest ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer.manifest @ONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/PrusaSlicer-gcodeviewer.rc.in ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer-gcodeviewer.rc @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/LibreSlicer-gcodeviewer.rc.in ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer-gcodeviewer.rc @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/PrusaSlicer.manifest.in ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer.manifest @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/osx/Info.plist.in ${CMAKE_CURRENT_BINARY_DIR}/Info.plist @ONLY)
 if (WIN32)
@@ -170,7 +170,7 @@ if (APPLE)
     # -liconv: boost links to libiconv by default
     target_link_libraries(PrusaSlicer PRIVATE "-liconv -framework IOKit" "-framework CoreFoundation" -lc++)
 elseif (MSVC)
-    # Manifest is provided through PrusaSlicer.rc, don't generate your own.
+    # Manifest is provided through LibreSlicer.rc, don't generate your own.
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /MANIFEST:NO")
 else ()
     # Boost on Raspberry-Pi does not link to pthreads explicitely.
@@ -209,7 +209,7 @@ if (WIN32)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -municode")
     endif()
 
-    add_executable(PrusaSlicer_app_gui WIN32 PrusaSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer.rc)
+    add_executable(PrusaSlicer_app_gui WIN32 PrusaSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer.rc)
     # Generate debug symbols even in release mode.
     if(MSVC)
         target_link_options(PrusaSlicer_app_gui PUBLIC "$<$<CONFIG:RELEASE>:/DEBUG>")
@@ -219,7 +219,7 @@ if (WIN32)
     set_target_properties(PrusaSlicer_app_gui PROPERTIES OUTPUT_NAME "libreslicer")
     target_link_libraries(PrusaSlicer_app_gui PRIVATE boost_headeronly)
 
-    add_executable(PrusaSlicer_app_console PrusaSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer.rc)
+    add_executable(PrusaSlicer_app_console PrusaSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer.rc)
     # Generate debug symbols even in release mode.
     if (MSVC)
         target_link_options(PrusaSlicer_app_console PUBLIC "$<$<CONFIG:RELEASE>:/DEBUG>")
@@ -229,7 +229,7 @@ if (WIN32)
     set_target_properties(PrusaSlicer_app_console PROPERTIES OUTPUT_NAME "libreslicer-console")
     target_link_libraries(PrusaSlicer_app_console PRIVATE boost_headeronly)
 
-    add_executable(PrusaSlicer_app_gcodeviewer WIN32 PrusaSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer-gcodeviewer.rc)
+    add_executable(PrusaSlicer_app_gcodeviewer WIN32 PrusaSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer-gcodeviewer.rc)
     # Generate debug symbols even in release mode.
     if (MSVC)
         target_link_options(PrusaSlicer_app_gcodeviewer PUBLIC "$<$<CONFIG:RELEASE>:/DEBUG>")
