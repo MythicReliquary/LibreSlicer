@@ -25,7 +25,7 @@ Options:
   --printer-profile PATH Override printer profile ini
   --print-profile PATH   Override print profile ini
   --resin-profile PATH   Override resin profile ini
-  --set KEY=VALUE        Append a `--set KEY=VALUE` override when invoking PrusaSlicer
+  --set KEY=VALUE        Append a '--set KEY=VALUE' override when invoking PrusaSlicer
   -h, --help             Show this help message
 USAGE
 }
