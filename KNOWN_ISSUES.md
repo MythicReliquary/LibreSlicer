@@ -10,7 +10,7 @@ If you’re on macOS (Intel or Apple Silicon), please test Aegis Slicer v1.0.0:
 - Download the `.dmg` from the release.
 - Drag to Applications.
 - Open via right-click → Open (to bypass unsigned app warning).
-- Report any startup or slicing errors here: https://github.com/MythicReliquary/Aegis-Slicer/issues
+- Report any startup or slicing errors here: https://github.com/MythicReliquary/LibreSlicer/issues
 
 ## Other known issues
 - See open issues on GitHub for the latest details.

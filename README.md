@@ -1,80 +1,62 @@
+# LibreSlicer
+> Creator‑first resin slicer. No telemetry. Prusa / Orca lineage.
 
-![PrusaSlicer logo](/resources/icons/PrusaSlicer.png?raw=true)
+LibreSlicer is a Mythic Reliquary community build of the PrusaSlicer / OrcaSlicer
+line. We focus on SLA/resin workflows, predictable release cadence, and keeping
+the project compliant with the GNU Affero GPLv3. The binaries we distribute are
+built from this repository; every release contains the corresponding `SOURCE_OFFER.md`
+alongside the installer.
 
-# LibreSlicer 1.0.0 — Supporter Build (AGPLv3)
-> Creator-first resin slicer. No telemetry. Prusa/Orca lineage.
+- **Latest builds:** see the [Releases page](https://github.com/MythicReliquary/LibreSlicer/releases).
+- **Source offer:** `COMPLIANCE/SOURCE_OFFER.md` (also shipped inside each release).
+- **License:** GNU AGPLv3 (see `LICENSE`). Third-party notices live in `THIRD_PARTY_NOTICES.txt`.
 
-LibreSlicer 1.0.0 is provided under the terms of AGPL-3.0-or-later. The corresponding source offer ships in `COMPLIANCE/SOURCE_OFFER.md` and every release artifact includes `SOURCE_OFFER.md`.
+## Support & Issue Tracking
 
-You may want to check the [PrusaSlicer project page](https://www.prusa3d.com/prusaslicer/).
-Prebuilt binaries: see Releases. LibreSlicer is AGPLv3; a SOURCE_OFFER ships with each release.
+- File bugs or feature requests here: [MythicReliquary/LibreSlicer issues](https://github.com/MythicReliquary/LibreSlicer/issues/new/choose)
+- Review open problems: [KNOWN_ISSUES.md](KNOWN_ISSUES.md)
 
-PrusaSlicer takes 3D models (STL, OBJ, AMF) and converts them into G-code
-instructions for FFF printers or PNG layers for mSLA 3D printers. It's
-compatible with any modern printer based on the RepRap toolchain, including all
-those based on the Marlin, Prusa, Sprinter and Repetier firmware. It also works
-with Mach3, LinuxCNC and Machinekit controllers.
+## Feature Snapshot
 
-PrusaSlicer is based on [Slic3r](https://github.com/Slic3r/Slic3r) by Alessandro Ranellucci and the RepRap community.
+LibreSlicer inherits a large feature set from PrusaSlicer/OrcaSlicer, including:
 
-See the [project homepage](https://www.prusa3d.com/slic3r-prusa-edition/) and
-the [documentation directory](doc/) for more information.
+- Cross-platform GUI (Windows / macOS / Linux) plus full command-line interface
+- Multi-material and multi-extruder support
+- SLA resin workflow (hollowing, drill, drainage, custom supports)
+- Wide G-code flavor coverage (RepRap, Marlin, Klipper, MakerBot, Mach3, Machinekit, …)
+- Advanced infill and shell controls, variable layer heights, spiral vase mode
+- Built-in post-processing scripts, custom G-code macros, dynamic cooling logic
+- Extensive unit tests and continuous integration
 
-### What language is it written in?
+LibreSlicer additions emphasize creator-friendly defaults, resin QA pipelines, and
+compliance automation. See release notes for changes per build.
 
-All user facing code is written in C++, and some legacy code as well as unit
-tests are written in Perl. Perl is not required for either development or use
-of PrusaSlicer.
+## Build From Source
 
-The slicing core is the `libslic3r` library, which can be built and used in a standalone way.
-The command line interface is a thin wrapper over `libslic3r`.
+We ship scripts and docs for reproducible builds:
 
-### What are PrusaSlicer's main features?
+- [Windows](docs/BUILD_WINDOWS.md) – MSVC + Ninja + NSIS one-liner
+- [macOS](doc/How%20to%20build%20-%20Mac%20OS.md) (upstream instructions still apply)
+- [Linux](doc/How%20to%20build%20-%20Linux%20et%20al.md)
+- [Reproducibility notes](REPRODUCIBLE-BUILD.md)
 
-Key features are:
+## Contributing
 
-* **multi-platform** (Linux/Mac/Win) and packaged as standalone-app with no dependencies required
-* complete **command-line interface** to use it with no GUI
-* multi-material **(multiple extruders)** object printing
-* multiple G-code flavors supported (RepRap, Makerbot, Mach3, Machinekit etc.)
-* ability to plate **multiple objects having distinct print settings**
-* **multithread** processing
-* **STL auto-repair** (tolerance for broken models)
-* wide automated unit testing
+Check out [CONTRIBUTING.md](CONTRIBUTING.md) for coding standards, PR expectations,
+and release-branch etiquette. Pull requests and community profiles are welcome.
+Please open an issue first for significant reworks so we can plan review bandwidth.
 
-Other major features are:
+Security reports should go to [support@mythicreliquary.com](mailto:support@mythicreliquary.com)
+as documented in [SECURITY.md](SECURITY.md).
 
-* combine infill every 'n' perimeters layer to speed up printing
-* **3D preview** (including multi-material files)
-* **multiple layer heights** in a single print
-* **spiral vase** mode for bumpless vases
-* fine-grained configuration of speed, acceleration, extrusion width
-* several infill patterns including honeycomb, spirals, Hilbert curves
-* support material, raft, brim, skirt
-* **standby temperature** and automatic wiping for multi-extruder printing
-* [customizable **G-code macros**](https://github.com/prusa3d/PrusaSlicer/wiki/Slic3r-Prusa-Edition-Macro-Language) and output filename with variable placeholders
-* support for **post-processing scripts**
-* **cooling logic** controlling fan speed and dynamic print speed
+## Credits & Upstream References
 
-### Development
+- Based on [PrusaSlicer](https://github.com/prusa3d/PrusaSlicer) and the original
+  [Slic3r](https://github.com/Slic3r/Slic3r) by Alessandro Ranellucci.
+- Draws inspiration and fixes from the [OrcaSlicer](https://github.com/SoftFever/OrcaSlicer) community.
+- Some historical documentation lives in the upstream `doc/` directory; retain upstream
+  references for advanced topics and macro syntax.
 
-If you want to compile the source yourself, follow the instructions on one of
-these documentation pages:
-* [Linux](doc/How%20to%20build%20-%20Linux%20et%20al.md)
-* [macOS](doc/How%20to%20build%20-%20Mac%20OS.md)
-* [Windows](doc/How%20to%20build%20-%20Windows.md)
-
-### Can I help?
-
-Sure! You can do the following to find things that are available to help with:
-* Add an [issue](https://github.com/prusa3d/PrusaSlicer/issues) to the github tracker if it isn't already present.
-* Look at [issues labeled "volunteer needed"](https://github.com/prusa3d/PrusaSlicer/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3A%22volunteer+needed%22)
-
-### What's PrusaSlicer license?
-
-PrusaSlicer is licensed under the _GNU Affero General Public License, version 3_.
-The PrusaSlicer is originally based on Slic3r by Alessandro Ranellucci.
-
-### How can I use PrusaSlicer from the command line?
-
-Please refer to the [Command Line Interface](https://github.com/prusa3d/PrusaSlicer/wiki/Command-Line-Interface) wiki page.
+LibreSlicer branding, icons, and documentation are © Mythic Reliquary LLC. Upstream
+credits and third-party license obligations remain intact—see `CREDITS.md` and
+`THIRD_PARTY_NOTICES.txt` for details.
