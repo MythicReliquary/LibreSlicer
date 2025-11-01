@@ -1,0 +1,13 @@
+{
+  "models": [
+    {
+      "id": "siraya-tech-v5",
+      "display_name": "Siraya Tech Test Model V5",
+      "filename": "v5_placeholder.stl",
+      "source_page": "https://siraya.tech/pages/siraya-tech-test-model",
+      "download_url": null,
+      "sha256": null,
+      "notes": "Placeholder geometry ships in-tree so CI wiring can be exercised offline. Replace with mirrored STL and update download_url/sha256 for production runs."
+    }
+  ]
+}
