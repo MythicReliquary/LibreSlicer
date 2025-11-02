@@ -25,8 +25,13 @@ find_package(LibBGCode CONFIG QUIET COMPONENTS Convert)
 if(NOT LibBGCode_FOUND)
     message(STATUS "LibBGCode not found; fetching vendor snapshot")
     include(FetchContent)
+    set(_heatshrink_url "https://github.com/atomicobject/heatshrink/archive/refs/tags/v0.4.1.zip")
+    set(_heatshrink_archive "${CMAKE_SOURCE_DIR}/deps/downloads/heatshrink-v0.4.1.zip")
+    if(EXISTS "${_heatshrink_archive}")
+        set(_heatshrink_url "${_heatshrink_archive}")
+    endif()
     FetchContent_Declare(libbgcode_heatshrink
-        URL https://github.com/atomicobject/heatshrink/archive/refs/tags/v0.4.1.zip
+        URL ${_heatshrink_url}
         URL_HASH SHA256=2e2db2366bdf36cb450f0b3229467cbc6ea81a8c690723e4227b0b46f92584fe
         DOWNLOAD_EXTRACT_TIMESTAMP TRUE
     )
@@ -76,8 +81,13 @@ if(NOT LibBGCode_FOUND)
     set(LibBGCode_BUILD_CMD_TOOL OFF CACHE BOOL "" FORCE)
     set(LibBGCode_BUILD_COMPONENT_Binarize ON CACHE BOOL "" FORCE)
     set(LibBGCode_BUILD_COMPONENT_Convert ON CACHE BOOL "" FORCE)
+    set(_libbgcode_url "https://github.com/prusa3d/libbgcode/archive/bc390aab4427589a6402b4c7f65cf4d0a8f987ec.zip")
+    set(_libbgcode_archive "${CMAKE_SOURCE_DIR}/deps/downloads/libbgcode-bc390aab.zip")
+    if(EXISTS "${_libbgcode_archive}")
+        set(_libbgcode_url "${_libbgcode_archive}")
+    endif()
     FetchContent_Declare(libbgcode
-        URL https://github.com/prusa3d/libbgcode/archive/bc390aab4427589a6402b4c7f65cf4d0a8f987ec.zip
+        URL ${_libbgcode_url}
         URL_HASH SHA256=0c86cb67232089728233014f937e2a07d133a61e31dd8811a9c905e563a49f24
         DOWNLOAD_EXTRACT_TIMESTAMP TRUE
         CMAKE_ARGS

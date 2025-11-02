@@ -73,16 +73,16 @@ if (SLIC3R_GUI)
         set (wxWidgets_CONFIG_OPTIONS "--toolkit=gtk${SLIC3R_GTK}")
     endif ()
 
-        # Prefer vcpkg config mode first
-        find_package(wxWidgets CONFIG QUIET COMPONENTS base core adv html gl)
-        if(TARGET wxWidgets::wxWidgets)
-            message(STATUS "Using vcpkg wxWidgets config (wxWidgets::wxWidgets)")
-            set(WXWIDGETS_LIBRARIES wxWidgets::wxWidgets)
-        else()
-            find_package(wxWidgets 3.2 MODULE REQUIRED COMPONENTS base core adv html gl)
-            include(${wxWidgets_USE_FILE})
-            set(WXWIDGETS_LIBRARIES ${wxWidgets_LIBRARIES})
-        endif()
+    # Prefer vcpkg config mode first
+    find_package(wxWidgets CONFIG QUIET COMPONENTS base core adv html gl)
+    if(TARGET wxWidgets::wxWidgets)
+        message(STATUS "Using vcpkg wxWidgets config (wxWidgets::wxWidgets)")
+        set(WXWIDGETS_LIBRARIES wxWidgets::wxWidgets)
+    else()
+        find_package(wxWidgets 3.2 MODULE REQUIRED COMPONENTS base core adv html gl)
+        include(${wxWidgets_USE_FILE})
+        set(WXWIDGETS_LIBRARIES ${wxWidgets_LIBRARIES})
+    endif()
 
     slic3r_remap_configs(wx::wxhtml wx::wxadv wx::wxgl wx::wxcore wx::wxbase RelWithDebInfo Release)
 
@@ -259,12 +259,15 @@ if (WIN32)
         set(_gui_target PrusaSlicer)
     endif()
 
+
     if(WIN32 AND TARGET ${_gui_target})
         set(_rc "${CMAKE_SOURCE_DIR}/src/platform/win/libreslicer.rc")
         if(EXISTS "${_rc}")
             target_sources(${_gui_target} PRIVATE "${_rc}")
         endif()
     endif()
+
+endif() # closes the outer if (WIN32)
 
 if(COMMAND brand_assets_for_target)
     foreach(_brand_target PrusaSlicer PrusaSlicer_app_gui PrusaSlicer_app_console PrusaSlicer_app_gcodeviewer)

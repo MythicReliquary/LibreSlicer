@@ -104,7 +104,12 @@ CMAKE_DEPENDENT_OPTION(SLIC3R_DESKTOP_INTEGRATION "Allow perfoming desktop integ
 
 set(OPENVDB_FIND_MODULE_PATH "" CACHE PATH "Path to OpenVDB installation's find modules.")
 
-set(SLIC3R_GTK "2" CACHE STRING "GTK version to use with wxWidgets on Linux")
+set(_slic3r_default_gtk "2")
+if(UNIX AND NOT APPLE)
+    set(_slic3r_default_gtk "3")
+endif()
+set(SLIC3R_GTK "${_slic3r_default_gtk}" CACHE STRING "GTK version to use with wxWidgets on Linux")
+unset(_slic3r_default_gtk)
 
 set(IS_CROSS_COMPILE FALSE)
 

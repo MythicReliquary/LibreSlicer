@@ -39,6 +39,9 @@ Add one per line: <old-path> -> <new-path> 301
 ## Legal & compliance
 - Supporter Build remains AGPLv3 with **SOURCE_OFFER** included in every release bundle.
 - **NOTICE** updated to reflect the new project name while preserving historical credits.
+- Keep build notes synced:
+  - Linux defaults to GTK3 wxWidgets (`SLIC3R_GTK=3`).
+  - Tests rely on Catch2 v3.x (ensure Windows toolchain pulls the same version).
 - No telemetry at launch; diagnostics remain optional/opt-in in a later version.
 
 ## Contact
