@@ -28,6 +28,7 @@
 #include "slic3r/GUI/I18N.hpp"
 
 #include <algorithm>
+#include <limits>
 #include <iterator>
 #include <exception>
 #include <cstdlib>
@@ -2925,19 +2926,48 @@ void GUI_App::load_current_presets(bool check_printer_presets_ /*= true*/)
         check_printer_presets();
 
     PrinterTechnology printer_technology = preset_bundle->printers.get_edited_preset().printer_technology();
-	this->plater()->set_printer_technology(printer_technology);
+        this->plater()->set_printer_technology(printer_technology);
     for (Tab *tab : tabs_list)
-		if (tab->supports_printer_technology(printer_technology)) {
-			if (tab->type() == Preset::TYPE_PRINTER) {
-				static_cast<TabPrinter*>(tab)->update_pages();
-				// Mark the plater to update print bed by tab->load_current_preset() from Plater::on_config_change().
-				this->plater()->force_print_bed_update();
-			}
-            else if (tab->type() == Preset::TYPE_FILAMENT)
-                // active extruder can be changed in a respect to the new loaded configurations, if some filament preset will be modified
-                static_cast<TabFilament*>(tab)->invalidate_active_extruder();
-			tab->load_current_preset();
-		}
+            if (tab->supports_printer_technology(printer_technology)) {
+                if (tab->type() == Preset::TYPE_PRINTER) {
+                    static_cast<TabPrinter*>(tab)->update_pages();
+                    // Mark the plater to update print bed by tab->load_current_preset() from Plater::on_config_change().
+                    this->plater()->force_print_bed_update();
+                }
+                else if (tab->type() == Preset::TYPE_FILAMENT)
+                    // active extruder can be changed in a respect to the new loaded configurations, if some filament preset will be modified
+                    static_cast<TabFilament*>(tab)->invalidate_active_extruder();
+                tab->load_current_preset();
+            }
+}
+
+bool GUI_App::switch_printer_technology(PrinterTechnology tech)
+{
+    if (preset_bundle == nullptr || plater_ == nullptr)
+        return false;
+
+    auto& printers = preset_bundle->printers;
+    const auto& presets = printers();
+
+    std::size_t candidate_idx = std::numeric_limits<std::size_t>::max();
+    for (std::size_t idx = 0; idx < presets.size(); ++idx) {
+        const Preset& preset = presets[idx];
+        if (!preset.is_visible())
+            continue;
+        if (preset.printer_technology() != tech)
+            continue;
+        candidate_idx = idx;
+        break;
+    }
+
+    if (candidate_idx == std::numeric_limits<std::size_t>::max())
+        return false;
+
+    if (printers.get_selected_idx() != candidate_idx)
+        printers.select_preset(candidate_idx);
+
+    load_current_presets();
+    return true;
 }
 
 bool GUI_App::OnExceptionInMainLoop()

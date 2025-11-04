@@ -22,6 +22,8 @@
 - Linux: documented source build path (GTK3 default, Catch2 v3 test harness).
 - Help menu trimmed to a single “LibreSlicer Website” entry while docs are rebuilt.
 - Elegoo SLA profiles seeded; resin QA smoke tests run in CI.
+- Dual-mode plater toggle exposes Resin and FDM workflows side-by-side.
+- Mesh repair lives in the object menu for one-click manifold cleanup.
 
 ## Next Wave (v1.1)
 - Ship ready-made profiles for Qidi X Max 3 and Elegoo Mars 5 with Siraya Tech Fast Grey.

@@ -46,6 +46,7 @@ class ModelObject;
 class ModelInstance;
 class Print;
 class SLAPrint;
+namespace FDM { class Engine; }
 enum PrintObjectStep : unsigned int;
 enum SLAPrintObjectStep : unsigned int;
 enum class ConversionType : int;
@@ -177,6 +178,8 @@ public:
     Print& fff_print();
     const SLAPrint& sla_print() const;
     SLAPrint& sla_print();
+    FDM::Engine& fdm_engine();
+    const FDM::Engine& fdm_engine() const;
 
     void new_project();
     void load_project();
@@ -379,6 +382,7 @@ public:
     bool can_decrease_instances(int obj_idx = -1) const;
     bool can_set_instance_to_object() const;
     bool can_fix_through_winsdk() const;
+    bool can_repair_mesh() const;
     bool can_simplify() const;
     bool can_split_to_objects() const;
     bool can_split_to_volumes() const;

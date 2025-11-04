@@ -30,3 +30,5 @@ The script:
   1. Install LibreSlicer and ensure the splash screen says **Supporter Build v1.0**.
   2. Launch the app, open `tests/models/rook/rook.3mf`, slice, and export G-code.
   3. Uninstall via **Apps & Features**; confirm `%ProgramFiles%\LibreSlicer` is removed.
+  4. Toggle the Resin | FDM switch in the plater to verify both workflows load without errors.
+  5. Invoke **Repair model** from the object menu and confirm the summary notification reports the fixes applied.

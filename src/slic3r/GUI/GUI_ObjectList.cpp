@@ -7,10 +7,12 @@
 #include "libslic3r/libslic3r.h"
 #include "libslic3r/PresetBundle.hpp"
 #include "libslic3r/TextConfiguration.hpp"
+#include "libslic3r/MeshRepair.hpp"
 #include "GUI_ObjectList.hpp"
 #include "GUI_Factories.hpp"
 #include "GUI_ObjectManipulation.hpp"
 #include "GUI_ObjectLayers.hpp"
+#include "GUI.hpp"
 #include "GUI_App.hpp"
 #include "I18N.hpp"
 #include "Plater.hpp"
@@ -36,6 +38,7 @@
 #include <wx/progdlg.h>
 #include <wx/listbook.h>
 #include <wx/numformatter.h>
+#include <wx/busyinfo.h>
 
 #include "slic3r/Utils/FixModelByWin10.hpp"
 
@@ -4689,6 +4692,72 @@ void ObjectList::fix_through_winsdk()
     if (msg.IsEmpty())
         msg = _L("Repairing was canceled");
     plater->get_notification_manager()->push_notification(NotificationType::RepairFinished, NotificationManager::NotificationLevel::PrintInfoShortNotificationLevel, boost::nowide::narrow(msg));
+}
+
+void ObjectList::repair_selection_mesh()
+{
+    auto plater = wxGetApp().plater();
+    if (!plater->can_repair_mesh())
+        return;
+
+    if (!plater->canvas3D()->get_gizmos_manager().check_gizmos_closed_except(GLGizmosManager::Undefined))
+        return;
+
+    std::vector<int> obj_idxs, vol_idxs;
+    get_selection_indexes(obj_idxs, vol_idxs);
+    if (obj_idxs.empty())
+        return;
+
+    wxBusyCursor busy;
+    wxBusyInfo info(_L("Repairing model"), plater);
+
+    plater->take_snapshot(_L("Repair Model"));
+
+    const std::string supports_removed = _u8L("Custom supports, seams and multimaterial painting were removed after repairing the mesh.");
+
+    MeshRepair::Options options{};
+    MeshRepair::Report summary;
+
+    auto accumulate = [&summary](const MeshRepair::Report& report) {
+        summary.objects_processed += report.objects_processed;
+        summary.volumes_processed += report.volumes_processed;
+        summary.volumes_repaired += report.volumes_repaired;
+        summary.total_errors_fixed += report.total_errors_fixed;
+        summary.modifications_applied = summary.modifications_applied || report.modifications_applied;
+        summary.details.insert(summary.details.end(), report.details.begin(), report.details.end());
+    };
+
+    if (vol_idxs.empty()) {
+        for (int obj_idx : obj_idxs) {
+            plater->clear_before_change_mesh(obj_idx, supports_removed);
+            MeshRepair::Report report = MeshRepair::repair_model_object(*plater->model().objects[obj_idx], options);
+            accumulate(report);
+            plater->changed_mesh(obj_idx);
+            update_item_error_icon(obj_idx, -1);
+        }
+    } else {
+        const int obj_idx = obj_idxs.front();
+        std::vector<std::size_t> volume_filter;
+        volume_filter.reserve(vol_idxs.size());
+        for (int vol_idx : vol_idxs)
+            volume_filter.push_back(static_cast<std::size_t>(vol_idx));
+
+        plater->clear_before_change_mesh(obj_idx, supports_removed);
+        MeshRepair::Report report = MeshRepair::repair_model_object(*plater->model().objects[obj_idx], options, &volume_filter);
+        accumulate(report);
+        plater->changed_mesh(obj_idx);
+        for (int vol_idx : vol_idxs)
+            update_item_error_icon(obj_idx, vol_idx);
+    }
+
+    if (summary.modifications_applied) {
+        const wxString message = format_wxstr(
+            _L_PLURAL("Repaired %1$d mesh issue.", "Repaired %1$d mesh issues.", summary.total_errors_fixed),
+            (int)summary.total_errors_fixed);
+        GUI::show_info(plater, message);
+    } else {
+        GUI::show_info(plater, _L("Meshes were already manifold."));
+    }
 }
 
 void ObjectList::simplify()

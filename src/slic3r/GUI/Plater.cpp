@@ -22,7 +22,9 @@
 
 #include <cstddef>
 #include <algorithm>
+#include <array>
 #include <numeric>
+#include <cassert>
 #include <vector>
 #include <string>
 #include <regex>
@@ -48,6 +50,7 @@
 #include <wx/wupdlock.h>
 #include <wx/numdlg.h>
 #include <wx/debug.h>
+#include <wx/radiobut.h>
 #include <wx/busyinfo.h>
 #include <wx/stdpaths.h>
 #ifdef _WIN32
@@ -70,6 +73,7 @@
 #include "libslic3r/SLA/ReprojectPointsOnMesh.hpp"
 #include "libslic3r/Polygon.hpp"
 #include "libslic3r/Print.hpp"
+#include "libslic3r/FDM/FDMEngine.hpp"
 #include "libslic3r/PrintConfig.hpp"
 #include "libslic3r/SLAPrint.hpp"
 #include "libslic3r/Utils.hpp"
@@ -1744,6 +1748,7 @@ struct Plater::priv
     Slic3r::Model               model;
     PrinterTechnology           printer_technology = ptFFF;
     Slic3r::GCodeProcessorResult gcode_result;
+    std::unique_ptr<FDM::Engine> fdm_engine;
 
     // GUI elements
     wxSizer* panel_sizer{ nullptr };
@@ -1761,6 +1766,11 @@ struct Plater::priv
     GLToolbar collapse_toolbar;
     Preview *preview;
     std::unique_ptr<NotificationManager> notification_manager;
+    wxPanel* mode_strip{ nullptr };
+    wxRadioButton* radio_fdm{ nullptr };
+    wxRadioButton* radio_resin{ nullptr };
+    std::array<wxStaticText*, 6> workflow_labels{};
+    wxStaticText* workflow_caption{ nullptr };
 
     ProjectDirtyStateManager dirty_state;
 
@@ -1796,6 +1806,11 @@ struct Plater::priv
 
     priv(Plater *q, MainFrame *main_frame);
     ~priv();
+
+    void init_mode_strip();
+    void refresh_mode_strip();
+    void update_workflow_labels();
+    bool apply_mode_switch(PrinterTechnology tech);
 
     bool is_project_dirty() const { return dirty_state.is_dirty(); }
     bool is_presets_dirty() const { return dirty_state.is_presets_dirty(); }
@@ -2030,6 +2045,7 @@ struct Plater::priv
     bool can_arrange() const;
     bool can_layers_editing() const;
     bool can_fix_through_winsdk() const;
+    bool can_repair_mesh() const;
     bool can_simplify() const;
     bool can_set_instance_to_object() const;
     bool can_mirror() const;
@@ -2109,6 +2125,7 @@ Plater::priv::priv(Plater *q, MainFrame *main_frame)
         }))
     , sidebar(new Sidebar(q))
     , notification_manager(std::make_unique<NotificationManager>(q))
+    , fdm_engine(std::make_unique<FDM::Engine>(&fff_print))
     , m_worker{q, std::make_unique<NotificationProgressIndicator>(notification_manager.get()), "ui_worker"}
     , m_sla_import_dlg{new SLAImportDialog{q}}
     , delayed_scene_refresh(false)
@@ -2153,14 +2170,20 @@ Plater::priv::priv(Plater *q, MainFrame *main_frame)
     });
 
     update();
+    init_mode_strip();
 
-    auto *hsizer = new wxBoxSizer(wxHORIZONTAL);
+    auto *content_sizer = new wxBoxSizer(wxHORIZONTAL);
     panel_sizer = new wxBoxSizer(wxHORIZONTAL);
     panel_sizer->Add(view3D, 1, wxEXPAND | wxALL, 0);
     panel_sizer->Add(preview, 1, wxEXPAND | wxALL, 0);
-    hsizer->Add(panel_sizer, 1, wxEXPAND | wxALL, 0);
-    hsizer->Add(sidebar, 0, wxEXPAND | wxLEFT | wxRIGHT, 0);
-    q->SetSizer(hsizer);
+    content_sizer->Add(panel_sizer, 1, wxEXPAND | wxALL, 0);
+    content_sizer->Add(sidebar, 0, wxEXPAND | wxLEFT | wxRIGHT, 0);
+
+    auto *root_sizer = new wxBoxSizer(wxVERTICAL);
+    if (mode_strip != nullptr)
+        root_sizer->Add(mode_strip, 0, wxEXPAND | wxBOTTOM, 5);
+    root_sizer->Add(content_sizer, 1, wxEXPAND | wxALL, 0);
+    q->SetSizer(root_sizer);
 
     menus.init(q);
 
@@ -2401,6 +2424,100 @@ void Plater::priv::update(unsigned int flags)
 
     if (get_config_bool("autocenter") && this->sidebar->obj_manipul()->IsShown())
         this->sidebar->obj_manipul()->UpdateAndShow(true);
+
+    refresh_mode_strip();
+}
+
+void Plater::priv::init_mode_strip()
+{
+    if (mode_strip != nullptr)
+        return;
+
+    mode_strip = new wxPanel(q, wxID_ANY);
+    mode_strip->SetBackgroundColour(q->GetBackgroundColour());
+
+    auto *strip_sizer = new wxBoxSizer(wxVERTICAL);
+
+    auto *mode_row = new wxBoxSizer(wxHORIZONTAL);
+    wxStaticText *mode_label = new wxStaticText(mode_strip, wxID_ANY, _L("Mode:"));
+    mode_row->Add(mode_label, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 8);
+
+    radio_fdm   = new wxRadioButton(mode_strip, wxID_ANY, _L("FDM"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+    radio_resin = new wxRadioButton(mode_strip, wxID_ANY, _L("Resin"));
+
+    mode_row->Add(radio_fdm, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 8);
+    mode_row->Add(radio_resin, 0, wxALIGN_CENTER_VERTICAL);
+
+    strip_sizer->Add(mode_row, 0, wxEXPAND | wxBOTTOM, 4);
+
+    auto *workflow_row = new wxBoxSizer(wxHORIZONTAL);
+    workflow_caption = new wxStaticText(mode_strip, wxID_ANY, _L("Workflow:"));
+    workflow_row->Add(workflow_caption, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 8);
+
+    const std::array<wxString, 6> base_steps = {
+        _L("Import"),
+        _L("Repair"),
+        _L("Orient"),
+        _L("Supports"),
+        _L("Slice"),
+        _L("Send to printer")
+    };
+
+    for (std::size_t i = 0; i < base_steps.size(); ++i) {
+        wxStaticText *label = new wxStaticText(mode_strip, wxID_ANY, base_steps[i]);
+        workflow_labels[i] = label;
+        workflow_row->Add(label, 0, wxALIGN_CENTER_VERTICAL);
+        if (i + 1 < base_steps.size())
+            workflow_row->AddSpacer(12);
+    }
+
+    strip_sizer->Add(workflow_row, 0, wxEXPAND);
+    mode_strip->SetSizer(strip_sizer);
+
+    radio_fdm->Bind(wxEVT_RADIOBUTTON, [this](wxCommandEvent&) {
+        if (!this->apply_mode_switch(ptFFF))
+            this->refresh_mode_strip();
+    });
+    radio_resin->Bind(wxEVT_RADIOBUTTON, [this](wxCommandEvent&) {
+        if (!this->apply_mode_switch(ptSLA))
+            this->refresh_mode_strip();
+    });
+
+    refresh_mode_strip();
+}
+
+void Plater::priv::refresh_mode_strip()
+{
+    if (mode_strip == nullptr)
+        return;
+    const bool resin_mode = printer_technology == ptSLA;
+    if (radio_resin != nullptr)
+        radio_resin->SetValue(resin_mode);
+    if (radio_fdm != nullptr)
+        radio_fdm->SetValue(!resin_mode);
+    update_workflow_labels();
+}
+
+void Plater::priv::update_workflow_labels()
+{
+    if (mode_strip == nullptr)
+        return;
+
+    const wxString final_step = (printer_technology == ptSLA)
+        ? _L("Validate in UVTools")
+        : _L("Send to printer");
+
+    if (workflow_labels[5] != nullptr)
+        workflow_labels[5]->SetLabel(final_step);
+
+    mode_strip->Layout();
+}
+
+bool Plater::priv::apply_mode_switch(PrinterTechnology tech)
+{
+    if (printer_technology == tech)
+        return true;
+    return wxGetApp().switch_printer_technology(tech);
 }
 
 void Plater::priv::select_view(const std::string& direction)
@@ -4912,6 +5029,16 @@ bool Plater::priv::can_fix_through_winsdk() const
 #endif // FIX_THROUGH_WINSDK_ALWAYS
 }
 
+bool Plater::priv::can_repair_mesh() const
+{
+    if (!m_worker.is_idle() || q->canvas3D()->get_gizmos_manager().is_in_editing_mode())
+        return false;
+
+    std::vector<int> obj_idxs, vol_idxs;
+    sidebar->obj_list()->get_selection_indexes(obj_idxs, vol_idxs);
+    return !obj_idxs.empty();
+}
+
 bool Plater::priv::can_simplify() const
 {
     const int obj_idx = get_selected_object_idx();
@@ -5339,6 +5466,18 @@ const Print&    Plater::fff_print() const   { return p->fff_print; }
 Print&          Plater::fff_print()         { return p->fff_print; }
 const SLAPrint& Plater::sla_print() const   { return p->sla_print; }
 SLAPrint&       Plater::sla_print()         { return p->sla_print; }
+
+FDM::Engine& Plater::fdm_engine()
+{
+    assert(p->fdm_engine);
+    return *p->fdm_engine;
+}
+
+const FDM::Engine& Plater::fdm_engine() const
+{
+    assert(p->fdm_engine);
+    return *p->fdm_engine;
+}
 
 bool Plater::is_project_temp() const
 {
@@ -7879,6 +8018,8 @@ bool Plater::set_printer_technology(PrinterTechnology printer_technology)
     p->notification_manager->set_fff(printer_technology == ptFFF);
     p->notification_manager->set_slicing_progress_hidden();
 
+    p->refresh_mode_strip();
+
     return ret;
 }
 
@@ -8201,6 +8342,7 @@ bool Plater::can_increase_instances() const { return p->can_increase_instances()
 bool Plater::can_decrease_instances(int obj_idx/* = -1*/) const { return p->can_decrease_instances(obj_idx); }
 bool Plater::can_set_instance_to_object() const { return p->can_set_instance_to_object(); }
 bool Plater::can_fix_through_winsdk() const { return p->can_fix_through_winsdk(); }
+bool Plater::can_repair_mesh() const { return p->can_repair_mesh(); }
 bool Plater::can_simplify() const { return p->can_simplify(); }
 bool Plater::can_split_to_objects() const { return p->can_split_to_objects(); }
 bool Plater::can_split_to_volumes() const { return p->can_split_to_volumes(); }

@@ -45,6 +45,7 @@ The resulting binaries live in `build/linux-release`. Launch the GUI with
 1. Start LibreSlicer and confirm the splash screen reports **Supporter Build v1.0**.
 2. Import the `tests/models/rook/rook.3mf` project and slice it.
 3. Export G-code and verify no errors appear in the status panel.
+4. Toggle the Resin | FDM switch in the plater to confirm both workflows load and the workflow strip updates.
 
 ## 4. Package the Source Archive
 

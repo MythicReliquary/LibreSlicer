@@ -168,6 +168,8 @@ set(SLIC3R_SOURCES
     ExtrusionRole.hpp
     ExtrusionSimulator.cpp
     ExtrusionSimulator.hpp
+    FDM/FDMEngine.cpp
+    FDM/FDMEngine.hpp
     FileParserError.hpp
     Fill/Fill.cpp
     Fill/Fill.hpp
@@ -319,6 +321,8 @@ set(SLIC3R_SOURCES
     ModelArrange.cpp
     MultiMaterialSegmentation.cpp
     MultiMaterialSegmentation.hpp
+    MeshRepair.cpp
+    MeshRepair.hpp
     MeshNormals.hpp
     MeshNormals.cpp
     Measure.hpp

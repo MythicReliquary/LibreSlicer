@@ -4,6 +4,8 @@
 - Windows 10/11: Fully tested, stable
 - Linux (Ubuntu/Debian/Fedora): Builds and slices confirmed
 - macOS: Beta — build compiles, but runtime untested (community QA requested)
+- Dual-mode plater switch exposes dedicated Resin and FDM workflows with a contextual workflow strip.
+- Added cross-platform one-click mesh repair using the integrated geometry healer for rapid cleanup.
 
 ## Platform coverage
 - Windows 10/11 ✅

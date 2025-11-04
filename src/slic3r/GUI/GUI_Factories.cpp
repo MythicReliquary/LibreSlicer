@@ -817,6 +817,15 @@ void MenuFactory::append_menu_items_osx(wxMenu* menu)
     menu->AppendSeparator();
 }
 
+wxMenuItem* MenuFactory::append_menu_item_mesh_repair(wxMenu* menu)
+{
+    wxMenuItem* menu_item = append_menu_item(menu, wxID_ANY, _L("Repair model"), _L("Automatically repair the selected mesh"),
+        [](wxCommandEvent&) { obj_list()->repair_selection_mesh(); }, "", menu,
+        []() { return plater()->can_repair_mesh(); }, m_parent);
+
+    return menu_item;
+}
+
 wxMenuItem* MenuFactory::append_menu_item_fix_through_winsdk(wxMenu* menu)
 {
     if (!is_windows10())
@@ -1127,6 +1136,7 @@ void MenuFactory::create_common_object_menu(wxMenu* menu)
     // "Scale to print volume" makes a sense just for whole object
     append_menu_item_scale_selection_to_fit_print_volume(menu);
 
+    append_menu_item_mesh_repair(menu);
     append_menu_item_fix_through_winsdk(menu);
     append_menu_item_simplify(menu);
     append_menu_items_mirror(menu);
@@ -1176,6 +1186,7 @@ void MenuFactory::create_part_menu()
     append_menu_item_reload_from_disk(menu);
     append_menu_item_replace_with_stl(menu);
     append_menu_item_export_stl(menu);
+    append_menu_item_mesh_repair(menu);
     append_menu_item_fix_through_winsdk(menu);
     append_menu_item_simplify(menu);
 
@@ -1192,6 +1203,7 @@ void MenuFactory::create_text_part_menu()
 
     append_menu_item_edit_text(menu);
     append_menu_item_delete(menu);
+    append_menu_item_mesh_repair(menu);
     append_menu_item_fix_through_winsdk(menu);
     append_menu_item_simplify(menu);
 
@@ -1204,6 +1216,7 @@ void MenuFactory::create_svg_part_menu()
 
     append_menu_item_edit_svg(menu);
     append_menu_item_delete(menu);
+    append_menu_item_mesh_repair(menu);
     append_menu_item_fix_through_winsdk(menu);
     append_menu_item_simplify(menu);
 
@@ -1317,6 +1330,7 @@ wxMenu* MenuFactory::multi_selection_menu()
 
     wxMenu* menu = new MenuWithSeparators();
 
+    append_menu_item_mesh_repair(menu);
     append_menu_item_fix_through_winsdk(menu);
     append_menu_item_reload_from_disk(menu);
     append_menu_items_convert_unit(menu);
