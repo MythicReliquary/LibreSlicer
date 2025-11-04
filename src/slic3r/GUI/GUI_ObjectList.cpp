@@ -40,6 +40,10 @@
 #include <wx/numformatter.h>
 #include <wx/busyinfo.h>
 
+#include <map>
+#include <set>
+#include <sstream>
+
 #include "slic3r/Utils/FixModelByWin10.hpp"
 
 #ifdef __WXMSW__
@@ -4703,10 +4707,57 @@ void ObjectList::repair_selection_mesh()
     if (!plater->canvas3D()->get_gizmos_manager().check_gizmos_closed_except(GLGizmosManager::Undefined))
         return;
 
-    std::vector<int> obj_idxs, vol_idxs;
-    get_selection_indexes(obj_idxs, vol_idxs);
-    if (obj_idxs.empty())
+    wxDataViewItemArray sels;
+    GetSelections(sels);
+    if (sels.IsEmpty())
         return;
+
+    std::map<int, std::set<int>> volumes_by_object;
+    std::set<int> full_objects;
+    std::vector<int> object_order;
+    object_order.reserve(sels.size());
+
+    auto record_object = [&object_order](int obj_idx) {
+        if (obj_idx < 0)
+            return;
+        if (std::find(object_order.begin(), object_order.end(), obj_idx) == object_order.end())
+            object_order.push_back(obj_idx);
+    };
+
+    for (wxDataViewItem item : sels) {
+        const ItemType type = m_objects_model->GetItemType(item);
+        if (type & itSettings)
+            continue;
+
+        int obj_idx = -1;
+        if (type & itObject)
+            obj_idx = m_objects_model->GetIdByItem(item);
+        else
+            obj_idx = m_objects_model->GetIdByItem(m_objects_model->GetTopParent(item));
+
+        if (obj_idx < 0)
+            continue;
+
+        record_object(obj_idx);
+
+        if (type & itVolume) {
+            if (type & itSettings)
+                continue;
+            if (sels.Count() == 1 && m_objects_model->GetItemType(m_objects_model->GetParent(item)) & itVolume)
+                item = m_objects_model->GetParent(item);
+            const int vol_idx = m_objects_model->GetVolumeIdByItem(item);
+            if (vol_idx >= 0)
+                volumes_by_object[obj_idx].insert(vol_idx);
+        } else {
+            full_objects.insert(obj_idx);
+        }
+    }
+
+    if (volumes_by_object.empty() && full_objects.empty())
+        return;
+
+    for (int obj_idx : full_objects)
+        volumes_by_object.erase(obj_idx);
 
     wxBusyCursor busy;
     wxBusyInfo info(_L("Repairing model"), plater);
@@ -4727,36 +4778,75 @@ void ObjectList::repair_selection_mesh()
         summary.details.insert(summary.details.end(), report.details.begin(), report.details.end());
     };
 
-    if (vol_idxs.empty()) {
-        for (int obj_idx : obj_idxs) {
-            plater->clear_before_change_mesh(obj_idx, supports_removed);
-            MeshRepair::Report report = MeshRepair::repair_model_object(*plater->model().objects[obj_idx], options);
-            accumulate(report);
-            plater->changed_mesh(obj_idx);
-            update_item_error_icon(obj_idx, -1);
-        }
-    } else {
-        const int obj_idx = obj_idxs.front();
-        std::vector<std::size_t> volume_filter;
-        volume_filter.reserve(vol_idxs.size());
-        for (int vol_idx : vol_idxs)
-            volume_filter.push_back(static_cast<std::size_t>(vol_idx));
+    struct ObjectRepairReport {
+        int obj_idx;
+        MeshRepair::Report report;
+        bool partial;
+    };
+    std::vector<ObjectRepairReport> per_object_reports;
 
+    auto process_object = [&](int obj_idx, const std::vector<std::size_t>* filter) {
         plater->clear_before_change_mesh(obj_idx, supports_removed);
-        MeshRepair::Report report = MeshRepair::repair_model_object(*plater->model().objects[obj_idx], options, &volume_filter);
+        MeshRepair::Report report = MeshRepair::repair_model_object(*plater->model().objects[obj_idx], options, filter);
         accumulate(report);
+        per_object_reports.push_back({ obj_idx, report, filter != nullptr });
         plater->changed_mesh(obj_idx);
-        for (int vol_idx : vol_idxs)
-            update_item_error_icon(obj_idx, vol_idx);
+        if (filter == nullptr) {
+            update_item_error_icon(obj_idx, -1);
+        } else {
+            for (std::size_t vol_idx : *filter)
+                update_item_error_icon(obj_idx, static_cast<int>(vol_idx));
+        }
+        update_info_items(static_cast<size_t>(obj_idx));
+    };
+
+    for (int obj_idx : object_order) {
+        const bool repair_whole_object = full_objects.count(obj_idx) > 0;
+        const auto vol_it = volumes_by_object.find(obj_idx);
+
+        if (repair_whole_object || vol_it == volumes_by_object.end()) {
+            process_object(obj_idx, nullptr);
+        } else {
+            std::vector<std::size_t> filter;
+            filter.reserve(vol_it->second.size());
+            for (int vol_idx : vol_it->second)
+                filter.push_back(static_cast<std::size_t>(vol_idx));
+            std::sort(filter.begin(), filter.end());
+            process_object(obj_idx, &filter);
+        }
     }
 
-    if (summary.modifications_applied) {
-        const wxString message = format_wxstr(
-            _L_PLURAL("Repaired %1$d mesh issue.", "Repaired %1$d mesh issues.", summary.total_errors_fixed),
-            (int)summary.total_errors_fixed);
-        GUI::show_info(plater, message);
+    wxString notification;
+    if (summary.volumes_processed == 0) {
+        notification = _L("Select an object or part to repair.");
+    } else if (summary.modifications_applied) {
+        notification = format_wxstr(
+            _L_PLURAL("Repaired %1$d mesh issue across %2$d part.",
+                      "Repaired %1$d mesh issues across %2$d parts.",
+                      summary.total_errors_fixed),
+            static_cast<int>(summary.total_errors_fixed),
+            static_cast<int>(summary.volumes_repaired));
+
+        for (const ObjectRepairReport& entry : per_object_reports) {
+            if (!entry.report.modifications_applied)
+                continue;
+            const ModelObject* object = (*m_objects)[entry.obj_idx];
+            wxString object_name = object->name.empty()
+                ? format_wxstr(_L("Object %1$d"), entry.obj_idx + 1)
+                : from_u8(object->name);
+            notification += "\n  - " + object_name + ": " +
+                wxString::Format(_L_PLURAL("%d fix", "%d fixes", entry.report.total_errors_fixed),
+                                 static_cast<int>(entry.report.total_errors_fixed));
+        }
     } else {
-        GUI::show_info(plater, _L("Meshes were already manifold."));
+        notification = _L("Meshes were already manifold.");
+    }
+
+    if (!notification.IsEmpty()) {
+        plater->get_notification_manager()->push_notification(
+            NotificationType::RepairFinished,
+            NotificationManager::NotificationLevel::PrintInfoShortNotificationLevel,
+            boost::nowide::narrow(notification));
     }
 }
 
