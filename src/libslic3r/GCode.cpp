@@ -38,6 +38,7 @@
 #include "Polygon.hpp"
 #include "PrintConfig.hpp"
 #include "ShortestPath.hpp"
+#include <cstdio>
 #include "Print.hpp"
 #include "Thread.hpp"
 #include "Utils.hpp"
@@ -49,6 +50,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <chrono>
+#include <cmath>
 #include <math.h>
 #include <optional>
 #include <string>
@@ -1005,10 +1007,15 @@ void GCodeGenerator::_do_export(Print& print, GCodeOutputStream &file, Thumbnail
     if (print.config().spiral_vase.value)
         m_spiral_vase = make_unique<SpiralVase>(print.config());
 
+    m_small_area_infill_flow_compensator.reset();
+
     if (print.config().max_volumetric_extrusion_rate_slope_positive.value > 0 ||
         print.config().max_volumetric_extrusion_rate_slope_negative.value > 0)
         m_pressure_equalizer = make_unique<PressureEqualizer>(print.config());
     m_enable_extrusion_role_markers = (bool)m_pressure_equalizer;
+
+    if (!print.config().small_area_infill_flow_compensation_model.empty())
+        m_small_area_infill_flow_compensator = std::make_unique<SmallAreaInfillFlowCompensator>(print.config());
 
     if (print.config().avoid_crossing_curled_overhangs){
         this->m_avoid_crossing_curled_overhangs.init_bed_shape(get_bed_shape(print.config()));
@@ -3061,8 +3068,9 @@ std::string GCodeGenerator::_extrude(
     gcode += this->unretract();
 
     // adjust acceleration
+    double acceleration = 0.0;
+    bool   acceleration_selected = false;
     if (m_config.default_acceleration.value > 0) {
-        double acceleration;
         if (this->on_first_layer() && m_config.first_layer_acceleration.value > 0) {
             acceleration = m_config.first_layer_acceleration.value;
         } else if (this->object_layer_over_raft() && m_config.first_layer_acceleration_over_raft.value > 0) {
@@ -3082,7 +3090,33 @@ std::string GCodeGenerator::_extrude(
         } else {
             acceleration = m_config.default_acceleration.value;
         }
+        acceleration_selected = true;
         gcode += m_writer.set_print_acceleration((unsigned int)floor(acceleration + 0.5));
+    }
+
+    double flow_scale = 1.0;
+    if (m_config.set_other_flow_ratios.value) {
+        const ExtrusionRole &role = path_attr.role;
+        if (role == ExtrusionRole::ExternalPerimeter) {
+            flow_scale *= m_config.outer_wall_flow_ratio.value;
+        } else if (role == ExtrusionRole::Perimeter) {
+            flow_scale *= m_config.inner_wall_flow_ratio.value;
+        } else if (role == ExtrusionRole::OverhangPerimeter) {
+            flow_scale *= m_config.overhang_flow_ratio.value;
+        } else if (role == ExtrusionRole::InternalInfill) {
+            flow_scale *= m_config.sparse_infill_flow_ratio.value;
+        } else if (role == ExtrusionRole::SolidInfill) {
+            flow_scale *= m_config.internal_solid_infill_flow_ratio.value;
+        } else if (role == ExtrusionRole::GapFill) {
+            flow_scale *= m_config.gap_fill_flow_ratio.value;
+        } else if (role.is_support_base()) {
+            flow_scale *= m_config.support_flow_ratio.value;
+        } else if (role.is_support_interface()) {
+            flow_scale *= m_config.support_interface_flow_ratio.value;
+        }
+
+        if (this->on_first_layer() && !role.is_skirt())
+            flow_scale *= m_config.first_layer_flow_ratio.value;
     }
 
     // calculate extrusion length per distance unit
@@ -3090,6 +3124,8 @@ std::string GCodeGenerator::_extrude(
     if (m_writer.extrusion_axis().empty())
         // gcfNoExtrusion
         e_per_mm = 0;
+    else
+        e_per_mm *= flow_scale;
 
     // set speed
     if (speed == -1) {
@@ -3157,6 +3193,29 @@ std::string GCodeGenerator::_extrude(
     }
 
     double F = speed * 60;  // convert mm/sec to mm/min
+
+    const bool role_change_for_pa = extrusion_role_to_gcode_extrusion_role(path_attr.role) != m_last_processor_extrusion_role;
+
+    if (m_pa_processor && m_writer.extruder() != nullptr
+        && EXTRUDER_CONFIG(enable_pressure_advance)
+        && EXTRUDER_CONFIG(adaptive_pressure_advance)) {
+        const unsigned int accel_i = (acceleration_selected && acceleration > 0.)
+            ? static_cast<unsigned int>(std::round(acceleration))
+            : 0u;
+        const bool is_bridge = path_attr.role == ExtrusionRole::BridgeInfill;
+        const bool overhang = path_attr.role == ExtrusionRole::OverhangPerimeter || path_attr.overhang_attributes.has_value();
+        const unsigned int extruder_id = m_writer.extruder()->id();
+        char buf[128];
+        std::snprintf(buf, sizeof(buf), ";%sT%u MM3MM:%g ACCEL:%u BR:%d RC:%d OV:%d\n",
+            GCodeProcessor::reserved_tag(GCodeProcessor::ETags::PA_Change).c_str(),
+            extruder_id,
+            path_attr.mm3_per_mm,
+            accel_i,
+            is_bridge ? 1 : 0,
+            role_change_for_pa ? 1 : 0,
+            overhang ? 1 : 0);
+        gcode += buf;
+    }
 
     // extrude arc or line
     if (m_enable_extrusion_role_markers)
@@ -3257,14 +3316,19 @@ std::string GCodeGenerator::_extrude(
                 // Extrude line segment.
                 if (const double line_length = (p - prev).norm(); line_length > 0) {
                     path_length += line_length;
-                    gcode += m_writer.extrude_to_xy(p, e_per_mm * line_length, comment);
+                    double dE = e_per_mm * line_length;
+                    if (m_small_area_infill_flow_compensator && m_config.small_area_infill_flow_compensation.value)
+                        dE = m_small_area_infill_flow_compensator->modify_flow(line_length, dE, path_attr.role);
+                    gcode += m_writer.extrude_to_xy(p, dE, comment);
                 }
             } else {
                 double angle = Geometry::ArcWelder::arc_angle(prev.cast<double>(), p.cast<double>(), double(radius));
                 assert(angle > 0);
                 const double line_length = angle * std::abs(radius);
                 path_length += line_length;
-                const double dE = e_per_mm * line_length;
+                double dE = e_per_mm * line_length;
+                if (m_small_area_infill_flow_compensator && m_config.small_area_infill_flow_compensation.value)
+                    dE = m_small_area_infill_flow_compensator->modify_flow(line_length, dE, path_attr.role);
                 assert(dE > 0);
                 gcode += m_writer.extrude_to_xy_G2G3IJ(p, ij, it->ccw(), dE, comment);
             }

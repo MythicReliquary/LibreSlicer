@@ -2947,12 +2947,12 @@ bool GUI_App::switch_printer_technology(PrinterTechnology tech)
         return false;
 
     auto& printers = preset_bundle->printers;
-    const auto& presets = printers();
+    const auto& presets = printers.get_presets();
 
     std::size_t candidate_idx = std::numeric_limits<std::size_t>::max();
     for (std::size_t idx = 0; idx < presets.size(); ++idx) {
         const Preset& preset = presets[idx];
-        if (!preset.is_visible())
+        if (!preset.is_visible)
             continue;
         if (preset.printer_technology() != tech)
             continue;
