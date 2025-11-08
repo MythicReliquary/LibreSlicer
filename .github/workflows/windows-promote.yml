@@ -48,7 +48,7 @@ jobs:
           echo "Release name:    ${{ inputs.name }}"
 
       - name: Download installer artifact from latest successful windows-release
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v6
         with:
           workflow: windows-release.yml
           workflow_conclusion: success
@@ -59,7 +59,7 @@ jobs:
       - name: Try to download smoke logs (optional)
         id: smoke
         continue-on-error: true
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v6
         with:
           workflow: windows-smoke.yml
           workflow_conclusion: success
