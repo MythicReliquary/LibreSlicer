@@ -68,3 +68,5 @@ dist/
 /installed/
 /.vcpkg-root
 /packages/
+Dirty_Merge/
+artifacts/
