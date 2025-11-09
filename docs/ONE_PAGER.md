@@ -26,10 +26,13 @@
 - Mesh repair lives in the object menu for one-click manifold cleanup.
 
 ## Next Wave (v1.1)
-- Ship ready-made profiles for Qidi X Max 3 and Elegoo Mars 5 with Siraya Tech Fast Grey.
+- Bundle clean-room FDM starter profiles covering key OrcaSlicer-supported machines (Qidi, Bambu, Elegoo, etc.) alongside curated community resin packs, implemented with our own profile format to avoid licensing conflicts.
 - macOS universal build + notarized disk image.
 - Expanded help center content and restored in-app documentation links.
 - Automation harness for simulated print environment (proprietary CLI tools).
+
+## Fresh Enhancements
+- Adaptive infill slider gains a new **Fill Multiline** control (1–5 passes) plus matching gyroid/honeycomb/lightning generators, letting advanced users stiffen sparse regions without changing density or manual G-code edits.
 
 ## How to Support the Project
 - Tip jar (Transparent Commons): https://libreslicer.org/support

@@ -397,7 +397,7 @@ TEST_CASE("Zero heuristic function should result in dijsktra's algo", "[AStar]")
     // arrive to the source within less hops than the full number of nodes.
     for (size_t i = 0, k = 0; i < graph.nodes.size(); ++i, k = 0) {
         GraphTracer::QNode *q = &graph.nodes[i];
-        REQUIRE(q->g == Approx(ref_distances[i]));
+        REQUIRE(q->g == Catch::Approx(ref_distances[i]));
         while (k++ < graph.nodes.size() && q->parent != astar::Unassigned)
             q = &graph.nodes[q->parent];
 

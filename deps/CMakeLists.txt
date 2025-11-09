@@ -130,7 +130,6 @@ dep_message(STATUS "Found external package definitions: ${FOUND_PACKAGES}")
 # Current list of all required dependencies for PS (top level)
 set(REQUIRED_PACKAGES
     Boost
-    Catch2
     Cereal
     CURL
     EXPAT

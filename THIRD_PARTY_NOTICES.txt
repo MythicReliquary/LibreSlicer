@@ -1,1 +1,56 @@
-LibreSlicer bundles third-party software under their respective licenses. See the `deps/` subdirectories for individual COPYING files and the repository `LICENSE` for aggregated terms.
+LibreSlicer bundles third-party software under their respective licenses. The
+following components are redistributed in binary and/or source form; refer to
+the noted upstream license texts (shipped in `deps/`, `vcpkg/installed`, or the
+linked project archives) for full terms.
+
+Core libraries
+--------------
+- Intel oneTBB — Apache License 2.0
+- NLopt — GNU LGPL v2.1 (with optional GPL modules)
+- OpenVDB — Mozilla Public License 2.0 + Apache License 2.0 components
+- Imath / OpenEXR — BSD 3-clause style license
+- c-blosc — BSD 3-clause
+- Eigen3 — Mozilla Public License 2.0
+- OpenCascade (OCCT) — GNU LGPL v2.1 with OCCT exception
+- CGAL (core + optional GPL components) — GNU LGPL v3 / GNU GPL v3
+- Qhull — Qhull permissive license
+- wxWidgets — wxWindows Library Licence
+- Catch2 — Boost Software License 1.0
+
+Graphics, imaging, and math
+---------------------------
+- GLEW — Modified BSD / MIT style license
+- libpng — libpng License
+- zlib — zlib License
+- libjpeg-turbo — BSD 3-clause
+- libtiff — libtiff License (BSD style)
+- OpenJPH — BSD 2-clause
+- Freetype — Freetype License (FTL) / GPL alternative
+- HarfBuzz — MIT License
+- Fontconfig — MIT License
+- Dirent-win32 — MIT License
+
+Compression & archives
+----------------------
+- bzip2 — bzip2 License (permissive)
+- libdeflate — MIT License
+- libzip — BSD 3-clause
+- Brotli — MIT License
+- zstd — BSD 3-clause (transitive dependency)
+
+Networking & utilities
+----------------------
+- libcurl — curl License (MIT style)
+- Boost (assign, beast, dll, log, locale, and headers) — Boost Software License 1.0
+- cereal — BSD 3-clause
+
+Tooling & packaging
+-------------------
+- Ninja — Apache License 2.0
+- CMake — BSD 3-clause
+- NSIS — zlib License
+
+LibreSlicer itself is distributed under the GNU Affero General Public License
+v3.0. Compliance artifacts, including SOURCE_OFFER.md and individual third-party
+licenses, are packaged with every binary release. Contact
+support@libreslicer.org for additional attribution information or license copies.

@@ -246,6 +246,15 @@ set(SLIC3R_SOURCES
     GCode/ExtrusionProcessor.hpp
     GCode/FindReplace.cpp
     GCode/FindReplace.hpp
+    GCode/AdaptivePAInterpolator.cpp
+    GCode/AdaptivePAInterpolator.hpp
+    GCode/AdaptivePAProcessor.cpp
+    GCode/AdaptivePAProcessor.hpp
+    GCode/PchipInterpolatorHelper.cpp
+    GCode/PchipInterpolatorHelper.hpp
+    GCode/SmallAreaInfillFlowCompensator.cpp
+    GCode/SmallAreaInfillFlowCompensator.hpp
+    GCode/spline/spline.h
     GCode/LabelObjects.cpp
     GCode/LabelObjects.hpp
     GCode/GCodeWriter.cpp

@@ -1,0 +1,80 @@
+{
+  "policies": {
+    "guardrails": {
+      "denyWrite": [
+        "build/**",
+        "build*/**",
+        "cmake-build*/**",
+        "dist/**",
+        "out_fdm/**",
+        "out_sla/**",
+        "vcpkg_installed/**",
+        "docs/_build/**",
+        "resources/generated/**",
+        "CMakeFiles/**",
+        "**/*.obj",
+        "**/*.o",
+        "**/*.a",
+        "**/*.lib",
+        "**/*.dll",
+        "**/*.exe",
+        "**/*.pdb",
+        "**/*.exp",
+        "**/*.ilk",
+        "**/*.idb",
+        "**/*.pch",
+        "**/*.pyc",
+        "**/*.log",
+        "**/*~",
+        "**/.cache/**"
+      ],
+      "allowedRoots": [
+        "src",
+        "lib",
+        "scripts",
+        "tests",
+        "cmake",
+        "ci_profiles",
+        "docs",
+        "packaging",
+        "resources",
+        "COMPLIANCE",
+        ".vscode"
+      ],
+      "maxLinesPerEdit": 400,
+      "commands": {
+        "prohibited": [
+          "curl http*",
+          "wget http*",
+          "Invoke-WebRequest http*",
+          "git push",
+          "git commit",
+          "git add build/**",
+          "rm -rf",
+          "sudo *",
+          "scp *",
+          "powershell Set-ExecutionPolicy*"
+        ],
+        "allowlist": [
+          "bash",
+          "cmake",
+          "cmake.exe",
+          "ninja",
+          "ninja.exe",
+          "ctest",
+          "ctest.exe",
+          "git status",
+          "git diff",
+          "python",
+          "python3",
+          "pip",
+          "pwsh",
+          "powershell",
+          "ls",
+          "rg",
+          "findstr"
+        ]
+      }
+    }
+  }
+}

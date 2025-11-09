@@ -30,6 +30,7 @@
 #include <libqhullcpp/QhullVertexSet.h>
 
 #include <cmath>
+#include <limits>
 #include <deque>
 #include <queue>
 #include <vector>
@@ -240,6 +241,77 @@ float TriangleMesh::volume()
     if (m_stats.volume == -1)
         m_stats.volume = its_volume(this->its);
     return m_stats.volume;
+}
+
+void TriangleMesh::repair()
+{
+    if (this->its.indices.empty())
+        return;
+
+    stl_file stl;
+    stl.stats.number_of_facets = static_cast<uint32_t>(this->its.indices.size());
+    stl.stats.original_num_facets = stl.stats.number_of_facets;
+    stl.stats.shortest_edge = std::numeric_limits<float>::max();
+
+    stl_allocate(&stl);
+
+    bool first = true;
+    for (size_t i = 0; i < this->its.indices.size(); ++i) {
+        stl_facet facet;
+        const stl_triangle_vertex_indices &tri = this->its.indices[i];
+
+        facet.vertex[0] = this->its.vertices[tri[0]];
+        facet.vertex[1] = this->its.vertices[tri[1]];
+        facet.vertex[2] = this->its.vertices[tri[2]];
+        stl_calculate_normal(facet.normal, &facet);
+        stl_normalize_vector(facet.normal);
+
+        stl_facet_stats(&stl, facet, first);
+        stl.facet_start[i] = facet;
+    }
+
+    stl.stats.size = stl.stats.max - stl.stats.min;
+    stl.stats.bounding_diameter = stl.stats.size.norm();
+
+    stl_repair(&stl,
+        /*fixall_flag*/ true,
+        /*exact_flag*/ false,
+        /*tolerance_flag*/ false,
+        /*tolerance*/ 0.f,
+        /*increment_flag*/ false,
+        /*increment*/ 0.f,
+        /*nearby_flag*/ false,
+        /*iterations*/ 2,
+        /*remove_unconnected_flag*/ false,
+        /*fill_holes_flag*/ false,
+        /*normal_directions_flag*/ false,
+        /*normal_values_flag*/ false,
+        /*reverse_all_flag*/ false,
+        /*verbose_flag*/ false);
+
+    auto facets_w_1_bad_edge = stl.stats.connected_facets_2_edge - stl.stats.connected_facets_3_edge;
+    auto facets_w_2_bad_edge = stl.stats.connected_facets_1_edge - stl.stats.connected_facets_2_edge;
+    auto facets_w_3_bad_edge = stl.stats.number_of_facets - stl.stats.connected_facets_1_edge;
+
+    indexed_triangle_set new_its;
+    stl_generate_shared_vertices(&stl, new_its);
+    this->its = std::move(new_its);
+
+    m_stats.number_of_facets = stl.stats.number_of_facets;
+    m_stats.min              = stl.stats.min;
+    m_stats.max              = stl.stats.max;
+    m_stats.size             = stl.stats.size;
+    m_stats.volume           = stl.stats.volume;
+    m_stats.number_of_parts  = stl.stats.number_of_parts;
+    m_stats.open_edges       = stl.stats.backwards_edges
+                             + facets_w_1_bad_edge
+                             + facets_w_2_bad_edge * 2
+                             + facets_w_3_bad_edge * 3;
+    m_stats.repaired_errors  = { stl.stats.edges_fixed,
+                                 stl.stats.degenerate_facets,
+                                 stl.stats.facets_removed,
+                                 stl.stats.facets_reversed,
+                                 stl.stats.backwards_edges };
 }
 
 void TriangleMesh::WriteOBJFile(const char* output_file) const

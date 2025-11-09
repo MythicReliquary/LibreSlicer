@@ -412,7 +412,7 @@ TEST_CASE("ray segment intersection", "[MeshBoolean]")
     CHECK(abs(*t1 - *t2) < std::numeric_limits<double>::epsilon());
 }
 
-TEST_CASE("triangle intersection", "[]")
+TEST_CASE("triangle intersection")
 {
     Vec2d                point(1, 1);
     Vec2d                dir(-1, 0);
@@ -481,7 +481,7 @@ TEST_CASE("Italic check", "[Emboss]")
 #endif // FONT_DIR_PATH
 
 #include "libslic3r/CutSurface.hpp"
-TEST_CASE("Cut surface", "[]")
+TEST_CASE("Cut surface")
 {
     std::string  font_path  = get_font_filepath();
     char         letter     = '%';
@@ -530,7 +530,7 @@ TEST_CASE("Cut surface", "[]")
 TEST_CASE("UndoRedo TextConfiguration serialization", "[Emboss]")
 {
     TextConfiguration tc;
-    tc.text = "Dovede-li se clovek zasmát sám sobe, nevyjde ze smíchu po celý život.";
+    tc.text = "Dovede-li se clovek zasmÃ¡t sÃ¡m sobe, nevyjde ze smÃ­chu po celÃ½ Å¾ivot.";
     EmbossStyle& es = tc.style;
     es.name      = "Seneca";
     es.path      = "Simply the best";
@@ -569,13 +569,13 @@ TEST_CASE("UndoRedo EmbossShape serialization", "[Emboss]")
     emboss.fix_3mf_tr  = Transform3d::Identity();
     emboss.svg_file = EmbossShape::SvgFile{};
     emboss.svg_file->path = "Everything starts somewhere, though many physicists disagree.\
- But people have always been dimly aware of the problem with the start of things.\
+ But people have always noticed the problem with the start of things.\
  They wonder how the snowplough driver gets to work,\
  or how the makers of dictionaries look up the spelling of words.";
-    emboss.svg_file->path_in_3mf = "Všechno nekde zacíná, i když mnoho fyziku nesouhlasí.\
- Ale lidé si vždy jen matne uvedomovali problém se zacátkem vecí.\
- Zajímalo je, jak se ridic snežného pluhu dostane do práce\
- nebo jak tvurci slovníku vyhledávají pravopis slov.";
+    emboss.svg_file->path_in_3mf = "Everything begins somewhere even if many physicists disagree.\
+ People have always sensed there is trouble with beginnings.\
+ They wonder how the driver of the snowplough gets to work,\
+ or how dictionary authors look up the spelling of words.";
     emboss.svg_file->file_data = std::make_unique<std::string>("cite: Terry Pratchett");
 
     std::stringstream ss; // any stream can be used
@@ -904,7 +904,9 @@ TEST_CASE("Emboss extrude cut", "[Emboss-Cut]")
     // identify glyph for intersected vertex
     std::string vert_shape_map_name = "v:glyph_id";
     MyMesh cgal_object = MeshBoolean::cgal2::to_cgal(cube, face_map_name);
-    auto face_map = cgal_object.property_map<MyMesh::Face_index, int32_t>(face_map_name).first;
+    auto face_map_handle = cgal_object.property_map<MyMesh::Face_index, int32_t>(face_map_name);
+    REQUIRE(face_map_handle);
+    auto face_map = *face_map_handle;
     auto vert_shape_map = cgal_object.add_property_map<MyMesh::Vertex_index, IntersectingElemnt>(vert_shape_map_name).first;
 
     std::string edge_shape_map_name = "e:glyph_id";
@@ -913,8 +915,12 @@ TEST_CASE("Emboss extrude cut", "[Emboss-Cut]")
 
     MyMesh cgal_shape = MeshBoolean::cgal2::to_cgal(shape, projection, 0, edge_shape_map_name, face_shape_map_name, glyph_contours);    
 
-    auto edge_shape_map = cgal_shape.property_map<MyMesh::Edge_index, IntersectingElemnt>(edge_shape_map_name).first;
-    auto face_shape_map = cgal_shape.property_map<MyMesh::Face_index, IntersectingElemnt>(face_shape_map_name).first;
+    auto edge_shape_map_handle = cgal_shape.property_map<MyMesh::Edge_index, IntersectingElemnt>(edge_shape_map_name);
+    REQUIRE(edge_shape_map_handle);
+    auto edge_shape_map = *edge_shape_map_handle;
+    auto face_shape_map_handle = cgal_shape.property_map<MyMesh::Face_index, IntersectingElemnt>(face_shape_map_name);
+    REQUIRE(face_shape_map_handle);
+    auto face_shape_map = *face_shape_map_handle;
 
     // bool map for affected edge
     using d_prop_bool = CGAL::dynamic_edge_property_t<bool>;

@@ -30,7 +30,7 @@ SCENARIO("Basics", "[ExPolygon]") {
             REQUIRE(expolygon.is_valid());
         }
         THEN("expolygon area") {
-            REQUIRE(expolygon.area() == Approx(100*100-20*20));
+            REQUIRE(expolygon.area() == Catch::Approx(100*100-20*20));
         }
         WHEN("Expolygon scaled") {
             ExPolygon expolygon2 = expolygon;

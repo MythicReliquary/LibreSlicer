@@ -1,4 +1,4 @@
-#include "catch2/catch.hpp"
+#include <catch2/catch_all.hpp>
 #include "test_utils.hpp"
 
 #include <random>
@@ -143,7 +143,7 @@ TEST_CASE("Basic arrange with cube", "[arrangejob]") {
             std::swap(sz.x(), sz.y());
 
         double d_obj = settings.get_distance_from_objects();
-        REQUIRE(sz.y() == Approx(2. * bb1.size().y() + d_obj));
+        REQUIRE(sz.y() == Catch::Approx(2. * bb1.size().y() + d_obj));
     }
 
     SECTION("Selected cube (different object), needs to go beside existing") {
@@ -177,7 +177,7 @@ TEST_CASE("Basic arrange with cube", "[arrangejob]") {
             std::swap(sz.x(), sz.y());
 
         double d_obj = settings.get_distance_from_objects();
-        REQUIRE(sz.y() == Approx(2. * bb1.size().y() + d_obj));
+        REQUIRE(sz.y() == Catch::Approx(2. * bb1.size().y() + d_obj));
     }
 
     SECTION("Four cubes needs to touch each other after arrange") {
@@ -229,8 +229,8 @@ TEST_CASE("Basic arrange with cube", "[arrangejob]") {
         REQUIRE(c == bounding_box(bed).center());
 
         float d_obj = settings.get_distance_from_objects();
-        REQUIRE(pilebb.size().x() == Approx(2. * 20. + d_obj));
-        REQUIRE(pilebb.size().y() == Approx(2. * 20. + d_obj));
+        REQUIRE(pilebb.size().x() == Catch::Approx(2. * 20. + d_obj));
+        REQUIRE(pilebb.size().y() == Catch::Approx(2. * 20. + d_obj));
     }
 }
 
@@ -348,4 +348,3 @@ TEST_CASE("Test for modifying model during arrangement", "[arrangejob][fillbedjo
 //        REQUIRE(bedidx_ojb1 == 1);
 //    }
 //}
-

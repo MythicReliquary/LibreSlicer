@@ -27,7 +27,7 @@ SCENARIO("Region expansion basics", "[RegionExpansion]") {
                 REQUIRE(expanded.size() == 1);
             }
             THEN("The area of the anchor is 10mm2") {
-                REQUIRE(area(expanded.front()) == Approx(expansion * ten));
+                REQUIRE(area(expanded.front()) == Catch::Approx(expansion * ten));
             }
         };
 
@@ -61,8 +61,8 @@ SCENARIO("Region expansion basics", "[RegionExpansion]") {
                 REQUIRE(expanded.front().size() == 2);
             }
             THEN("The area of each anchor is 10mm2") {
-                REQUIRE(area(expanded.front().front()) == Approx(expansion * ten));
-                REQUIRE(area(expanded.front().back()) == Approx(expansion * ten));
+                REQUIRE(area(expanded.front().front()) == Catch::Approx(expansion * ten));
+                REQUIRE(area(expanded.front().back()) == Catch::Approx(expansion * ten));
             }
         }
 
@@ -77,8 +77,8 @@ SCENARIO("Region expansion basics", "[RegionExpansion]") {
                 REQUIRE(expanded.front().size() == 2);
             }
             THEN("The area of each anchor is 100mm2") {
-                REQUIRE(area(expanded.front().front()) == Approx(sqr<double>(ten)));
-                REQUIRE(area(expanded.front().back()) == Approx(sqr<double>(ten)));
+                REQUIRE(area(expanded.front().front()) == Catch::Approx(sqr<double>(ten)));
+                REQUIRE(area(expanded.front().back()) == Catch::Approx(sqr<double>(ten)));
             }
         }
     }
@@ -247,7 +247,7 @@ SCENARIO("Region expansion basics", "[RegionExpansion]") {
             THEN("The anchor expands into a single region with two holes, fully covering the boundary") {
                 REQUIRE(expanded.size() == 1);
                 REQUIRE(expanded.front().size() == 3);
-                REQUIRE(area(expanded.front()) == Approx(area(boundary)));
+                REQUIRE(area(expanded.front()) == Catch::Approx(area(boundary)));
             }
         }
     }

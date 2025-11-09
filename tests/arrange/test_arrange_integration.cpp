@@ -560,10 +560,10 @@ TEST_CASE("Virtual bed handlers - StriderVBedHandler", "[arrange2][integration][
                 auto ref_pos = tr * Vec3d::Zero();
 
                 auto displace = bed_index * (unscaled(vbh.stride_scaled()));
-                REQUIRE(ref_pos.x() == Approx(-displace));
+                REQUIRE(ref_pos.x() == Catch::Approx(-displace));
 
                 auto ref_pos_mi = mi_to_move.get_matrix() * Vec3d::Zero();
-                REQUIRE(ref_pos_mi.x() == Approx(instance_displace.x() + (bed_index >= 0) * displace));
+                REQUIRE(ref_pos_mi.x() == Catch::Approx(instance_displace.x() + (bed_index >= 0) * displace));
             }
         }
     }
@@ -868,8 +868,8 @@ bool settings_eq(const Slic3r::arr2::ArrangeSettingsView &v1,
 {
     return v1.is_rotation_enabled() == v2.is_rotation_enabled() &&
            v1.get_arrange_strategy() == v2.get_arrange_strategy() &&
-           v1.get_distance_from_bed() == Approx(v2.get_distance_from_bed()) &&
-           v1.get_distance_from_objects() == Approx(v2.get_distance_from_objects()) &&
+           v1.get_distance_from_bed() == Catch::Approx(v2.get_distance_from_bed()) &&
+           v1.get_distance_from_objects() == Catch::Approx(v2.get_distance_from_objects()) &&
            v1.get_geometry_handling() == v2.get_geometry_handling() &&
            v1.get_xl_alignment() == v2.get_xl_alignment();
         ;

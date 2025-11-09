@@ -28,7 +28,7 @@ void FillHoneycomb::_fill_surface_single(
     if (it_m == this->cache.end()) {
         it_m = this->cache.insert(it_m, std::pair<CacheID, CacheData>(cache_id, CacheData()));
         CacheData &m        = it_m->second;
-        coord_t min_spacing = coord_t(scale_(this->spacing));
+        coord_t min_spacing = coord_t(scale_(this->spacing)) * params.multiline;
         m.distance          = coord_t(min_spacing / params.density);
         m.hex_side          = coord_t(m.distance / (sqrt(3)/2));
         m.hex_width         = m.distance * 2; // $m->{hex_width} == $m->{hex_side} * sqrt(3);
@@ -78,15 +78,15 @@ void FillHoneycomb::_fill_surface_single(
                 x += m.distance;
             }
             p.rotate(-direction.first, m.hex_center);
+            p.simplify(5 * spacing);
             all_polylines.push_back(p);
         }
     }
-    
+
+    multiline_fill(all_polylines, params, 1.1f * spacing);
+
     all_polylines = intersection_pl(std::move(all_polylines), expolygon);
-    if (params.dont_connect() || all_polylines.size() <= 1)
-        append(polylines_out, chain_polylines(std::move(all_polylines)));
-    else
-        connect_infill(std::move(all_polylines), expolygon, polylines_out, this->spacing, params);
+    chain_or_connect_infill(std::move(all_polylines), expolygon, polylines_out, this->spacing, params);
 }
 
 } // namespace Slic3r

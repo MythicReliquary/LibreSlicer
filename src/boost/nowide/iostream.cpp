@@ -5,7 +5,9 @@
 //  accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
+#ifndef BOOST_NOWIDE_SOURCE
 #define BOOST_NOWIDE_SOURCE
+#endif
 #include <boost/nowide/iostream.hpp>
 #include <boost/nowide/convert.hpp>
 #include <stdio.h>

@@ -99,7 +99,7 @@ static void eval_ground_conn(const Slic3r::sla::GroundConnection &conn,
     REQUIRE(conn.path.back().r < conn.pillar_base->r_top);
 
     // The end radius and the pillar base's upper radius should match
-    REQUIRE(conn.pillar_base->r_top == Approx(end_r));
+    REQUIRE(conn.pillar_base->r_top == Catch::Approx(end_r));
 }
 
 TEST_CASE("Pillar search dumb case", "[suptreeutils]") {
@@ -119,7 +119,7 @@ TEST_CASE("Pillar search dumb case", "[suptreeutils]") {
 
         REQUIRE(conn);
 //        REQUIRE(conn.path.size() == 1);
-        REQUIRE(conn.pillar_base->pos.z() == Approx(ground_level(sm)));
+        REQUIRE(conn.pillar_base->pos.z() == Catch::Approx(ground_level(sm)));
     }
 
     SECTION("with zero R source and destination") {
@@ -134,8 +134,8 @@ TEST_CASE("Pillar search dumb case", "[suptreeutils]") {
 
         REQUIRE(conn);
 //        REQUIRE(conn.path.size() == 1);
-        REQUIRE(conn.pillar_base->pos.z() == Approx(ground_level(sm)));
-        REQUIRE(conn.pillar_base->r_top == Approx(0.));
+        REQUIRE(conn.pillar_base->pos.z() == Catch::Approx(ground_level(sm)));
+        REQUIRE(conn.pillar_base->r_top == Catch::Approx(0.));
     }
 
     SECTION("with zero init direction") {
@@ -150,7 +150,7 @@ TEST_CASE("Pillar search dumb case", "[suptreeutils]") {
 
         REQUIRE(conn);
 //        REQUIRE(conn.path.size() == 1);
-        REQUIRE(conn.pillar_base->pos.z() == Approx(ground_level(sm)));
+        REQUIRE(conn.pillar_base->pos.z() == Catch::Approx(ground_level(sm)));
     }
 }
 
@@ -278,7 +278,7 @@ TEST_CASE("Find ground route just above ground", "[suptreeutils]") {
 
     REQUIRE(conn);
 
-    REQUIRE(conn.pillar_base->pos.z() >= Approx(ground_level(sm)));
+    REQUIRE(conn.pillar_base->pos.z() >= Catch::Approx(ground_level(sm)));
 }
 
 TEST_CASE("BranchingSupports::MergePointFinder", "[suptreeutils]") {

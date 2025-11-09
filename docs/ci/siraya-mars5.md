@@ -58,8 +58,11 @@ scripts/fetch_siraya_models.py --strict
 scripts/ci_slice_and_validate.sh --stl third_party/siraya_test_models/v5_placeholder.stl --aa 0 --variant local-aa0
 ```
 
-Set `PRUSA_CLI` and `UVTOOLS_CLI` environment variables if the binaries live outside
-`tools/`.
+The helper will automatically prefer a locally built `build/src/libreslicer.exe`
+(`.exe`/Linux variants) before falling back to the AppImages mirrored under
+`tools/`, so no extra flags are needed in the common developer workflow. Set
+`PRUSA_CLI` and `UVTOOLS_CLI` manually if your binaries live elsewhere (for
+example, when pointing to a system-wide UVTools install on Windows).
 
 When validating local IDE changes before opening a pull request, run the helper script
 against any mirrored Siraya models and inspect the generated `out/` artifacts. This

@@ -40,7 +40,8 @@ VolumeReport repair_volume(ModelVolume& volume, const Options& options)
 
     if (after.repaired() && repaired_error_count(after) != repaired_error_count(before)) {
         volume.set_mesh(std::move(mesh));
-        volume.invalidate_object_bounding_box();
+        if (ModelObject* object = volume.get_object())
+            object->invalidate_bounding_box();
         report.repaired = true;
         report.errors_fixed = repaired_error_count(after);
     }

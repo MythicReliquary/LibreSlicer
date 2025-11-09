@@ -10,6 +10,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <memory>
+#include <algorithm>
 
 #include "../ClipperUtils.hpp"
 #include "../Geometry.hpp"
@@ -52,6 +53,7 @@ struct SurfaceFillParams
 
     // FillParams
     float       	density = 0.f;
+	int             multiline = 1;
     // Don't adjust spacing to fill the space evenly.
 //    bool        	dont_adjust = false;
     // Length of the infill anchor along the perimeter line.
@@ -86,6 +88,7 @@ struct SurfaceFillParams
 //		RETURN_COMPARE_NON_EQUAL(overlap);
 		RETURN_COMPARE_NON_EQUAL(angle);
 		RETURN_COMPARE_NON_EQUAL(density);
+		RETURN_COMPARE_NON_EQUAL(multiline);
 //		RETURN_COMPARE_NON_EQUAL_TYPED(unsigned, dont_adjust);
 		RETURN_COMPARE_NON_EQUAL(anchor_length);
 		RETURN_COMPARE_NON_EQUAL(anchor_length_max);
@@ -105,6 +108,7 @@ struct SurfaceFillParams
 				this->bridge   			== rhs.bridge   		&&
 //				this->bridge_angle 		== rhs.bridge_angle		&&
 				this->density   		== rhs.density   		&&
+				this->multiline         == rhs.multiline        &&
 //				this->dont_adjust   	== rhs.dont_adjust 		&&
 				this->anchor_length  	== rhs.anchor_length    &&
 				this->anchor_length_max == rhs.anchor_length_max &&
@@ -165,6 +169,15 @@ std::vector<SurfaceFill> group_fills(const Layer &layer)
 		                (surface.is_solid() ?
 		                    (surface.is_top() ? ExtrusionRole::TopSolidInfill : ExtrusionRole::SolidInfill) :
 							ExtrusionRole::InternalInfill);
+                const bool supports_multiline_pattern =
+                    params.pattern == ipHoneycomb ||
+                    params.pattern == ipGyroid ||
+                    params.pattern == ipLightning;
+		        if (!surface.is_solid() && !is_bridge && supports_multiline_pattern && params.extrusion_role == ExtrusionRole::InternalInfill) {
+                    int requested = region_config.fill_multiline.value;
+                    params.multiline = std::clamp(requested, 1, 5);
+		        } else
+                    params.multiline = 1;
 		        params.bridge_angle = float(surface.bridge_angle);
 		        params.angle 		= float(Geometry::deg2rad(region_config.fill_angle.value));
 		        
@@ -515,6 +528,7 @@ void Layer::make_fills(FillAdaptive::Octree* adaptive_fill_octree, FillAdaptive:
         params.resolution        = resolution;
         params.use_arachne       = (perimeter_generator == PerimeterGeneratorType::Arachne && surface_fill.params.pattern == ipConcentric) || surface_fill.params.pattern == ipEnsuring;
         params.layer_height      = layerm.layer()->height;
+        params.multiline         = surface_fill.params.multiline;
 
         for (ExPolygon &expoly : surface_fill.expolygons) {
 			// Spacing is modified by the filler to indicate adjustments. Reset it for each expolygon.
@@ -699,6 +713,7 @@ Polylines Layer::generate_sparse_infill_polylines_for_anchoring(FillAdaptive::Oc
         params.resolution        = resolution;
         params.use_arachne       = false;
         params.layer_height      = layerm.layer()->height;
+        params.multiline         = surface_fill.params.multiline;
 
         for (ExPolygon &expoly : surface_fill.expolygons) {
             // Spacing is modified by the filler to indicate adjustments. Reset it for each expolygon.

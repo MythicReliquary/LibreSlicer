@@ -31,15 +31,11 @@ TEST_CASE("Curves: cubic b spline fit test", "[Curves]") {
 
     auto bspline = fit_cubic_bspline(observations, observation_points, weights, 1);
 
-    Approx ap(1.0f);
-    ap.epsilon(0.1f);
-
     for (int p = 0; p < 200; ++p) {
         float fitted_val = bspline.get_fitted_value(fx(p))(0);
         float expected = fy(p);
 
-        REQUIRE(fitted_val == ap(expected));
-
+        REQUIRE(fitted_val == Catch::Approx(expected).epsilon(0.1f));
     }
 }
 
@@ -106,13 +102,9 @@ TEST_CASE("Curves: polynomial fit test", "[Curves]") {
     Vec2f fmin { fx(0), fy(0) };
     Vec2f fmax { fx(200), fy(200) };
 
-    Approx ap(1.0f);
-    ap.epsilon(0.1f);
-
     auto poly = fit_polynomial(observations, observation_points, weights, 2);
 
-    REQUIRE(poly.coefficients(0, 0) == ap(1));
-    REQUIRE(poly.coefficients(0, 1) == ap(-2));
-    REQUIRE(poly.coefficients(0, 2) == ap(1));
+    REQUIRE(poly.coefficients(0, 0) == Catch::Approx(1.0f).epsilon(0.1f));
+    REQUIRE(poly.coefficients(0, 1) == Catch::Approx(-2.0f).epsilon(0.1f));
+    REQUIRE(poly.coefficients(0, 2) == Catch::Approx(1.0f).epsilon(0.1f));
 }
-

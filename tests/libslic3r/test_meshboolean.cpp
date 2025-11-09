@@ -19,7 +19,7 @@ TEST_CASE("CGAL and TriangleMesh conversions", "[MeshBoolean]") {
     REQUIRE(M.its.vertices.size() == sphere.its.vertices.size());
     REQUIRE(M.its.indices.size() == sphere.its.indices.size());
     
-    REQUIRE(M.volume() == Approx(sphere.volume()));
+    REQUIRE(M.volume() == Catch::Approx(sphere.volume()));
     
     REQUIRE(! MeshBoolean::cgal::does_self_intersect(M));
 }

@@ -153,6 +153,7 @@ public:
     bool   has_zero_volume() const;
     // Estimate of the memory occupied by this structure, important for keeping an eye on the Undo / Redo stack allocation.
     size_t memsize() const;
+    void   repair();
 
     // Used by the Undo / Redo stack, legacy interface. As of now there is nothing cached at TriangleMesh,
     // but we may decide to cache some data in the future (for example normals), thus we keep the interface in place.

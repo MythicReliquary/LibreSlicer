@@ -197,7 +197,10 @@ namespace Slic3r {
             Custom_Code,
             First_Line_M73_Placeholder,
             Last_Line_M73_Placeholder,
-            Estimated_Printing_Time_Placeholder
+            Estimated_Printing_Time_Placeholder,
+            Wipe_Tower_Start,
+            Wipe_Tower_End,
+            PA_Change
         };
 
         static const std::string& reserved_tag(ETags tag) { return Reserved_Tags[static_cast<unsigned char>(tag)]; }

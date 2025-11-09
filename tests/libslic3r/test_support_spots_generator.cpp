@@ -17,11 +17,11 @@ TEST_CASE("Numerical integral calculation compared with exact solution.", "[Supp
     };
 
     const Integrals integrals{{polygon}};
-    CHECK(integrals.area == Approx(width * height));
-    CHECK(integrals.x_i.x() == Approx(0));
-    CHECK(integrals.x_i.y() == Approx(0));
-    CHECK(integrals.x_i_squared.x() == Approx(std::pow(width, 3) * height / 12));
-    CHECK(integrals.x_i_squared.y() == Approx(width * std::pow(height, 3) / 12));
+    CHECK(integrals.area == Catch::Approx(width * height));
+    CHECK(integrals.x_i.x() == Catch::Approx(0));
+    CHECK(integrals.x_i.y() == Catch::Approx(0));
+    CHECK(integrals.x_i_squared.x() == Catch::Approx(std::pow(width, 3) * height / 12));
+    CHECK(integrals.x_i_squared.y() == Catch::Approx(width * std::pow(height, 3) / 12));
 }
 
 TEST_CASE("Moment values and ratio check.", "[SupportSpotsGenerator]") {
@@ -48,10 +48,10 @@ TEST_CASE("Moment values and ratio check.", "[SupportSpotsGenerator]") {
     const float moment_ratio = std::pow(width / height, 2);
 
     // Ensure the object transaltion has no effect.
-    CHECK(x_axis_moment == Approx(width * std::pow(height, 3) / 12));
-    CHECK(y_axis_moment == Approx(std::pow(width, 3) * height / 12));
+    CHECK(x_axis_moment == Catch::Approx(width * std::pow(height, 3) / 12));
+    CHECK(y_axis_moment == Catch::Approx(std::pow(width, 3) * height / 12));
     // If the object is "wide" the y axis moments should be large compared to x axis moment.
-    CHECK(y_axis_moment / x_axis_moment == Approx(moment_ratio));
+    CHECK(y_axis_moment / x_axis_moment == Catch::Approx(moment_ratio));
 }
 
 TEST_CASE("Moments calculation for rotated axis.", "[SupportSpotsGenerator]") {
@@ -134,16 +134,16 @@ TEST_CASE_METHOD(ObjectPartFixture, "Constructing ObjectPart using extrusion col
 
     CHECK(part.connected_to_bed == true);
     Vec3f volume_centroid{part.volume_centroid_accumulator / part.volume};
-    CHECK(volume_centroid.x() == Approx(0.5));
-    CHECK(volume_centroid.y() == Approx(0));
-    CHECK(volume_centroid.z() == Approx(layer_height / 2));
-    CHECK(part.sticking_area == Approx(expected.area));
-    CHECK(part.sticking_centroid_accumulator.x() == Approx(expected.x_i.x()));
-    CHECK(part.sticking_centroid_accumulator.y() == Approx(expected.x_i.y()));
-    CHECK(part.sticking_second_moment_of_area_accumulator.x() == Approx(expected.x_i_squared.x()));
-    CHECK(part.sticking_second_moment_of_area_accumulator.y() == Approx(expected.x_i_squared.y()));
-    CHECK(part.sticking_second_moment_of_area_covariance_accumulator == Approx(expected.xy).margin(1e-6));
-    CHECK(part.volume == Approx(layer_height * width));
+    CHECK(volume_centroid.x() == Catch::Approx(0.5));
+    CHECK(volume_centroid.y() == Catch::Approx(0));
+    CHECK(volume_centroid.z() == Catch::Approx(layer_height / 2));
+    CHECK(part.sticking_area == Catch::Approx(expected.area));
+    CHECK(part.sticking_centroid_accumulator.x() == Catch::Approx(expected.x_i.x()));
+    CHECK(part.sticking_centroid_accumulator.y() == Catch::Approx(expected.x_i.y()));
+    CHECK(part.sticking_second_moment_of_area_accumulator.x() == Catch::Approx(expected.x_i_squared.x()));
+    CHECK(part.sticking_second_moment_of_area_accumulator.y() == Catch::Approx(expected.x_i_squared.y()));
+    CHECK(part.sticking_second_moment_of_area_covariance_accumulator == Catch::Approx(expected.xy).margin(1e-6));
+    CHECK(part.volume == Catch::Approx(layer_height * width));
 }
 
 TEST_CASE_METHOD(ObjectPartFixture, "Constructing ObjectPart with brim", "[SupportSpotsGenerator]") {
@@ -158,6 +158,6 @@ TEST_CASE_METHOD(ObjectPartFixture, "Constructing ObjectPart with brim", "[Suppo
         brim
     };
 
-    CHECK(part.sticking_area == Approx((1 + 2*brim_width) * (width + 2*brim_width)));
+    CHECK(part.sticking_area == Catch::Approx((1 + 2*brim_width) * (width + 2*brim_width)));
 }
 

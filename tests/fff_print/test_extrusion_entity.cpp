@@ -62,11 +62,11 @@ SCENARIO("ExtrusionLoop", "[ExtrusionEntity]")
         ExtrusionLoop loop;
         loop.paths.emplace_back(new_extrusion_path(square.split_at_first_point(), ExtrusionRole::ExternalPerimeter, 1.));
         THEN("polygon area") {
-            REQUIRE(loop.polygon().area() == Approx(square.area()));
-            REQUIRE(loop.area() == Approx(square.area()));
+            REQUIRE(loop.polygon().area() == Catch::Approx(square.area()));
+            REQUIRE(loop.area() == Catch::Approx(square.area()));
         }
         THEN("loop length") {
-            REQUIRE(loop.length() == Approx(square.length()));
+            REQUIRE(loop.length() == Catch::Approx(square.length()));
         }
 
         WHEN("cloned") {
@@ -108,18 +108,18 @@ SCENARIO("ExtrusionLoop", "[ExtrusionEntity]")
         loop.paths.emplace_back(new_extrusion_path(polyline2, ExtrusionRole::OverhangPerimeter, 1.));
 
         THEN("area") {
-            REQUIRE(loop.area() == Approx(loop.polygon().area()));
+            REQUIRE(loop.area() == Catch::Approx(loop.polygon().area()));
         }
         double tot_len = polyline1.length() + polyline2.length();
         THEN("length") {
-            REQUIRE(loop.length() == Approx(tot_len));
+            REQUIRE(loop.length() == Catch::Approx(tot_len));
         }
 
         WHEN("splitting at intermediate point") {
             auto loop2 = std::unique_ptr<ExtrusionLoop>(dynamic_cast<ExtrusionLoop*>(loop.clone()));
             loop2->split_at_vertex(polyline1.points[1]);
             THEN("length after splitting is unchanged") {
-                REQUIRE(loop2->length() == Approx(tot_len));
+                REQUIRE(loop2->length() == Catch::Approx(tot_len));
             }
             THEN("loop contains three paths after splitting") {
                 REQUIRE(loop2->paths.size() == 3);
@@ -151,7 +151,7 @@ SCENARIO("ExtrusionLoop", "[ExtrusionEntity]")
                 double l2 = 0;
                 for (const ExtrusionPath &p : paths)
                     l2 += p.length();
-                REQUIRE(l2 == Approx(l - 3.));
+                REQUIRE(l2 == Catch::Approx(l - 3.));
             }
         }
         
@@ -159,7 +159,7 @@ SCENARIO("ExtrusionLoop", "[ExtrusionEntity]")
             auto loop2 = std::unique_ptr<ExtrusionLoop>(dynamic_cast<ExtrusionLoop*>(loop.clone()));
             loop2->split_at_vertex(polyline2.points.front());
             THEN("length after splitting is unchanged") {
-                REQUIRE(loop2->length() == Approx(tot_len));
+                REQUIRE(loop2->length() == Catch::Approx(tot_len));
             }
             THEN("loop contains two paths after splitting") {
                 REQUIRE(loop2->paths.size() == 2);
@@ -189,7 +189,7 @@ SCENARIO("ExtrusionLoop", "[ExtrusionEntity]")
             auto loop2 = std::unique_ptr<ExtrusionLoop>(dynamic_cast<ExtrusionLoop*>(loop.clone()));
             loop2->split_at(point, false, 0);
             THEN("length after splitting is unchanged") {
-                REQUIRE(loop2->length() == Approx(tot_len));
+                REQUIRE(loop2->length() == Catch::Approx(tot_len));
             }
             Point expected_start_point(200, 150);
             THEN("expected starting point") {
@@ -213,14 +213,14 @@ SCENARIO("ExtrusionLoop", "[ExtrusionEntity]")
         loop.paths.emplace_back(new_extrusion_path(polyline4, ExtrusionRole::OverhangPerimeter, 1.));
         double len = loop.length();
         THEN("area") {
-            REQUIRE(loop.area() == Approx(loop.polygon().area()));
+            REQUIRE(loop.area() == Catch::Approx(loop.polygon().area()));
         }
         WHEN("splitting at vertex") {
             Point point(4821067, 9321068);
             if (! loop.split_at_vertex(point))
                 loop.split_at(point, false, 0);
             THEN("total length is preserved after splitting") {
-                REQUIRE(loop.length() == Approx(len));
+                REQUIRE(loop.length() == Catch::Approx(len));
             }
             THEN("order is correctly preserved after splitting") {
                 REQUIRE(loop.paths.front().role() == ExtrusionRole::ExternalPerimeter);
@@ -238,12 +238,12 @@ SCENARIO("ExtrusionLoop", "[ExtrusionEntity]")
                        { 33853231, 33825297 }, { 24842049, 37509013 }, { 15896798, 33757841 }, { 12211841, 24812544 }, { 15896783, 15868739 } },
             ExtrusionRole::ExternalPerimeter, 1.));
         THEN("area") {
-            REQUIRE(loop.area() == Approx(loop.polygon().area()));
+            REQUIRE(loop.area() == Catch::Approx(loop.polygon().area()));
         }
         double len = loop.length();
         THEN("split_at() preserves total length") {
             loop.split_at({ 15896783, 15868739 }, false, 0);
-            REQUIRE(loop.length() == Approx(len));
+            REQUIRE(loop.length() == Catch::Approx(len));
         }
     }
 }

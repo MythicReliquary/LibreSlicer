@@ -25,6 +25,8 @@ CMakeUserPresets.json
 # --- local workspace notes ---
 Codex_Source.txt
 Dirty_Merge/
+Terminal_output.txt
+Workspace_Settings/
 # --- build outputs (never commit) ---
 /build-*/
 /build*/

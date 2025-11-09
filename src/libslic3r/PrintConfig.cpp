@@ -1437,6 +1437,14 @@ void PrintConfigDef::init_fff_params()
     });
     def->set_default_value(new ConfigOptionPercent(20));
 
+    def = this->add("fill_multiline", coInt);
+    def->label = L("Fill multiline");
+    def->category = L("Infill");
+    def->tooltip = L("Use multiple, evenly offset lines for supported infill patterns without changing the requested density.");
+    def->min = 1;
+    def->max = 5;
+    def->set_default_value(new ConfigOptionInt(1));
+
     def = this->add("fill_pattern", coEnum);
     def->label = L("Fill pattern");
     def->category = L("Infill");

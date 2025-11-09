@@ -38,6 +38,8 @@
 #include "GCode/WipeTowerIntegration.hpp"
 #include "GCode/SeamPlacer.hpp"
 #include "GCode/GCodeProcessor.hpp"
+#include "GCode/AdaptivePAProcessor.hpp"
+#include "GCode/SmallAreaInfillFlowCompensator.hpp"
 #include "EdgeGrid.hpp"
 #include "GCode/ThumbnailData.hpp"
 #include "tcbspan/span.hpp"
@@ -525,6 +527,8 @@ private:
     std::unique_ptr<SpiralVase>         m_spiral_vase;
     std::unique_ptr<GCodeFindReplace>   m_find_replace;
     std::unique_ptr<PressureEqualizer>  m_pressure_equalizer;
+    std::unique_ptr<AdaptivePAProcessor> m_pa_processor;
+    std::unique_ptr<SmallAreaInfillFlowCompensator> m_small_area_infill_flow_compensator;
     std::unique_ptr<GCode::WipeTowerIntegration> m_wipe_tower;
 
     // Heights (print_z) at which the skirt has already been extruded.

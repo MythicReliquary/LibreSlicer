@@ -1499,6 +1499,7 @@ void TabPrint::build()
         optgroup = page->new_optgroup(L("Infill"));
         optgroup->append_single_option_line("fill_density", category_path + "fill-density");
         optgroup->append_single_option_line("fill_pattern", category_path + "fill-pattern");
+        optgroup->append_single_option_line("fill_multiline", category_path + "fill-multiline");
         optgroup->append_single_option_line("infill_anchor", category_path + "fill-pattern");
         optgroup->append_single_option_line("infill_anchor_max", category_path + "fill-pattern");
         optgroup->append_single_option_line("top_fill_pattern", category_path + "top-fill-pattern");
@@ -2413,6 +2414,14 @@ void TabFilament::toggle_options()
         const auto og_it = std::find_if(page->m_optgroups.begin(), page->m_optgroups.end(), [](const ConfigOptionsGroupShp og) { return og->title == "Temperature"; });
         if (og_it != page->m_optgroups.end())
             update_line_with_near_label_widget(*og_it, "idle_temperature");
+
+        bool pa_enabled = m_config->opt_bool("enable_pressure_advance", 0);
+        toggle_option("pressure_advance", pa_enabled);
+        toggle_option("adaptive_pressure_advance", pa_enabled);
+        bool adaptive_pa_enabled = pa_enabled && m_config->opt_bool("adaptive_pressure_advance", 0);
+        toggle_option("adaptive_pressure_advance_model", adaptive_pa_enabled);
+        toggle_option("adaptive_pressure_advance_overhangs", adaptive_pa_enabled);
+        toggle_option("adaptive_pressure_advance_bridges", adaptive_pa_enabled);
     }
 }
 

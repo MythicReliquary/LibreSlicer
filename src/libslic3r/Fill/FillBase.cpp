@@ -14,6 +14,7 @@
 #include "../EdgeGrid.hpp"
 #include "../Geometry.hpp"
 #include "../Geometry/Circle.hpp"
+#include "../ShortestPath.hpp"
 #include "../Point.hpp"
 #include "../PrintConfig.hpp"
 #include "../Surface.hpp"
@@ -1120,6 +1121,20 @@ void Fill::connect_infill(Polylines &&infill_ordered, const Polygons &boundary_s
         polygons_src.emplace_back(&polygon);
 
     connect_infill(std::move(infill_ordered), polygons_src, bbox, polylines_out, spacing, params);
+}
+
+void Fill::chain_or_connect_infill(Polylines &&infill_ordered, const ExPolygon &boundary, Polylines &polylines_out, const double spacing, const FillParams &params)
+{
+    if (infill_ordered.empty())
+        return;
+
+    if (params.dont_connect()) {
+        if (infill_ordered.size() > 1)
+            infill_ordered = chain_polylines(std::move(infill_ordered));
+        append(polylines_out, std::move(infill_ordered));
+    } else {
+        connect_infill(std::move(infill_ordered), boundary, polylines_out, spacing, params);
+    }
 }
 
 static constexpr auto boundary_idx_unconnected = std::numeric_limits<size_t>::max();
@@ -2536,6 +2551,56 @@ void Fill::connect_base_support(Polylines &&infill_ordered, const Polygons &boun
         polygons_src.emplace_back(&polygon);
 
     connect_base_support(std::move(infill_ordered), polygons_src, bbox, polylines_out, spacing, params);
+}
+
+void multiline_fill(Polylines& polylines, const FillParams& params, float spacing)
+{
+    if (params.multiline <= 1)
+        return;
+
+    const int n_lines = params.multiline;
+    const int n_polylines = static_cast<int>(polylines.size());
+    Polylines all_polylines;
+    all_polylines.reserve(n_lines * n_polylines);
+
+    const float center = (n_lines - 1) / 2.0f;
+
+    for (int line = 0; line < n_lines; ++line) {
+        float offset = scale_((static_cast<float>(line) - center) * spacing);
+
+        for (const Polyline& pl : polylines) {
+            const size_t n = pl.points.size();
+            if (n < 2) {
+                all_polylines.emplace_back(pl);
+                continue;
+            }
+
+            Points new_points;
+            new_points.reserve(n);
+            for (size_t i = 0; i < n; ++i) {
+                Vec2f tangent;
+                if (i == 0) {
+                    if (pl.points[0] == pl.points[n - 1])
+                        tangent = (pl.points[1] - pl.points[n - 2]).cast<float>().normalized();
+                    else
+                        tangent = (pl.points[1] - pl.points[0]).cast<float>().normalized();
+                } else if (i == n - 1) {
+                    if (pl.points[0] == pl.points[n - 1])
+                        tangent = (pl.points[1] - pl.points[n - 2]).cast<float>().normalized();
+                    else
+                        tangent = (pl.points[n - 1] - pl.points[n - 2]).cast<float>().normalized();
+                } else
+                    tangent = (pl.points[i + 1] - pl.points[i - 1]).cast<float>().normalized();
+                Vec2f normal(-tangent.y(), tangent.x());
+
+                Point p = pl.points[i] + (normal * offset).cast<coord_t>();
+                new_points.push_back(p);
+            }
+
+            all_polylines.emplace_back(std::move(new_points));
+        }
+    }
+    polylines = std::move(all_polylines);
 }
 
 } // namespace Slic3r

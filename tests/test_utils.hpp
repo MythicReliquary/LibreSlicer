@@ -4,6 +4,7 @@
 #include <libslic3r/TriangleMesh.hpp>
 #include <libslic3r/Format/OBJ.hpp>
 #include <random>
+#include <cstdlib>
 
 #if defined(WIN32) || defined(_WIN32)
 #define PATH_SEPARATOR R"(\)"
@@ -35,6 +36,11 @@ Slic3r::IntegerOnly<T> random_value(T minv, T maxv)
     std::uniform_int_distribution<T> dist(minv, maxv);
 
     return dist(rng);
+}
+
+inline bool suppressed_tests_enabled()
+{
+    return std::getenv("LIBRESLICER_RUN_SUPPRESSED_TESTS") != nullptr;
 }
 
 #endif // SLIC3R_TEST_UTILS

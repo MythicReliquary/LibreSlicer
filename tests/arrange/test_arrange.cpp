@@ -930,7 +930,7 @@ TEST_CASE("Optimal nfp position search with GravityKernel using RectangleItem an
 
                 Slic3r::Vec2crd D = bed.center - item.shape.center();
                 REQUIRE(item.translation == D);
-                REQUIRE(score == Approx(0.).margin(EPSILON));
+                REQUIRE(score == Catch::Approx(0.).margin(EPSILON));
             }
         }
     }
@@ -1063,7 +1063,7 @@ TEMPLATE_TEST_CASE("Test if allowed item rotations are considered", "[arrange2]"
     bool packed = pack(strategy, bed, itm);
 
     REQUIRE(packed);
-    REQUIRE(get_rotation(itm) == Approx(PI));
+    REQUIRE(get_rotation(itm) == Catch::Approx(PI));
 }
 
 //TEST_CASE("NFP optimizing test", "[arrange2]") {

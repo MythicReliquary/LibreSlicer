@@ -22,7 +22,7 @@ SCENARIO("Origin manipulation", "[GCode]") {
     }
 }
 
-struct ApproxEqualsPoints : public Catch::MatcherBase<Points> {
+struct ApproxEqualsPoints : public Catch::Matchers::MatcherBase<Points> {
     ApproxEqualsPoints(const Points& expected, unsigned tolerance): expected(expected), tolerance(tolerance) {}
     bool match(const Points& points) const override {
         if (points.size() != expected.size()) {
@@ -180,12 +180,12 @@ TEST_CASE("Get first crossed line distance", "[GCode]") {
 
     // Try different cases by skipping lines in the travel.
     AABBTreeLines::LinesDistancer<Linef> distancer = get_expolygons_distancer({square_with_hole, square_above});
-    CHECK(*get_first_crossed_line_distance(travel, distancer) == Approx(1));
-    CHECK(*get_first_crossed_line_distance(tcb::span{travel}.subspan(1), distancer) == Approx(0.2));
-    CHECK(*get_first_crossed_line_distance(tcb::span{travel}.subspan(2), distancer) == Approx(0.5));
-    CHECK(*get_first_crossed_line_distance(tcb::span{travel}.subspan(3), distancer) == Approx(1.0)); //Edge case
-    CHECK(*get_first_crossed_line_distance(tcb::span{travel}.subspan(4), distancer) == Approx(0.7));
-    CHECK(*get_first_crossed_line_distance(tcb::span{travel}.subspan(5), distancer) == Approx(1.6));
+    CHECK(*get_first_crossed_line_distance(travel, distancer) == Catch::Approx(1));
+    CHECK(*get_first_crossed_line_distance(tcb::span{travel}.subspan(1), distancer) == Catch::Approx(0.2));
+    CHECK(*get_first_crossed_line_distance(tcb::span{travel}.subspan(2), distancer) == Catch::Approx(0.5));
+    CHECK(*get_first_crossed_line_distance(tcb::span{travel}.subspan(3), distancer) == Catch::Approx(1.0)); //Edge case
+    CHECK(*get_first_crossed_line_distance(tcb::span{travel}.subspan(4), distancer) == Catch::Approx(0.7));
+    CHECK(*get_first_crossed_line_distance(tcb::span{travel}.subspan(5), distancer) == Catch::Approx(1.6));
     CHECK_FALSE(get_first_crossed_line_distance(tcb::span{travel}.subspan(6), distancer));
 }
 
@@ -196,8 +196,8 @@ TEST_CASE("Generate regular polygon", "[GCode]") {
     const Point oposite_point{centroid * 2};
 
     REQUIRE(result.size() == 32);
-    CHECK(result[16].x() == Approx(oposite_point.x()));
-    CHECK(result[16].y() == Approx(oposite_point.y()));
+    CHECK(result[16].x() == Catch::Approx(oposite_point.x()));
+    CHECK(result[16].y() == Catch::Approx(oposite_point.y()));
 
     std::vector<double> angles;
     angles.reserve(points_count);

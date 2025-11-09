@@ -181,6 +181,25 @@ std::string GCodeWriter::set_bed_temperature(unsigned int temperature, bool wait
     return gcode.str();
 }
 
+std::string GCodeWriter::set_pressure_advance(double advance) const
+{
+    const unsigned int extruder_id = (m_extruder != nullptr) ? m_extruder->id() : 0u;
+
+    std::ostringstream gcode;
+    gcode.setf(std::ios::fixed, std::ios::floatfield);
+    gcode << std::setprecision(5);
+
+    if (FLAVOR_IS(gcfRepRapSprinter) || FLAVOR_IS(gcfRepRapFirmware)) {
+        gcode << "M572 D" << extruder_id << " S" << advance << "\n";
+    } else if (FLAVOR_IS(gcfKlipper)) {
+        gcode << "SET_PRESSURE_ADVANCE ADVANCE=" << advance << "\n";
+    } else {
+        gcode << "M900 K" << advance << "\n";
+    }
+
+    return gcode.str();
+}
+
 std::string GCodeWriter::set_acceleration_internal(Acceleration type, unsigned int acceleration)
 {
     // Clamp the acceleration to the allowed maximum.

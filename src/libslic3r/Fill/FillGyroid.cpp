@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <iostream>
 
+#include "FillBase.hpp"
 #include "FillGyroid.hpp"
 
 namespace Slic3r {
@@ -166,12 +167,14 @@ void FillGyroid::_fill_surface_single(
 
     BoundingBox bb = expolygon.contour.bounding_box();
     // Density adjusted to have a good %of weight.
-    double      density_adjusted = std::max(0., params.density * DensityAdjust);
+    double      density_adjusted = std::max(0., params.density * DensityAdjust / std::max(1, params.multiline));
     // Distance between the gyroid waves in scaled coordinates.
     coord_t     distance = coord_t(scale_(this->spacing) / density_adjusted);
 
     // align bounding box to a multiple of our grid module
     bb.merge(align_to_grid(bb.min, Point(2*M_PI*distance, 2*M_PI*distance)));
+    const coord_t expand = coord_t(10 * scale_(this->spacing));
+    bb.offset(expand);
 
     // generate pattern
     Polylines polylines = make_gyroid_waves(
@@ -185,6 +188,8 @@ void FillGyroid::_fill_surface_single(
 	for (Polyline &pl : polylines)
 		pl.translate(bb.min);
 
+    multiline_fill(polylines, params, this->spacing);
+
 	polylines = intersection_pl(polylines, expolygon);
 
     if (! polylines.empty()) {
@@ -197,12 +202,8 @@ void FillGyroid::_fill_surface_single(
     }
 
 	if (! polylines.empty()) {
-		// connect lines
 		size_t polylines_out_first_idx = polylines_out.size();
-		if (params.dont_connect())
-        	append(polylines_out, chain_polylines(polylines));
-        else
-            this->connect_infill(std::move(polylines), expolygon, polylines_out, this->spacing, params);
+        chain_or_connect_infill(std::move(polylines), expolygon, polylines_out, this->spacing, params);
 
 	    // new paths must be rotated back
         if (std::abs(infill_angle) >= EPSILON) {

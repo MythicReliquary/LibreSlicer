@@ -2,8 +2,47 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PRUSA_CLI="${PRUSA_CLI:-$ROOT_DIR/tools/PrusaSlicer.AppImage}"
-UVTOOLS_CLI="${UVTOOLS_CLI:-$ROOT_DIR/tools/uvtools.AppImage}"
+
+find_first_executable() {
+  for candidate in "$@"; do
+    if [[ -x "$candidate" ]]; then
+      printf '%s\n' "$candidate"
+      return 0
+    fi
+  done
+  return 1
+}
+
+if [[ -z "${PRUSA_CLI:-}" ]]; then
+  if DEFAULT_PRUSA_CLI="$(find_first_executable \
+      "$ROOT_DIR/build/src/libreslicer.exe" \
+      "$ROOT_DIR/build/src/libreslicer" \
+      "$ROOT_DIR/build/src/PrusaSlicer.exe" \
+      "$ROOT_DIR/build/src/PrusaSlicer" \
+      "$ROOT_DIR/tools/libreslicer.AppImage" \
+      "$ROOT_DIR/tools/LibreSlicer.AppImage" \
+      "$ROOT_DIR/tools/PrusaSlicer.AppImage")"
+  then
+    PRUSA_CLI="$DEFAULT_PRUSA_CLI"
+  else
+    PRUSA_CLI="$ROOT_DIR/tools/PrusaSlicer.AppImage"
+  fi
+fi
+
+if [[ -z "${UVTOOLS_CLI:-}" ]]; then
+  if DEFAULT_UVTOOLS_CLI="$(find_first_executable \
+      "$ROOT_DIR/tools/uvtools.exe" \
+      "$ROOT_DIR/tools/UVTools.exe" \
+      "$ROOT_DIR/tools/uvtools.AppImage" \
+      "$ROOT_DIR/tools/UVtools.AppImage" \
+      "$ROOT_DIR/tools/UVTools.AppImage")"
+  then
+    UVTOOLS_CLI="$DEFAULT_UVTOOLS_CLI"
+  else
+    UVTOOLS_CLI="$ROOT_DIR/tools/uvtools.AppImage"
+  fi
+fi
+
 PRINTER_PROFILE="${PRINTER_PROFILE:-$ROOT_DIR/ci_profiles/mars5_printer.ini}"
 PRINT_PROFILE="${PRINT_PROFILE:-$ROOT_DIR/ci_profiles/mars5_print_0.05mm.ini}"
 RESIN_PROFILE="${RESIN_PROFILE:-$ROOT_DIR/ci_profiles/mars5_resin_siraya.ini}"
