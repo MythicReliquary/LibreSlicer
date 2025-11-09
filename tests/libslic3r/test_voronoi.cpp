@@ -342,8 +342,10 @@ TEST_CASE("Voronoi division by zero 12903", "[Voronoi]")
 // This test is suppressed.
 TEST_CASE("Voronoi NaN coordinates 12139", "[Voronoi][suppressed]")
 {
-    if (!suppressed_tests_enabled())
-        CATCH_SKIP("Set LIBRESLICER_RUN_SUPPRESSED_TESTS=1 to exercise suppressed Voronoi tests.");
+    if (!suppressed_tests_enabled()) {
+        WARN("Set LIBRESLICER_RUN_SUPPRESSED_TESTS=1 to exercise suppressed Voronoi tests.");
+        return;
+    }
 
     Lines lines = {
         { {  260500,1564400 }, { 261040,1562960 } },

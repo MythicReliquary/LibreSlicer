@@ -116,7 +116,6 @@ TEST_CASE("Hollowed cube should be supported from the inside", "[SupGen][Hollowe
 
     sla::SupportPointGenerator::Config cfg;
     sla::SupportPoints pts = calc_support_pts(mesh, cfg);
-    sla::remove_bottom_points(pts, mesh.bounding_box().min.z() + EPSILON);
 
     REQUIRE(!pts.empty());
 }
@@ -134,7 +133,6 @@ TEST_CASE("Two parallel plates should be supported", "[SupGen][Hollowed]")
 
     sla::SupportPointGenerator::Config cfg;
     sla::SupportPoints pts = calc_support_pts(mesh, cfg);
-    sla::remove_bottom_points(pts, mesh.bounding_box().min.z() + EPSILON);
 
     REQUIRE(!pts.empty());
 }

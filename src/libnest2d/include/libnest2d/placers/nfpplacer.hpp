@@ -110,7 +110,7 @@ struct NfpPConfig {
      * circle than you won't be able to pack it. If you knew apriori that
      * there four circles are to be placed, you would have placed the first 3
      * into an L shape. This parameter can be used to make these kind of
-     * decisions (for you or a more intelligent AI).
+     * decisions (for you or a more advanced heuristic).
      */
     std::function<void(const nfp::Shapes<RawShape>&, // merged pile
                        const ItemGroup&,             // packed items

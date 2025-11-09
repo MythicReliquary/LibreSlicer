@@ -1,6 +1,8 @@
+########################################
+# User/IDE/OS-specific files
+########################################
 Build
 Build.bat
-/build/
 MYMETA.json
 MYMETA.yml
 _build
@@ -11,58 +13,56 @@ MANIFEST.bak
 xs/MANIFEST.bak
 xs/assertlib*
 .init_bundle.ini
-.vs/*
 local-lib
 /src/TAGS
-/.vscode/
+**/.DS_Store
+**/.idea/
+.vscode/
+.pkg_cache
+CMakeUserPresets.json
+.vs/
 build-linux/*
 deps/build*
 deps/build-linux/*
-**/.DS_Store
-**/.idea/
-.pkg_cache
-CMakeUserPresets.json
-# --- local workspace notes ---
-Codex_Source.txt
-Dirty_Merge/
+
+########################################
+# Local workspace notes (never commit)
+########################################
+ Dirty_Merge/
 Terminal_output.txt
 Workspace_Settings/
-# --- build outputs (never commit) ---
-/build-*/
+docs/dev-notes/mesh-repair.md
+features_list.txt
+
+########################################
+# Build outputs (never commit)
+########################################
 /build*/
-/out/
-/bin/
-/obj/
-/x64/
+/build-*/
+build/
+out/
+bin/
+obj/
+x64/
+dist/
 /CMakeFiles/
 /CMakeCache.txt
 /.cmake/
-/.vs/
-/dist/
 /*.zip
 /*.7z
 /*.exe
 /*.msi
 /*.pdb
 /*.dll
-# --- build outputs (never commit) ---
-/build-*/
-/build*/
-/out/
-/bin/
-/obj/
-/x64/
-/dist/
-/CMakeFiles/
-/CMakeCache.txt
-/.cmake/
-/.vs/
 *.dll
 *.pdb
 *.zip
 *.msi
 *.exe
+
+########################################
 # vcpkg build trees (never commit)
+########################################
 /vcpkg/
 /vcpkg_installed/
 /installed/

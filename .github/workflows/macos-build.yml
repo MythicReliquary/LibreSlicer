@@ -3,7 +3,11 @@ name: macOS CI (V1 RC)
 on:
   push:
     branches:
+      - main
       - release/windows-v1-rc1
+  pull_request:
+    branches:
+      - main
   workflow_dispatch: {}
 
 concurrency:
