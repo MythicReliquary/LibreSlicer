@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2020 - 2023 Oleksandra Iushchenko @YuSanka, Vojtěch Bubník @bubnikv, Tomáš Mészáros @tamasmeszaros, Lukáš Matěna @lukasmatena, Enrico Turri @enricoturri1966
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "libslic3r/libslic3r.h"
 #include "DoubleSlider.hpp"
@@ -417,7 +417,7 @@ void Control::SetLayersTimes(const std::vector<float>& layers_times, float total
 
     // Erase duplicates values from m_values and save it to the m_layers_values
     // They will be used for show the correct estimated time for MM print, when "No sparce layer" is enabled
-    // See https://github.com/prusa3d/PrusaSlicer/issues/6232
+    // See https://github.com/prusa3d/LibreSlicer/issues/6232
     if (m_is_wipe_tower && m_values.size() != m_layers_times.size()) {
         m_layers_values = m_values;
         sort(m_layers_values.begin(), m_layers_values.end());
@@ -748,7 +748,7 @@ wxString Control::get_label(int tick, LabelType label_type/* = ltHeightWithLayer
     // When "Print Settings -> Multiple Extruders -> No sparse layer" is enabled, then "Smart" Wipe Tower is used for wiping.
     // As a result, each layer with tool changes is splited for min 3 parts: first tool, wiping, second tool ...
     // So, vertical slider have to respect to this case.
-    // see https://github.com/prusa3d/PrusaSlicer/issues/6232.
+    // see https://github.com/prusa3d/LibreSlicer/issues/6232.
     // m_values contains data for all layer's parts,
     // but m_layers_values contains just unique Z values.
     // Use this function for correct conversion slider position to number of printed layer
@@ -1193,7 +1193,7 @@ void Control::draw_ruler(wxDC& dc)
                 tick++;
             }
         }
-        // very short object or some non-trivial ruler with non-regular step (see https://github.com/prusa3d/PrusaSlicer/issues/7263)
+        // very short object or some non-trivial ruler with non-regular step (see https://github.com/prusa3d/LibreSlicer/issues/7263)
         else {
             if (get_scroll_step() < 1) // step less then 1 px indicates very tall object with non-regular laayer step (probably in vase mode)
                 return;
@@ -1518,7 +1518,7 @@ wxString Control::get_tooltip(int tick/*=-1*/)
         std::string space = "   ";
         tooltip = space;
         auto format_gcode = [space](std::string gcode) {
-            // when the tooltip is too long, it starts to flicker, see: https://github.com/prusa3d/PrusaSlicer/issues/7368
+            // when the tooltip is too long, it starts to flicker, see: https://github.com/prusa3d/LibreSlicer/issues/7368
             // so we limit the number of lines shown
             std::vector<std::string> lines;
             boost::split(lines, gcode, boost::is_any_of("\n"), boost::token_compress_off);
@@ -2763,7 +2763,7 @@ bool TickCodeInfo::edit_tick(std::set<TickCode>::iterator it, double print_z)
 {
     // Save previously value of the tick before the call a Dialog from get_... functions,
     // otherwise a background process can change ticks values and current iterator wouldn't be valid for the moment of a Dialog close
-    // and PS will crash (see https://github.com/prusa3d/PrusaSlicer/issues/10941)
+    // and PS will crash (see https://github.com/prusa3d/LibreSlicer/issues/10941)
     TickCode changed_tick = *it;
 
     std::string edited_value;

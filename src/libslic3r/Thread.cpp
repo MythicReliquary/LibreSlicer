@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2020 - 2023 Vojtěch Bubník @bubnikv, Lukáš Hejl @hejllukas, Lukáš Matěna @lukasmatena, Roman Beránek @zavorka
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifdef _WIN32
 	#include <windows.h>
@@ -230,7 +230,7 @@ void name_tbb_thread_pool_threads_set_locale()
 		return;
 	initialized = true;
 
-	// see GH issue #5661 PrusaSlicer hangs on Linux when run with non standard task affinity
+	// see GH issue #5661 LibreSlicer hangs on Linux when run with non standard task affinity
 	// TBB will respect the task affinity mask on Linux and spawn less threads than std::thread::hardware_concurrency().
 //	const size_t nthreads_hw = std::thread::hardware_concurrency();
 	const size_t nthreads_hw = tbb::this_task_arena::max_concurrency();

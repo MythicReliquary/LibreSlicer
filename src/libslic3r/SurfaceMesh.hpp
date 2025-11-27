@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2022 Lukáš Matěna @lukasmatena
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef slic3r_SurfaceMesh_hpp_
 #define slic3r_SurfaceMesh_hpp_
@@ -84,7 +84,7 @@ public:
 
         for (int i=0; i<3; ++i) {
             if (is_same_vertex(source(h_candidate), target(h))) {
-                // Meshes in PrusaSlicer should be fixed enough for the following not to happen.
+                // Meshes in LibreSlicer should be fixed enough for the following not to happen.
                 assert(is_same_vertex(target(h_candidate), source(h)));
                 return h_candidate;
             }

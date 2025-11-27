@@ -1,7 +1,7 @@
 ///|/ Copyright (c) Prusa Research 2018 - 2023 Vojtěch Bubník @bubnikv, Oleksandra Iushchenko @YuSanka, Tomáš Mészáros @tamasmeszaros, David Kocík @kocikdav, Lukáš Matěna @lukasmatena, Enrico Turri @enricoturri1966, Filip Sykala @Jony01, Lukáš Hejl @hejllukas, Vojtěch Král @vojtechkral
 ///|/ Copyright (c) 2021 Li Jiang
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef slic3r_GUI_App_hpp_
 #define slic3r_GUI_App_hpp_
@@ -113,7 +113,7 @@ class ConfigWizard;
 static wxString dots("…", wxConvUTF8);
 
 // Does our wxWidgets version support markup?
-// https://github.com/prusa3d/PrusaSlicer/issues/4282#issuecomment-634676371
+// https://github.com/prusa3d/LibreSlicer/issues/4282#issuecomment-634676371
 #if wxUSE_MARKUP && wxCHECK_VERSION(3, 1, 1)
     #if defined(__has_include)
         #if __has_include(<wx/generic/private/markuptext.h>) || __has_include(<wx/private/markuptext.h>)
@@ -412,13 +412,12 @@ private:
     void            on_version_read(wxCommandEvent& evt);
     // if the data from version file are already downloaded, shows dialogs to start download of new version of app
     void            app_updater(bool from_user);
-    // inititate read of version file online in separate thread
-    void            app_version_check(bool from_user);
 #else
     void            on_version_read(wxCommandEvent&) {}
     void            app_updater(bool) {}
-    void            app_version_check(bool) {}
 #endif
+    // inititate read of version file online in separate thread (or open release page when disabled)
+    void            app_version_check(bool from_user);
 
     bool                    m_datadir_redefined { false }; 
     bool                    m_wifi_config_dialog_shown { false };

@@ -60,7 +60,7 @@
 #include "libslic3r/Thread.hpp"
 #include "libslic3r/BlacklistedLibraryCheck.hpp"
 
-#include "PrusaSlicer.hpp"
+#include "LibreSlicer.hpp"
 
 #ifdef SLIC3R_GUI
     #include "slic3r/GUI/GUI_Init.hpp"
@@ -958,7 +958,7 @@ extern "C" {
 
 #if defined(SLIC3R_UBSAN)
 extern "C" {
-    // Enable printing stacktrace by default. It can be disabled by running PrusaSlicer with "UBSAN_OPTIONS=print_stacktrace=0".
+    // Enable printing stacktrace by default. It can be disabled by running LibreSlicer with "UBSAN_OPTIONS=print_stacktrace=0".
     const char *__ubsan_default_options() {
         return "print_stacktrace=1";
     }

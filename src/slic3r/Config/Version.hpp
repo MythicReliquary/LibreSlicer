@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2018 - 2020 Lukáš Matěna @lukasmatena, David Kocík @kocikdav, Vojtěch Bubník @bubnikv, Vojtěch Král @vojtechkral
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef slic3r_GUI_ConfigIndex_
 #define slic3r_GUI_ConfigIndex_
@@ -76,7 +76,7 @@ public:
 	// Returns configs().end() if such version does not exist in the index. This shall never happen
 	// if the index is valid.
 	const_iterator				recommended() const;
-	// Recommended config for a provided slic3r version. Used when checking for slic3r update (slic3r_version is the old one read out from PrusaSlicer.ini)
+	// Recommended config for a provided slic3r version. Used when checking for slic3r update (slic3r_version is the old one read out from LibreSlicer.ini)
 	const_iterator				recommended(const Semver &slic3r_version) const;
 
 	// Returns the filesystem path from which this index has originally been loaded

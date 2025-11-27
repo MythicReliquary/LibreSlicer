@@ -3,7 +3,7 @@
 **Version:** 2025-10-28 · Maintainer: Mythic Reliquary LLC
 
 ## What LibreSlicer Delivers
-- Creator-first SLA/resin slicer derived from the proven PrusaSlicer engine.
+- Creator-first SLA/resin slicer derived from the proven LibreSlicer engine.
 - No telemetry, no vendor lock-in—everything ships under the GNU AGPLv3.
 - Clean, predictable releases with matching source archives and compliance docs.
 

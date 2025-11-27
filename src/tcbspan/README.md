@@ -1,4 +1,4 @@
-Bundled with PrusaSlicer: 
+Bundled with LibreSlicer: 
 https://github.com/tcbrindle/span
 commit 836dc6a0efd9849cb194e88e4aa2387436bb079b
 This is not the full distribution, it only contains README and span.hpp

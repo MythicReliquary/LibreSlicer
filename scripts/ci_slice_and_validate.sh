@@ -17,15 +17,15 @@ if [[ -z "${PRUSA_CLI:-}" ]]; then
   if DEFAULT_PRUSA_CLI="$(find_first_executable \
       "$ROOT_DIR/build/src/libreslicer.exe" \
       "$ROOT_DIR/build/src/libreslicer" \
-      "$ROOT_DIR/build/src/PrusaSlicer.exe" \
-      "$ROOT_DIR/build/src/PrusaSlicer" \
+      "$ROOT_DIR/build/src/LibreSlicer.exe" \
+      "$ROOT_DIR/build/src/LibreSlicer" \
       "$ROOT_DIR/tools/libreslicer.AppImage" \
       "$ROOT_DIR/tools/LibreSlicer.AppImage" \
-      "$ROOT_DIR/tools/PrusaSlicer.AppImage")"
+      "$ROOT_DIR/tools/LibreSlicer.AppImage")"
   then
     PRUSA_CLI="$DEFAULT_PRUSA_CLI"
   else
-    PRUSA_CLI="$ROOT_DIR/tools/PrusaSlicer.AppImage"
+    PRUSA_CLI="$ROOT_DIR/tools/LibreSlicer.AppImage"
   fi
 fi
 
@@ -64,7 +64,7 @@ Options:
   --printer-profile PATH Override printer profile ini
   --print-profile PATH   Override print profile ini
   --resin-profile PATH   Override resin profile ini
-  --set KEY=VALUE        Append a '--set KEY=VALUE' override when invoking PrusaSlicer
+  --set KEY=VALUE        Append a '--set KEY=VALUE' override when invoking LibreSlicer
   -h, --help             Show this help message
 USAGE
 }
@@ -122,7 +122,7 @@ if [[ -z "$STL_PATH" ]]; then
 fi
 
 if [[ ! -x "$PRUSA_CLI" ]]; then
-  echo "PrusaSlicer CLI not found or not executable: $PRUSA_CLI" >&2
+  echo "LibreSlicer CLI not found or not executable: $PRUSA_CLI" >&2
   exit 1
 fi
 

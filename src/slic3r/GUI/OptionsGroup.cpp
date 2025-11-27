@@ -8,7 +8,7 @@
 ///|/ Copyright (c) 2012 Henrik Brix Andersen @henrikbrixandersen
 ///|/ Copyright (c) 2011 Richard Goodwin
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "OptionsGroup.hpp"
 #include "ConfigExceptions.hpp"
@@ -1022,10 +1022,7 @@ wxString OptionsGroup::get_url(const std::string& path_end)
     if (path_end.empty())
         return wxEmptyString;
 
-    wxString language = wxGetApp().current_language_code_safe();
-    wxString lang_marker = language.IsEmpty() ? "en" : language.BeforeFirst('_');
-
-    return wxString("https://help.prusa3d.com/") + lang_marker + wxString("/article/" + path_end);
+    return wxString("https://github.com/MythicReliquary/LibreSlicer-Supporter-Dev/wiki/") + wxString(path_end);
 }
 
 bool OptionsGroup::launch_browser(const std::string& path_end)

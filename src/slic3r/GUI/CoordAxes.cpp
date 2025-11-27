@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2022 - 2023 Lukáš Matěna @lukasmatena, Enrico Turri @enricoturri1966
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "libslic3r/libslic3r.h"
 
@@ -47,7 +47,7 @@ void CoordAxes::render(const Transform3d& trafo, float emission_factor)
     shader->set_uniform("emission_factor", emission_factor);
 
     // Scale the axes if the camera is close to them to avoid issues
-    // such as https://github.com/prusa3d/PrusaSlicer/issues/9483
+    // such as https://github.com/prusa3d/LibreSlicer/issues/9483
     const Camera& camera = wxGetApp().plater()->get_camera();
     Transform3d scale_tr = Transform3d::Identity();
     scale_tr.scale(std::min(1., camera.get_inv_zoom() * 10.));

@@ -9,14 +9,14 @@
 ///|/ Copyright (c) 2016 Miro Hrončok @hroncok
 ///|/ Copyright (c) 2014 Kamil Kwolek
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef _libslic3r_h_
 #define _libslic3r_h_
 
 #include "libslic3r_version.h"
-#define GCODEVIEWER_APP_NAME "PrusaSlicer G-code Viewer"
-#define GCODEVIEWER_APP_KEY  "PrusaSlicerGcodeViewer"
+#define GCODEVIEWER_APP_NAME "LibreSlicer G-code Viewer"
+#define GCODEVIEWER_APP_KEY  "LibreSlicerGcodeViewer"
 
 // this needs to be included early for MSVC (listing it in Build.PL is not enough)
 #include <memory>
@@ -48,7 +48,7 @@
 
 using coord_t = 
 #if 1
-// Saves around 32% RAM after slicing step, 6.7% after G-code export (tested on PrusaSlicer 2.2.0 final).
+// Saves around 32% RAM after slicing step, 6.7% after G-code export (tested on LibreSlicer 2.2.0 final).
     int32_t;
 #else
     //FIXME At least FillRectilinear2 and std::boost Voronoi require coord_t to be 32bit.

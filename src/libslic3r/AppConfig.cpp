@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2017 - 2023 Oleksandra Iushchenko @YuSanka, Vojtěch Bubník @bubnikv, Pavel Mikuš @Godrak, David Kocík @kocikdav, Lukáš Matěna @lukasmatena, Enrico Turri @enricoturri1966, Lukáš Hejl @hejllukas, Filip Sykala @Jony01, Vojtěch Král @vojtechkral
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "libslic3r/libslic3r.h"
 #include "libslic3r/Utils.hpp"
@@ -34,17 +34,28 @@ namespace Slic3r {
 
 static const std::string VENDOR_PREFIX = "vendor:";
 static const std::string MODEL_PREFIX = "model:";
-// Because of a crash in PrusaSlicer 2.3.0/2.3.1 when showing an update notification with some locales, we don't want PrusaSlicer 2.3.0/2.3.1
-// to show this notification. On the other hand, we would like PrusaSlicer 2.3.2 to show an update notification of the upcoming PrusaSlicer 2.4.0.
-// Thus we will let PrusaSlicer 2.3.2 and couple of follow-up versions to download the version number from an alternate file until the PrusaSlicer 2.3.0/2.3.1
+// Because of a crash in LibreSlicer 2.3.0/2.3.1 when showing an update notification with some locales, we don't want LibreSlicer 2.3.0/2.3.1
+// to show this notification. On the other hand, we would like LibreSlicer 2.3.2 to show an update notification of the upcoming LibreSlicer 2.4.0.
+// Thus we will let LibreSlicer 2.3.2 and couple of follow-up versions to download the version number from an alternate file until the LibreSlicer 2.3.0/2.3.1
 // are phased out, then we will revert to the original name.
-// For 2.6.0-alpha1 we have switched back to the original. The file should contain data for AppUpdater.cpp
-static const std::string VERSION_CHECK_URL = "https://files.prusa3d.com/wp-content/uploads/repository/PrusaSlicer-settings-master/live/PrusaSlicer.version";
-//static const std::string VERSION_CHECK_URL = "https://files.prusa3d.com/wp-content/uploads/repository/PrusaSlicer-settings-master/live/PrusaSlicer.version2";
+#ifndef LIBRESLICER_VERSION_CHECK_URL
+#define LIBRESLICER_VERSION_CHECK_URL ""
+#endif
+
+#ifndef LIBRESLICER_INDEX_ARCHIVE_URL
+#define LIBRESLICER_INDEX_ARCHIVE_URL ""
+#endif
+
+#ifndef LIBRESLICER_PROFILE_FOLDER_URL
+#define LIBRESLICER_PROFILE_FOLDER_URL ""
+#endif
+
+// LibreSlicer v1 disables upstream download endpoints until privacy requirements are met.
+static const std::string VERSION_CHECK_URL = LIBRESLICER_VERSION_CHECK_URL;
 // Url to index archive zip that contains latest indicies
-static const std::string INDEX_ARCHIVE_URL= "https://files.prusa3d.com/wp-content/uploads/repository/vendor_indices.zip";
+static const std::string INDEX_ARCHIVE_URL= LIBRESLICER_INDEX_ARCHIVE_URL;
 // Url to folder with vendor profile files. Used when downloading new profiles that are not in resources folder.
-static const std::string PROFILE_FOLDER_URL = "https://files.prusa3d.com/wp-content/uploads/repository/PrusaSlicer-settings-master/live/";
+static const std::string PROFILE_FOLDER_URL = LIBRESLICER_PROFILE_FOLDER_URL;
 
 const std::string AppConfig::SECTION_FILAMENTS = "filaments";
 const std::string AppConfig::SECTION_MATERIALS = "sla_materials";
@@ -91,7 +102,7 @@ void AppConfig::set_defaults()
             set("drop_project_action", "1");
 
         if (get("preset_update").empty())
-            set("preset_update", "1");
+            set("preset_update", "0");
 
         if (get("export_sources_full_pathnames").empty())
             set("export_sources_full_pathnames", "0");
@@ -146,7 +157,7 @@ void AppConfig::set_defaults()
             set("use_binary_gcode_when_supported", "1");
  
        if (get("notify_release").empty())
-           set("notify_release", "all"); // or "none" or "release"
+           set("notify_release", "none"); // LibreSlicer performs manual release checks.
 
 #if ENABLE_ENVIRONMENT_MAP
         if (get("use_environment_map").empty())
@@ -351,7 +362,7 @@ std::string AppConfig::load(const std::string &path)
 #endif // WIN32
             BOOST_LOG_TRIVIAL(info) << format(R"(Failed to parse configuration file "%1%": %2%)", path, ex.what());
         if (!recovered) {
-            // Report the initial error of parsing PrusaSlicer.ini.
+            // Report the initial error of parsing LibreSlicer.ini.
             // Error while parsing config file. We'll customize the error message and rethrow to be displayed.
             // ! But to avoid the use of _utf8 (related to use of wxWidgets) 
             // we will rethrow this exception from the place of load() call, if returned value wouldn't be empty
@@ -490,7 +501,7 @@ void AppConfig::save()
 #endif
 
     // Rename the config atomically.
-    // On Windows, the rename is likely NOT atomic, thus it may fail if PrusaSlicer crashes on another thread in the meanwhile.
+    // On Windows, the rename is likely NOT atomic, thus it may fail if LibreSlicer crashes on another thread in the meanwhile.
     // To cope with that, we already made a backup of the config on Windows.
     rename_file(path_pid, path);
     m_dirty = false;

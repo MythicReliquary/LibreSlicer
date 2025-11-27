@@ -8,7 +8,7 @@ to provide a quick confidence check that a build of LibreSlicer can slice both
 resin (SLA/DLP) and FDM (FFF) models, repair meshes, and interoperate with UVTools.
 
 It assumes that the repository has been checked out with the expected directory
-structure (e.g. ``tools/PrusaSlicer.AppImage`` and ``tools/uvtools.AppImage`` as
+structure (e.g. ``tools/LibreSlicer.AppImage`` and ``tools/uvtools.AppImage`` as
 downloaded in the CI workflow), and that the calibration/test model
 ``third_party/siraya_test_models/v5_placeholder.stl`` is present.
 
@@ -75,13 +75,13 @@ def run_command(command: str, cwd: Path, extra_env: Optional[Dict[str, str]] = N
 
 def find_prusa_cli(root: Path) -> Path:
     """
-    Resolve the LibreSlicer/PrusaSlicer CLI executable.
+    Resolve the LibreSlicer/LibreSlicer CLI executable.
 
     Preference order:
       1. PRUSA_CLI environment variable (if it points to an existing file)
       2. build/src/libreslicer.exe (Windows)
-      3. build/src/PrusaSlicer.exe (upstream naming)
-      4. tools/PrusaSlicer.AppImage (Linux/CI default)
+      3. build/src/LibreSlicer.exe (upstream naming)
+      4. tools/LibreSlicer.AppImage (Linux/CI default)
     """
     env_override = os.environ.get("PRUSA_CLI")
     if env_override:
@@ -92,8 +92,8 @@ def find_prusa_cli(root: Path) -> Path:
 
     candidates = [
         root / "build" / "src" / "libreslicer.exe",
-        root / "build" / "src" / "PrusaSlicer.exe",
-        root / "tools" / "PrusaSlicer.AppImage",
+        root / "build" / "src" / "LibreSlicer.exe",
+        root / "tools" / "LibreSlicer.AppImage",
     ]
     for candidate in candidates:
         if candidate.exists():

@@ -5,7 +5,7 @@
 ///|/ Copyright (c) Prusa Research 2017 Vojtěch Bubník @bubnikv
 ///|/ Copyright (c) Slic3r 2012 - 2015 Alessandro Ranellucci @alranel
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include <limits>
 #include <string.h>
@@ -351,7 +351,7 @@ void AMFParserContext::startElement(const char *name, const char **atts)
                 }
                 else
                 {
-                    // It means that data was saved in old version (2.2.0 and older) of PrusaSlicer
+                    // It means that data was saved in old version (2.2.0 and older) of LibreSlicer
                     // read old data ... 
                     std::string gcode = get_attribute(atts, "gcode");
                     // ... and interpret them to the new data
@@ -724,8 +724,8 @@ void AMFParserContext::endElement(const char * /* name */)
             // Each config line is prefixed with a semicolon (G-code comment), that is ugly.
 
             // Replacing the legacy function with load_from_ini_string_commented leads to issues when
-            // parsing 3MFs from before PrusaSlicer 2.0.0 (which can have duplicated entries in the INI.
-            // See https://github.com/prusa3d/PrusaSlicer/issues/7155. We'll revert it for now.
+            // parsing 3MFs from before LibreSlicer 2.0.0 (which can have duplicated entries in the INI.
+            // See https://github.com/prusa3d/LibreSlicer/issues/7155. We'll revert it for now.
             //m_config_substitutions->substitutions = m_config->load_from_ini_string_commented(std::move(m_value[1].c_str()), m_config_substitutions->rule);
             ConfigBase::load_from_gcode_string_legacy(*m_config, std::move(m_value[1].c_str()), *m_config_substitutions);
         }
@@ -1322,7 +1322,7 @@ bool store_amf(const char* path, Model* model, const DynamicPrintConfig* config,
             code_tree.put("<xmlattr>.color"     , code.color    );
             code_tree.put("<xmlattr>.extra"     , code.extra    );
 
-            // add gcode field data for the old version of the PrusaSlicer
+            // add gcode field data for the old version of the LibreSlicer
             std::string gcode = code.type == CustomGCode::ColorChange ? config->opt_string("color_change_gcode")    :
                                 code.type == CustomGCode::PausePrint  ? config->opt_string("pause_print_gcode")     :
                                 code.type == CustomGCode::Template    ? config->opt_string("template_custom_gcode") :

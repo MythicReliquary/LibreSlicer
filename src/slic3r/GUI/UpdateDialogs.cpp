@@ -1,7 +1,7 @@
 ///|/ Copyright (c) Prusa Research 2018 - 2023 Oleksandra Iushchenko @YuSanka, David Kocík @kocikdav, Lukáš Matěna @lukasmatena, Lukáš Hejl @hejllukas, Vojtěch Král @vojtechkral, Vojtěch Bubník @bubnikv
 ///|/ Copyright (c) 2020 Ondřej Nový @onovy
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "UpdateDialogs.hpp"
 
@@ -33,11 +33,11 @@ namespace Slic3r {
 namespace GUI {
 
 
-static const char* URL_CHANGELOG = "https://files.prusa3d.com/?latest=slicer-stable&lng=%1%";
-static const char* URL_DOWNLOAD = "https://www.prusa3d.com/slicerweb&lng=%1%";
-static const char* URL_DEV = "https://github.com/prusa3d/PrusaSlicer/releases/tag/version_%1%";
+static const char* URL_CHANGELOG = "https://github.com/MythicReliquary/LibreSlicer-Supporter-Dev/releases?lng=%1%";
+static const char* URL_DOWNLOAD = "https://github.com/MythicReliquary/LibreSlicer-Supporter-Dev/releases?lng=%1%";
+static const char* URL_DEV      = "https://github.com/MythicReliquary/LibreSlicer-Supporter-Dev/releases/tag/%1%";
 
-static const std::string CONFIG_UPDATE_WIKI_URL("https://github.com/prusa3d/PrusaSlicer/wiki/Slic3r-PE-1.40-configuration-update");
+static const std::string CONFIG_UPDATE_WIKI_URL("https://github.com/MythicReliquary/LibreSlicer-Supporter-Dev/wiki/Configuration-Updates");
 
 
 // MsgUpdateSlic3r
@@ -272,10 +272,15 @@ boost::filesystem::path AppUpdateDownloadDialog::get_download_path() const
 // MsgUpdateConfig
 
 MsgUpdateConfig::MsgUpdateConfig(const std::vector<Update> &updates, bool force_before_wizard/* = false*/) :
-	MsgDialog(nullptr, force_before_wizard ? _L("Opening Configuration Wizard") : _L("Configuration update"), 
-					   force_before_wizard ? _L("PrusaSlicer is not using the newest configuration available.\n"
-												"Configuration Wizard may not offer the latest printers, filaments and SLA materials to be installed.") : 
-											 _L("Configuration update is available"), wxICON_ERROR)
+    MsgDialog(
+        nullptr,
+        force_before_wizard ? _L("Opening Configuration Wizard") : _L("Configuration update"),
+        force_before_wizard
+            ? format_wxstr(_L("%s is not using the newest configuration available.\n"
+                              "Configuration Wizard may not offer the latest printers, filaments and SLA materials to be installed."),
+                           SLIC3R_APP_NAME)
+            : _L("Configuration update is available"),
+        wxICON_ERROR)
 {
 	auto *text = new wxStaticText(this, wxID_ANY, _(L(
 		"Would you like to install it?\n\n"
@@ -472,10 +477,9 @@ MsgDataLegacy::MsgDataLegacy() :
 	content_sizer->AddSpacer(VERT_SPACING);
 
 	auto *text2 = new wxStaticText(this, wxID_ANY, _(L("For more information please visit our wiki page:")));
-	static const wxString url("https://github.com/prusa3d/PrusaSlicer/wiki/Slic3r-PE-1.40-configuration-update");
 	// The wiki page name is intentionally not localized:
-	// TRN %s = PrusaSlicer
-	auto *link = new wxHyperlinkCtrl(this, wxID_ANY, format_wxstr(_L("%s 1.40 configuration update"), SLIC3R_APP_NAME), CONFIG_UPDATE_WIKI_URL);
+	// TRN %s = LibreSlicer
+	auto *link = new wxHyperlinkCtrl(this, wxID_ANY, format_wxstr(_L("%s configuration update guide"), SLIC3R_APP_NAME), CONFIG_UPDATE_WIKI_URL);
 	content_sizer->Add(text2);
 	content_sizer->Add(link);
 	content_sizer->AddSpacer(VERT_SPACING);
@@ -511,7 +515,7 @@ MsgNoUpdates::~MsgNoUpdates() {}
 MsgNoAppUpdates::MsgNoAppUpdates() :
 	MsgDialog(nullptr, _(L("App update")), _(L("No updates available")), wxICON_ERROR | wxOK)
 {
-	//TRN %1% is PrusaSlicer
+	//TRN %1% is LibreSlicer
 	auto* text = new wxStaticText(this, wxID_ANY, format_wxstr(_L("Your %1% is up to date."),SLIC3R_APP_NAME));
 	text->Wrap(CONTENT_WIDTH * wxGetApp().em_unit());
 	content_sizer->Add(text);

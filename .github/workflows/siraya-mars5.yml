@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       PRUSASLICER_VERSION: "2.7.4"
-      PRUSASLICER_URL: "https://github.com/prusa3d/PrusaSlicer/releases/download/version_2.7.4/PrusaSlicer-2.7.4+linux-x64-GTK3.AppImage"
+      PRUSASLICER_URL: "https://github.com/prusa3d/LibreSlicer/releases/download/version_2.7.4/LibreSlicer-2.7.4+linux-x64-GTK3.AppImage"
       UVTOOLS_VERSION: "v5.22.0"
       UVTOOLS_URL: "https://github.com/sn4k3/UVtools/releases/download/v5.22.0/UVtools_Linux_x64_v5.22.0.AppImage"
     strategy:
@@ -69,10 +69,10 @@ jobs:
       - name: Prepare toolchain directory
         run: mkdir -p tools
 
-      - name: Download PrusaSlicer ${{ env.PRUSASLICER_VERSION }}
+      - name: Download LibreSlicer ${{ env.PRUSASLICER_VERSION }}
         run: |
-          curl -L "$PRUSASLICER_URL" -o tools/PrusaSlicer.AppImage
-          chmod +x tools/PrusaSlicer.AppImage
+          curl -L "$PRUSASLICER_URL" -o tools/LibreSlicer.AppImage
+          chmod +x tools/LibreSlicer.AppImage
 
       - name: Download UVTools ${{ env.UVTOOLS_VERSION }}
         run: |

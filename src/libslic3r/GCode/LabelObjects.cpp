@@ -74,7 +74,7 @@ void LabelObjects::init(const Print& print)
                 name += " id:" + std::to_string(object_id) + " copy " + std::to_string(instance_id); 
             }
             else if (m_label_objects_style == LabelObjectsStyle::Firmware) {
-                // use one-based indexing for objects and instances so indices match what we see in PrusaSlicer.
+                // use one-based indexing for objects and instances so indices match what we see in LibreSlicer.
                 ++object_id;
                 ++instance_id;
 

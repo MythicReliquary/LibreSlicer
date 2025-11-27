@@ -4,7 +4,7 @@
 ///|/ Copyright (c) Prusa Research 2016 - 2018 Vojtěch Bubník @bubnikv, Tomáš Mészáros @tamasmeszaros
 ///|/ Copyright (c) Slic3r 2014 Alessandro Ranellucci @alranel
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef PROGRESSSTATUSBAR_HPP
 #define PROGRESSSTATUSBAR_HPP

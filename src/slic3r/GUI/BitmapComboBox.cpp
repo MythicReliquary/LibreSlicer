@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2021 - 2022 Oleksandra Iushchenko @YuSanka
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "BitmapComboBox.hpp"
 
@@ -40,7 +40,7 @@
 #include "format.hpp"
 
 // A workaround for a set of issues related to text fitting into gtk widgets:
-// See e.g.: https://github.com/prusa3d/PrusaSlicer/issues/4584
+// See e.g.: https://github.com/prusa3d/LibreSlicer/issues/4584
 #if defined(__WXGTK20__) || defined(__WXGTK3__)
     #include <glib-2.0/glib-object.h>
     #include <pango-1.0/pango/pango-layout.h>

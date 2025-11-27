@@ -1,7 +1,7 @@
 ///|/ Copyright (c) Prusa Research 2018 - 2023 Vojtěch Bubník @bubnikv, David Kocík @kocikdav, Oleksandra Iushchenko @YuSanka, Lukáš Matěna @lukasmatena, Enrico Turri @enricoturri1966, Vojtěch Král @vojtechkral
 ///|/ Copyright (c) 2020 Ondřej Nový @onovy
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "PresetUpdater.hpp"
 
@@ -22,6 +22,7 @@
 #include <wx/app.h>
 #include <wx/msgdlg.h>
 #include <wx/progdlg.h>
+#include <wx/uri.h>
 
 #include "libslic3r/libslic3r.h"
 #include "libslic3r/format.hpp"
@@ -39,6 +40,7 @@
 #include "slic3r/Utils/Http.hpp"
 #include "slic3r/Config/Version.hpp"
 #include "slic3r/Config/Snapshot.hpp"
+#include "slic3r/FeatureToggles.hpp"
 
 namespace fs = boost::filesystem;
 using Slic3r::GUI::Config::Index;
@@ -180,6 +182,7 @@ struct PresetUpdater::priv
 
 	bool has_waiting_updates { false };
 	Updates waiting_updates;
+	std::string vendor_host;
 
 	priv();
 
@@ -197,6 +200,8 @@ struct PresetUpdater::priv
 	// checks existence and downloads resource to vendor or copy from cache to vendor
 	void get_or_copy_missing_resource(const std::string& vendor, const std::string& filename, const std::string& url) const;
 	void update_index_db();
+	bool url_is_whitelisted(const std::string& url) const;
+	bool has_vendor_host() const { return !vendor_host.empty(); }
 };
 
 PresetUpdater::priv::priv()
@@ -205,6 +210,7 @@ PresetUpdater::priv::priv()
 	, rsrc_path(fs::path(resources_dir()) / "profiles")
 	, vendor_path(fs::path(Slic3r::data_dir()) / "vendor")
 	, cancel(false)
+	, vendor_host(FeatureToggles::kVendorHost.data(), FeatureToggles::kVendorHost.size())
 {
 	set_download_prefs(GUI::wxGetApp().app_config);
 	// Install indicies from resources. Only installs those that are either missing or older than in resources.
@@ -218,12 +224,37 @@ void PresetUpdater::priv::update_index_db()
 	index_db = Index::load_db();
 }
 
+bool PresetUpdater::priv::url_is_whitelisted(const std::string& url) const
+{
+	if (!has_vendor_host())
+		return false;
+
+	wxURI uri(wxString::FromUTF8(url.c_str()));
+	if (!uri.IsValid() || uri.IsReference())
+		return false;
+
+	if (uri.GetScheme().CmpNoCase("https") != 0)
+		return false;
+
+	return uri.GetServer().CmpNoCase(wxString::FromUTF8(vendor_host.c_str())) == 0;
+}
+
 // Pull relevant preferences from AppConfig
 void PresetUpdater::priv::set_download_prefs(const AppConfig *app_config)
 {
 	enabled_version_check = app_config->get("notify_release") != "none";
 	version_check_url = app_config->version_check_url();
-	enabled_config_update = app_config->get_bool("preset_update") && !app_config->legacy_datadir();
+	if (!has_vendor_host() || version_check_url.empty() || !url_is_whitelisted(version_check_url))
+		enabled_version_check = false;
+
+	const auto archive_url  = app_config->index_archive_url();
+	const auto profile_url  = app_config->profile_folder_url();
+	enabled_config_update   = app_config->get_bool("preset_update") && !app_config->legacy_datadir();
+	if (enabled_config_update && (!has_vendor_host() || archive_url.empty() || profile_url.empty() ||
+		!url_is_whitelisted(archive_url) || !url_is_whitelisted(profile_url))) {
+		BOOST_LOG_TRIVIAL(info) << "Vendor profile updates are disabled: whitelist or endpoint mismatch.";
+		enabled_config_update = false;
+	}
 }
 
 // Downloads a file (http get operation). Cancels if the Updater is being destroyed.
@@ -232,6 +263,11 @@ bool PresetUpdater::priv::get_file(const std::string &url, const fs::path &targe
 	bool res = false;
 	fs::path tmp_path = target_path;
 	tmp_path += format(".%1%%2%", get_current_pid(), TMP_EXTENSION);
+
+	if (!url_is_whitelisted(url)) {
+		BOOST_LOG_TRIVIAL(error) << "Rejected vendor download outside LibreSlicer whitelist: " << url;
+		return false;
+	}
 
 	BOOST_LOG_TRIVIAL(info) << format("Get: `%1%`\n\t-> `%2%`\n\tvia tmp path `%3%`",
 		url,
@@ -276,11 +312,8 @@ void PresetUpdater::priv::get_missing_resource(const std::string& vendor, const 
 	if (filename.empty() || vendor.empty())
 		return;
 
-	if (!boost::starts_with(url, "http://files.prusa3d.com/wp-content/uploads/repository/") &&
-		!boost::starts_with(url, "https://files.prusa3d.com/wp-content/uploads/repository/"))
-	{
-		throw Slic3r::CriticalException(GUI::format("URL outside prusa3d.com network: %1%", url));
-	}
+	if (!url_is_whitelisted(url))
+		throw Slic3r::CriticalException(GUI::format("URL outside LibreSlicer whitelist: %1%", url));
 
 	std::string escaped_filename = escape_string_url(filename);
 	const fs::path file_in_vendor(vendor_path / (vendor + "/" + filename));
@@ -330,11 +363,8 @@ void PresetUpdater::priv::get_or_copy_missing_resource(const std::string& vendor
 		return;
 	}
 	if (!fs::exists(file_in_cache)) { // No file to copy. Download it to straight to the vendor dir.
-		if (!boost::starts_with(url, "http://files.prusa3d.com/wp-content/uploads/repository/") &&
-			!boost::starts_with(url, "https://files.prusa3d.com/wp-content/uploads/repository/"))
-		{
-			throw Slic3r::CriticalException(GUI::format("URL outside prusa3d.com network: %1%", url));
-		}
+		if (!url_is_whitelisted(url))
+			throw Slic3r::CriticalException(GUI::format("URL outside LibreSlicer whitelist: %1%", url));
 		BOOST_LOG_TRIVIAL(info) << "Downloading resources missing in cache directory: " << vendor << " / " << filename;
 
 		const auto resource_url = format("%1%%2%%3%", url, url.back() == '/' ? "" : "/", escaped_filename); // vendor should already be in url 
@@ -366,15 +396,12 @@ void PresetUpdater::priv::sync_config(const VendorMap vendors, const std::string
 	// Any error here also doesnt show any info in UI. Do we want maybe notification?
 	fs::path archive_path(cache_path / "vendor_indices.zip");
 	if (index_archive_url.empty()) {
-		BOOST_LOG_TRIVIAL(error) << "Downloading profile archive failed - url has no value.";
+		BOOST_LOG_TRIVIAL(info) << "Skipping vendor profile sync: no archive URL configured.";
 		return;
 	}
 	BOOST_LOG_TRIVIAL(info) << "Downloading vedor profiles archive zip from " << index_archive_url;
-	//check if idx_url is leading to our site 
-	if (!boost::starts_with(index_archive_url, "http://files.prusa3d.com/wp-content/uploads/repository/") &&
-		!boost::starts_with(index_archive_url, "https://files.prusa3d.com/wp-content/uploads/repository/"))
-	{
-		BOOST_LOG_TRIVIAL(error) << "Unsafe url path for vedor profiles archive zip. Download is rejected.";
+	if (!url_is_whitelisted(index_archive_url)) {
+		BOOST_LOG_TRIVIAL(error) << "Unsafe url host for vedor profiles archive zip. Download is rejected.";
 		return;
 	}
 	if (!get_file(index_archive_url, archive_path)) {
@@ -806,7 +833,7 @@ void PresetUpdater::priv::check_install_indices() const
 }
 
 // Generates a list of bundle updates that are to be performed.
-// Version of slic3r that was running the last time and which was read out from PrusaSlicer.ini is provided
+// Version of slic3r that was running the last time and which was read out from LibreSlicer.ini is provided
 // as a parameter.
 Updates PresetUpdater::priv::get_config_updates(const Semver &old_slic3r_version) const
 {
@@ -872,7 +899,7 @@ Updates PresetUpdater::priv::get_config_updates(const Semver &old_slic3r_version
 		}
 
 		if (recommended->config_version < vp.config_version) {
-			BOOST_LOG_TRIVIAL(warning) << format("Recommended config version for the currently running PrusaSlicer is older than the currently installed config for vendor %1%. This should not happen.", idx.vendor());
+			BOOST_LOG_TRIVIAL(warning) << format("Recommended config version for the currently running LibreSlicer is older than the currently installed config for vendor %1%. This should not happen.", idx.vendor());
 			continue;
 		}
 
@@ -881,13 +908,13 @@ Updates PresetUpdater::priv::get_config_updates(const Semver &old_slic3r_version
 			continue;
 		}
 
-		// Config bundle update situation. The recommended config bundle version for this PrusaSlicer version from the index from the cache is newer
+		// Config bundle update situation. The recommended config bundle version for this LibreSlicer version from the index from the cache is newer
 		// than the version of the currently installed config bundle.
 
 		// The config index inside the cache directory (given by idx.path()) is one of the following:
-		// 1) The last config index downloaded by any previously running PrusaSlicer instance
-		// 2) The last config index installed by any previously running PrusaSlicer instance (older or newer) from its resources.
-		// 3) The last config index installed by the currently running PrusaSlicer instance from its resources.
+		// 1) The last config index downloaded by any previously running LibreSlicer instance
+		// 2) The last config index installed by any previously running LibreSlicer instance (older or newer) from its resources.
+		// 3) The last config index installed by the currently running LibreSlicer instance from its resources.
 		// The config index is always the newest one (given by its newest config bundle referenced), and older config indices shall fully contain
 		// the content of the older config indices.
 
@@ -949,7 +976,7 @@ Updates PresetUpdater::priv::get_config_updates(const Semver &old_slic3r_version
 					found = true;
 				} else {
 					BOOST_LOG_TRIVIAL(warning) << format("The recommended config version for vendor `%1%` in resources does not match the recommended\n"
-			                                             " config version for this version of PrusaSlicer. Corrupted installation?", idx.vendor());
+			                                             " config version for this version of LibreSlicer. Corrupted installation?", idx.vendor());
 				}
 			}
 		}

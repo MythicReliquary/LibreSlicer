@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2018 - 2023 Tomáš Mészáros @tamasmeszaros, Lukáš Matěna @lukasmatena, Oleksandra Iushchenko @YuSanka, Enrico Turri @enricoturri1966, Vojtěch Bubník @bubnikv, Lukáš Hejl @hejllukas, David Kocík @kocikdav, Vojtěch Král @vojtechkral
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "SysInfoDialog.hpp"
 #include "I18N.hpp"
@@ -163,7 +163,7 @@ SysInfoDialog::SysInfoDialog()
 #ifdef WIN32
         std::wstring blacklisted_libraries = BlacklistedLibraryCheck::get_instance().get_blacklisted_string().c_str();
         if (! blacklisted_libraries.empty())
-            blacklisted_libraries_message = wxString("<br><b>") + _L("Blacklisted libraries loaded into PrusaSlicer process:") + "</b><br>" + blacklisted_libraries;
+            blacklisted_libraries_message = wxString("<br><b>") + _L("Blacklisted libraries loaded into LibreSlicer process:") + "</b><br>" + blacklisted_libraries;
 #endif // WIN32
        const auto text = GUI::format_wxstr(
             "<html>"

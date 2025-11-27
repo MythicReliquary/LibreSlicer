@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2020 - 2021 Vojtěch Bubník @bubnikv, David Kocík @kocikdav
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef _libslic3r_Exception_h_
 #define _libslic3r_Exception_h_
@@ -9,7 +9,7 @@
 
 namespace Slic3r {
 
-// PrusaSlicer's own exception hierarchy is derived from std::runtime_error.
+// LibreSlicer's own exception hierarchy is derived from std::runtime_error.
 // Base for Slicer's own exceptions.
 class Exception : public std::runtime_error { using std::runtime_error::runtime_error; };
 #define SLIC3R_DERIVE_EXCEPTION(DERIVED_EXCEPTION, PARENT_EXCEPTION) \

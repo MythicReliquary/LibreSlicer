@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2018 - 2023 Enrico Turri @enricoturri1966, Oleksandra Iushchenko @YuSanka, Lukáš Matěna @lukasmatena, Lukáš Hejl @hejllukas, Vojtěch Bubník @bubnikv, Vojtěch Král @vojtechkral
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "libslic3r/libslic3r.h"
 #include "OpenGLManager.hpp"
@@ -401,7 +401,7 @@ bool OpenGLManager::init_gl()
             auto [result, error] = m_shaders_manager.init();
             if (!result) {
                 wxString message = format_wxstr(_L("Unable to load the following shaders:\n%s"), error);
-                wxMessageBox(message, wxString("PrusaSlicer - ") + _L("Error loading shaders"), wxOK | wxICON_ERROR);
+                wxMessageBox(message, wxString("LibreSlicer - ") + _L("Error loading shaders"), wxOK | wxICON_ERROR);
             }
 #if ENABLE_OPENGL_DEBUG_OPTION
             if (m_debug_enabled && GLEW_KHR_debug) {
@@ -415,7 +415,7 @@ bool OpenGLManager::init_gl()
 
 #ifdef _WIN32
         // Since AMD driver version 22.7.1, there is probably some bug in the driver that causes the issue with the missing
-        // texture of the bed (see: https://github.com/prusa3d/PrusaSlicer/issues/8417).
+        // texture of the bed (see: https://github.com/prusa3d/LibreSlicer/issues/8417).
         // It seems that this issue only triggers when mipmaps are generated manually
         // (combined with a texture compression) with texture size not being power of two.
         // When mipmaps are generated through OpenGL function glGenerateMipmap() the driver works fine,

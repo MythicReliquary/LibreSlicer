@@ -52,7 +52,47 @@ endif()
 project(LibreSlicer LANGUAGES CXX)
 
 option(ENABLE_SLA "Enable resin/SLA slicing features" ON)
-add_compile_definitions(LS_DISABLE_UPDATE_CHECKER=1 LIBRESLICER_UPDATER=0)
+
+option(LIBRESLICER_ENABLE_UPDATER "Enable the legacy PrusaSlicer application updater" OFF)
+option(LIBRESLICER_ENABLE_UPDATE_CHECKER "Enable update notifications / dialogs" OFF)
+option(LIBRESLICER_ENABLE_TELEMETRY "Enable telemetry hooks" OFF)
+
+set(LIBRESLICER_VENDOR_HOST "" CACHE STRING "Whitelisted hostname for vendor downloads")
+set(LIBRESLICER_VERSION_CHECK_URL "" CACHE STRING "Default version manifest URL for the updater")
+set(LIBRESLICER_INDEX_ARCHIVE_URL "" CACHE STRING "Default vendor index archive URL")
+set(LIBRESLICER_PROFILE_FOLDER_URL "" CACHE STRING "Default vendor profile folder URL")
+
+if(LIBRESLICER_ENABLE_UPDATER)
+    add_compile_definitions(LIBRESLICER_UPDATER=1)
+else()
+    add_compile_definitions(LIBRESLICER_UPDATER=0)
+endif()
+
+if(LIBRESLICER_ENABLE_UPDATE_CHECKER)
+    add_compile_definitions(LS_DISABLE_UPDATE_CHECKER=0)
+else()
+    add_compile_definitions(LS_DISABLE_UPDATE_CHECKER=1)
+endif()
+
+if(LIBRESLICER_ENABLE_TELEMETRY)
+    add_compile_definitions(LIBRESLICER_TELEMETRY_ENABLED=1)
+else()
+    add_compile_definitions(LIBRESLICER_TELEMETRY_ENABLED=0)
+endif()
+
+function(libreslicer_define_string_macro NAME VALUE)
+    if("${VALUE}" STREQUAL "")
+        add_compile_definitions(${NAME}="")
+    else()
+        string(REPLACE "\"" "\\\"" _escaped "${VALUE}")
+        add_compile_definitions(${NAME}="${_escaped}")
+    endif()
+endfunction()
+
+libreslicer_define_string_macro(LIBRESLICER_VENDOR_HOST "${LIBRESLICER_VENDOR_HOST}")
+libreslicer_define_string_macro(LIBRESLICER_VERSION_CHECK_URL "${LIBRESLICER_VERSION_CHECK_URL}")
+libreslicer_define_string_macro(LIBRESLICER_INDEX_ARCHIVE_URL "${LIBRESLICER_INDEX_ARCHIVE_URL}")
+libreslicer_define_string_macro(LIBRESLICER_PROFILE_FOLDER_URL "${LIBRESLICER_PROFILE_FOLDER_URL}")
 
 if(WIN32)
     add_compile_definitions(
@@ -92,9 +132,9 @@ else()
         endif()
 endif()
 
-option(SLIC3R_STATIC 			"Compile PrusaSlicer with static libraries (Boost, TBB, glew)" ${SLIC3R_STATIC_INITIAL})
-option(SLIC3R_GUI    			"Compile PrusaSlicer with GUI components (OpenGL, wxWidgets)" 1)
-option(SLIC3R_FHS               "Assume PrusaSlicer is to be installed in a FHS directory structure" 0)
+option(SLIC3R_STATIC 			"Compile LibreSlicer with static libraries (Boost, TBB, glew)" ${SLIC3R_STATIC_INITIAL})
+option(SLIC3R_GUI    			"Compile LibreSlicer with GUI components (OpenGL, wxWidgets)" 1)
+option(SLIC3R_FHS               "Assume LibreSlicer is to be installed in a FHS directory structure" 0)
 option(SLIC3R_PCH               "Use precompiled headers" 1)
 option(SLIC3R_MSVC_COMPILE_PARALLEL "Compile on Visual Studio in parallel" 1)
 option(SLIC3R_MSVC_PDB          "Generate PDB files on MSVC in Release mode" 1)
@@ -204,7 +244,7 @@ if (MINGW)
 endif ()
 
 if (NOT MSVC)
-    # ARMs (Raspberry PI) use an unsigned char by default. Let's make it consistent for PrusaSlicer on all platforms.
+    # ARMs (Raspberry PI) use an unsigned char by default. Let's make it consistent for LibreSlicer on all platforms.
     add_compile_options(-fsigned-char)
 endif ()
 
@@ -364,7 +404,7 @@ if (SLIC3R_ASAN)
 endif ()
 
 if (SLIC3R_UBSAN)
-    # Stacktrace for every report is enabled by default. It can be disabled by running PrusaSlicer with "UBSAN_OPTIONS=print_stacktrace=0".
+    # Stacktrace for every report is enabled by default. It can be disabled by running LibreSlicer with "UBSAN_OPTIONS=print_stacktrace=0".
 
     # Define macro SLIC3R_UBSAN to allow detection in the source code if this sanitizer is enabled.
     add_compile_definitions(SLIC3R_UBSAN)
@@ -407,7 +447,7 @@ if(WIN32)
     if(MSVC)
         # BOOST_ALL_NO_LIB: Avoid the automatic linking of Boost libraries on Windows. Rather rely on explicit linking.
 add_definitions(-DBOOST_ALL_NO_LIB -DBOOST_USE_WINAPI_VERSION=0x0A00 -DBOOST_SYSTEM_USE_UTF8 -DBOOST_NOWIDE_STATIC_LINK )
-        # Force the source code encoding to UTF-8. See PrusaSlicer GH pull request #5583
+        # Force the source code encoding to UTF-8. See LibreSlicer GH pull request #5583
         add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
         add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
     endif(MSVC)
@@ -607,7 +647,7 @@ set(L10N_DIR "${SLIC3R_RESOURCES_DIR}/localization")
 add_custom_target(gettext_make_pot
     COMMAND xgettext --keyword=L --keyword=_L --keyword=_u8L --keyword=L_CONTEXT:1,2c --keyword=_L_PLURAL:1,2 --add-comments=TRN --from-code=UTF-8 --debug --boost
         -f "${L10N_DIR}/list.txt"
-        -o "${L10N_DIR}/PrusaSlicer.pot"
+        -o "${L10N_DIR}/LibreSlicer.pot"
     COMMAND hintsToPot ${SLIC3R_RESOURCES_DIR} ${L10N_DIR}
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     COMMENT "Generate pot file from strings in the source tree"
@@ -617,7 +657,7 @@ add_custom_target(gettext_merge_community_po_with_pot
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     COMMENT "Merge community po with new generated pot file"
 )
-file(GLOB L10N_PO_FILES "${L10N_DIR}/*/PrusaSlicer*.po")
+file(GLOB L10N_PO_FILES "${L10N_DIR}/*/LibreSlicer*.po")
 # list of names of directories, which are licalized by PS internally
 list(APPEND PS_L10N_DIRS "cs" "de" "es" "fr" "it" "ja" "pl")
 foreach(po_file ${L10N_PO_FILES})
@@ -628,7 +668,7 @@ foreach(po_file ${L10N_PO_FILES})
     if(found_dir_id LESS 0)
         add_custom_command(
             TARGET gettext_merge_community_po_with_pot PRE_BUILD
-            COMMAND msgmerge -N -o ${po_file} ${po_file} "${L10N_DIR}/PrusaSlicer.pot"
+            COMMAND msgmerge -N -o ${po_file} ${po_file} "${L10N_DIR}/LibreSlicer.pot"
             # delete obsolete lines from resulting PO to avoid conflicts after a merging of it with wxWidgets.po
             COMMAND msgattrib --no-obsolete -o ${po_file} ${po_file}
         )
@@ -637,14 +677,14 @@ endforeach()
 
 add_custom_target(gettext_concat_wx_po_with_po
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-    COMMENT "Concatenate and merge wxWidgets localization po with PrusaSlicer po file"
+    COMMENT "Concatenate and merge wxWidgets localization po with LibreSlicer po file"
 )
-file(GLOB L10N_PO_FILES "${L10N_DIR}/*/PrusaSlicer*.po")
+file(GLOB L10N_PO_FILES "${L10N_DIR}/*/LibreSlicer*.po")
 foreach(po_file ${L10N_PO_FILES})
     GET_FILENAME_COMPONENT(po_dir "${po_file}" DIRECTORY)
     GET_FILENAME_COMPONENT(po_dir_name "${po_dir}" NAME)
     SET(wx_po_file "${L10N_DIR}/wx_locale/${po_dir_name}.po")
-    #SET(po_new_file "${po_dir}/PrusaSlicer_.po")
+    #SET(po_new_file "${po_dir}/LibreSlicer_.po")
     add_custom_command(
         TARGET gettext_concat_wx_po_with_po PRE_BUILD
         COMMAND msgcat --use-first -o ${po_file} ${po_file} ${wx_po_file}
@@ -657,10 +697,10 @@ add_custom_target(gettext_po_to_mo
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     COMMENT "Generate localization mo files (binary) from po files (texts)"
 )
-file(GLOB L10N_PO_FILES "${L10N_DIR}/*/PrusaSlicer*.po")
+file(GLOB L10N_PO_FILES "${L10N_DIR}/*/LibreSlicer*.po")
 foreach(po_file ${L10N_PO_FILES})
     GET_FILENAME_COMPONENT(po_dir "${po_file}" DIRECTORY)
-    SET(mo_file "${po_dir}/PrusaSlicer.mo")
+    SET(mo_file "${po_dir}/LibreSlicer.mo")
     add_custom_command(
         TARGET gettext_po_to_mo PRE_BUILD
         COMMAND msgfmt ARGS --check-format -o ${mo_file} ${po_file}
@@ -791,9 +831,9 @@ function(prusaslicer_copy_dlls target)
 endfunction()
 
 
-# libslic3r, PrusaSlicer GUI and the PrusaSlicer executable.
+# libslic3r, LibreSlicer GUI and the LibreSlicer executable.
 add_subdirectory(src)
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT PrusaSlicer_app_console)
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT LibreSlicer_app_console)
 
 add_dependencies(gettext_make_pot hintsToPot)
 

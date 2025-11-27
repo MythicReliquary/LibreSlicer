@@ -1,4 +1,4 @@
-Bundled with PrusaSlicer: commit 6c0831f91ffde5dfe2ceef32cbaff91d62b0e0ee
+Bundled with LibreSlicer: commit 6c0831f91ffde5dfe2ceef32cbaff91d62b0e0ee
 Original README follows:
 
 

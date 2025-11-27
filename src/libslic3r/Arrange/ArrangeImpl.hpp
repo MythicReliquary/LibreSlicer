@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2023 Tomáš Mészáros @tamasmeszaros
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef ARRANGEIMPL_HPP
 #define ARRANGEIMPL_HPP
@@ -257,7 +257,7 @@ void fill_rotations(const Range<It>           &items,
     }
 }
 
-// An arranger put together to fulfill all the requirements of PrusaSlicer based
+// An arranger put together to fulfill all the requirements of LibreSlicer based
 // on the supplied ArrangeSettings
 template<class ArrItem>
 class DefaultArranger: public Arranger<ArrItem> {

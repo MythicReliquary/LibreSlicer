@@ -1,7 +1,7 @@
 ///|/ Copyright (c) Prusa Research 2021 Vojtěch Bubník @bubnikv
 ///|/ Copyright (c) 2020 - 2021 Sergey Kovalev @RandoMan70
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef slic3r_Utils_TCPConsole_hpp_
 #define slic3r_Utils_TCPConsole_hpp_

@@ -1,7 +1,7 @@
 ///|/ Copyright (c) Prusa Research 2018 - 2023 Oleksandra Iushchenko @YuSanka, Lukáš Matěna @lukasmatena, Enrico Turri @enricoturri1966, David Kocík @kocikdav, Vojtěch Bubník @bubnikv, Tomáš Mészáros @tamasmeszaros, Filip Sykala @Jony01, Lukáš Hejl @hejllukas, Vojtěch Král @vojtechkral
 ///|/ Copyright (c) 2019 Jason Tibbitts @jasontibbitts
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "ImGuiWrapper.hpp"
 
@@ -1695,7 +1695,7 @@ void ImGuiWrapper::init_font(bool compress)
     builder.AddChar(ImWchar(0x2026)); // …
 
     if (m_font_cjk) {
-        // This is a temporary fix of https://github.com/prusa3d/PrusaSlicer/issues/8171. The translation
+        // This is a temporary fix of https://github.com/prusa3d/LibreSlicer/issues/8171. The translation
         // contains characters not in the ImGui ranges for simplified Chinese. For now, just add them manually.
         // In future, it might be worth to parse the dictionary and add all the necessary characters.
         builder.AddChar(ImWchar(0x5ED3));

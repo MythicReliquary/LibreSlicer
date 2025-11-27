@@ -1,4 +1,4 @@
-// PrusaSlicer specific: 
+// LibreSlicer specific: 
 // Include and compile QOI library.
 
 #define QOI_IMPLEMENTATION

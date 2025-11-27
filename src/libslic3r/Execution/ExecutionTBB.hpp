@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2021 - 2022 Tomáš Mészáros @tamasmeszaros, Roman Beránek @zavorka
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef EXECUTIONTBB_HPP
 #define EXECUTIONTBB_HPP

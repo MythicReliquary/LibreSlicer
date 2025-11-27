@@ -137,25 +137,25 @@ msgstr ""
 #: src/libslic3r/Format/3mf.cpp:1950
 msgid ""
 "The selected 3MF contains FDM supports painted object using a newer version "
-"of PrusaSlicer and is not compatible."
+"of LibreSlicer and is not compatible."
 msgstr ""
-"A kiválasztott 3MF a PrusaSlicer újabb verziójával készült FDM támaszték "
+"A kiválasztott 3MF a LibreSlicer újabb verziójával készült FDM támaszték "
 "festett objektumot tartalmaz, és nem kompatibilis."
 
 #: src/libslic3r/Format/3mf.cpp:1954
 msgid ""
 "The selected 3MF contains seam painted object using a newer version of "
-"PrusaSlicer and is not compatible."
+"LibreSlicer and is not compatible."
 msgstr ""
-"A kiválasztott 3MF a PrusaSlicer egy újabb verziójával készült varrat "
+"A kiválasztott 3MF a LibreSlicer egy újabb verziójával készült varrat "
 "festett objektumot tartalmaz, és nem kompatibilis."
 
 #: src/libslic3r/Format/3mf.cpp:1958
 msgid ""
 "The selected 3MF contains multi-material painted object using a newer "
-"version of PrusaSlicer and is not compatible."
+"version of LibreSlicer and is not compatible."
 msgstr ""
-"A kiválasztott 3MF a PrusaSlicer újabb verziójával készült, több anyagos "
+"A kiválasztott 3MF a LibreSlicer újabb verziójával készült, több anyagos "
 "festett objektumot tartalmaz, és nem kompatibilis."
 
 #: src/libslic3r/Format/AMF.cpp:1005
@@ -1612,17 +1612,17 @@ msgstr "A tárgyasztal automatikus feltöltési funkciójához használt távols
 #: src/libslic3r/PrintConfig.cpp:835
 msgid ""
 "This end procedure is inserted at the end of the output file. Note that you "
-"can use placeholder variables for all PrusaSlicer settings."
+"can use placeholder variables for all LibreSlicer settings."
 msgstr ""
 "Ez a befejező eljárás a kimeneti fájl végére kerül. Vegye figyelembe, "
-"helyőrző változókat is használhat az összes PrusaSlicer beállításhoz."
+"helyőrző változókat is használhat az összes LibreSlicer beállításhoz."
 
 #: src/libslic3r/PrintConfig.cpp:845
 msgid ""
 "This end procedure is inserted at the end of the output file, before the "
 "printer end gcode (and before any toolchange from this filament in case of "
 "multimaterial printers). Note that you can use placeholder variables for all "
-"PrusaSlicer settings. If you have multiple extruders, the gcode is processed "
+"LibreSlicer settings. If you have multiple extruders, the gcode is processed "
 "in extruder order."
 msgstr ""
 "Ez a befejezési eljárás a kimeneti fájl végére kerül, a nyomtató végének g-"
@@ -2564,13 +2564,13 @@ msgstr "G-kód változat"
 msgid ""
 "Some G/M-code commands, including temperature control and others, are not "
 "universal. Set this option to your printer's firmware to get a compatible "
-"output. The \"No extrusion\" flavor prevents PrusaSlicer from exporting any "
+"output. The \"No extrusion\" flavor prevents LibreSlicer from exporting any "
 "extrusion value at all."
 msgstr ""
 "Egyes G/M-kódok, köztük a hőmérséklet-szabályozás és mások, nem "
 "univerzálisak. Állítsa be ezt az opciót a nyomtató firmware-ével a "
 "kompatibilis kimenet érdekében. A \"Nincs extrudálás\" változat "
-"megakadályozza, hogy a PrusaSlicer egyáltalán bármilyen extrudálási értéket "
+"megakadályozza, hogy a LibreSlicer egyáltalán bármilyen extrudálási értéket "
 "exportáljon."
 
 #: src/libslic3r/PrintConfig.cpp:1487
@@ -2683,7 +2683,7 @@ msgstr "A kitöltőhorgony hossza"
 msgid ""
 "Connect an infill line to an internal perimeter with a short segment of an "
 "additional perimeter. If expressed as percentage (example: 15%) it is "
-"calculated over infill extrusion width. PrusaSlicer tries to connect two "
+"calculated over infill extrusion width. LibreSlicer tries to connect two "
 "close infill lines to a short perimeter segment. If no such perimeter "
 "segment shorter than infill_anchor_max is found, the infill line is "
 "connected to a perimeter segment at just one side and the length of the "
@@ -2694,7 +2694,7 @@ msgstr ""
 "Kitöltési vonal belső kerülethez való csatlakoztatása egy rövid kerület "
 "szakasszal. Ha százalékban van kifejezve (példa: 150%), akkor azt a "
 "kitöltési extrudálás szélességére kell vonatkoztatni.\n"
-"A PrusaSlicer megpróbál két közeli kitöltési vonalat egy rövid kerületi "
+"A LibreSlicer megpróbál két közeli kitöltési vonalat egy rövid kerületi "
 "szegmenssel összekötni. Ha nem talál ilyen, az infill_anchor_max-nál "
 "rövidebb kerületi szegmenst, akkor a kitöltési vonalat csak az egyik oldalon "
 "kapcsolja a kerületi szegmenshez, és a felvett kerületi szegmens hossza erre "
@@ -2735,7 +2735,7 @@ msgstr "A kitöltőhorgony maximális hossza"
 msgid ""
 "Connect an infill line to an internal perimeter with a short segment of an "
 "additional perimeter. If expressed as percentage (example: 15%) it is "
-"calculated over infill extrusion width. PrusaSlicer tries to connect two "
+"calculated over infill extrusion width. LibreSlicer tries to connect two "
 "close infill lines to a short perimeter segment. If no such perimeter "
 "segment shorter than this parameter is found, the infill line is connected "
 "to a perimeter segment at just one side and the length of the perimeter "
@@ -2745,7 +2745,7 @@ msgstr ""
 "Kitöltési vonal belső kerülethez való csatlakoztatása egy rövid kerület "
 "szakasszal. Ha százalékban van kifejezve (példa: 150%), akkor azt a "
 "kitöltési extrudálás szélességére kell vonatkoztatni.\n"
-"A PrusaSlicer megpróbál két közeli kitöltési vonalat egy rövid kerületi "
+"A LibreSlicer megpróbál két közeli kitöltési vonalat egy rövid kerületi "
 "szegmenssel összekötni. Ha nem talál ennél a paraméternél rövidebb kerületi "
 "szegmenst, a kitöltési vonalat csak az egyik oldalon kapcsolja a kerületi "
 "szegmenshez, és a felvett kerületi szegmens hossza az infill_anchor értékre "
@@ -3667,7 +3667,7 @@ msgstr ""
 
 #: src/libslic3r/PrintConfig.cpp:2366
 msgid ""
-"If enabled, PrusaSlicer detects obstacles along the travel path and makes "
+"If enabled, LibreSlicer detects obstacles along the travel path and makes "
 "the slope steeper in case an obstacle might be hit during the initial phase "
 "of the travel."
 msgstr ""
@@ -4027,17 +4027,17 @@ msgstr ""
 
 #: src/libslic3r/PrintConfig.cpp:2625
 msgid ""
-"When enabled, PrusaSlicer will check whether your Custom Start G-Code "
+"When enabled, LibreSlicer will check whether your Custom Start G-Code "
 "contains M104 or M190. If so, the temperatures will not be emitted "
 "automatically so you're free to customize the order of heating commands and "
 "other custom actions. Note that you can use placeholder variables for all "
-"PrusaSlicer settings, so you can put a \"M109 S[first_layer_temperature]\" "
+"LibreSlicer settings, so you can put a \"M109 S[first_layer_temperature]\" "
 "command wherever you want.\n"
-"If your Custom Start G-Code does NOT contain M104 or M190, PrusaSlicer will "
+"If your Custom Start G-Code does NOT contain M104 or M190, LibreSlicer will "
 "execute the Start G-Code after bed reached its target temperature and "
 "extruder just started heating.\n"
 "\n"
-"When disabled, PrusaSlicer will NOT emit commands to heat up extruder and "
+"When disabled, LibreSlicer will NOT emit commands to heat up extruder and "
 "bed, leaving both to Custom Start G-Code."
 msgstr ""
 
@@ -4052,21 +4052,21 @@ msgid ""
 "This start procedure is inserted at the beginning, after any printer start "
 "gcode (and after any toolchange to this filament in case of multi-material "
 "printers). This is used to override settings for a specific filament. If "
-"PrusaSlicer detects M104, M109, M140 or M190 in your custom codes, such "
+"LibreSlicer detects M104, M109, M140 or M190 in your custom codes, such "
 "commands will not be prepended automatically so you're free to customize the "
 "order of heating commands and other custom actions. Note that you can use "
-"placeholder variables for all PrusaSlicer settings, so you can put a \"M109 "
+"placeholder variables for all LibreSlicer settings, so you can put a \"M109 "
 "S[first_layer_temperature]\" command wherever you want. If you have multiple "
 "extruders, the gcode is processed in extruder order."
 msgstr ""
 "Ez a start eljárás az elejére kerül beillesztésre, a nyomtató indítási g-"
 "kódja után (és a több anyagból dolgozó nyomtatók esetében az adott "
 "filamentre történő szerszámváltás után). Ez egy adott filamentre vonatkozó "
-"beállítások felülbírálására szolgál. Ha a PrusaSlicer az M104, M109, M140 "
+"beállítások felülbírálására szolgál. Ha a LibreSlicer az M104, M109, M140 "
 "vagy M190 kódot észlel az egyéni kódban, akkor ezek a parancsok nem lesznek "
 "automatikusan előre beillesztve, így szabadon testre szabhatja a fűtési "
 "parancsok és más egyéni műveletek sorrendjét. Ne feledje, hogy minden "
-"PrusaSlicer beállításhoz használhat helyőrző változókat, így bárhová beírhat "
+"LibreSlicer beállításhoz használhat helyőrző változókat, így bárhová beírhat "
 "egy \"M109 S[first_layer_temperature]\" parancsot. Ha több extruderrel "
 "rendelkezik, akkor a g-kód az extruderek sorrendjében kerül feldolgozásra."
 
@@ -4654,17 +4654,17 @@ msgstr ""
 #: src/libslic3r/PrintConfig.cpp:3142
 msgid ""
 "This custom code is inserted before every toolchange. Placeholder variables "
-"for all PrusaSlicer settings as well as {toolchange_z}, {previous_extruder} "
+"for all LibreSlicer settings as well as {toolchange_z}, {previous_extruder} "
 "and {next_extruder} can be used. When a tool-changing command which changes "
-"to the correct extruder is included (such as T{next_extruder}), PrusaSlicer "
+"to the correct extruder is included (such as T{next_extruder}), LibreSlicer "
 "will emit no other such command. It is therefore possible to script custom "
 "behaviour both before and after the toolchange."
 msgstr ""
 "Ez az egyéni kód minden eszközváltás előtt beillesztésre kerül. Az összes "
-"PrusaSlicer Helytartó változó, valamint a {toolchange_z}, "
+"LibreSlicer Helytartó változó, valamint a {toolchange_z}, "
 "{previous_extruder} és {next_extruder} változók használhatók. Ha olyan "
 "szerszámcsere parancsot tartalmaz, amely a megfelelő extruderre vált "
-"(például T{next_extruder}), akkor a PrusaSlicer nem ad ki más ilyen "
+"(például T{next_extruder}), akkor a LibreSlicer nem ad ki más ilyen "
 "parancsot. Lehetőség van tehát egyéni viselkedés szkriptelésére a "
 "szerszámváltás előtt és után is."
 
@@ -6149,13 +6149,13 @@ msgstr ""
 
 #: src/libslic3r/PrintConfig.cpp:5040
 msgid ""
-"This version of PrusaSlicer may not understand configurations produced by "
-"the newest PrusaSlicer versions. For example, newer PrusaSlicer may extend "
+"This version of LibreSlicer may not understand configurations produced by "
+"the newest LibreSlicer versions. For example, newer LibreSlicer may extend "
 "the list of supported firmware flavors. One may decide to bail out or to "
 "substitute an unknown value with a default silently or verbosely."
 msgstr ""
-"A PrusaSlicer ezen verziója nem feltétlenül érti a legújabb PrusaSlicer "
-"verziók által létrehozott konfigurációkat. Az újabb PrusaSlicer például "
+"A LibreSlicer ezen verziója nem feltétlenül érti a legújabb LibreSlicer "
+"verziók által létrehozott konfigurációkat. Az újabb LibreSlicer például "
 "bővítheti a támogatott firmware változatok listáját. Az ember eldöntheti, "
 "hogy kilép, vagy az ismeretlen értéket egy alapértelmezett értékkel "
 "helyettesíti csendben vagy megjegyzéssel."
@@ -6211,11 +6211,11 @@ msgstr "Egypéldányos mód"
 #: src/libslic3r/PrintConfig.cpp:5061
 msgid ""
 "If enabled, the command line arguments are sent to an existing instance of "
-"GUI PrusaSlicer, or an existing PrusaSlicer window is activated. Overrides "
+"GUI LibreSlicer, or an existing LibreSlicer window is activated. Overrides "
 "the \"single_instance\" configuration value from application preferences."
 msgstr ""
-"Ha engedélyezve van, a parancssori argumentumokat a egy meglévő PrusaSlicer "
-"GUI példánynak küldi el, vagy egy meglévő PrusaSlicer ablakot aktivál. Az "
+"Ha engedélyezve van, a parancssori argumentumokat a egy meglévő LibreSlicer "
+"GUI példánynak küldi el, vagy egy meglévő LibreSlicer ablakot aktivál. Az "
 "alkalmazás beállításai közül felülírja a \"single_instance\" konfigurációs "
 "értéket."
 
@@ -6278,7 +6278,7 @@ msgstr "Pozíció"
 msgid ""
 "Position of the extruder at the beginning of the custom G-code block. If the "
 "custom G-code travels somewhere else, it should write to this variable so "
-"PrusaSlicer knows where it travels from when it gets control back."
+"LibreSlicer knows where it travels from when it gets control back."
 msgstr ""
 
 #: src/libslic3r/PrintConfig.cpp:5119 src/slic3r/GUI/Tab.cpp:3293
@@ -6289,7 +6289,7 @@ msgstr "Visszahúzás"
 msgid ""
 "Retraction state at the beginning of the custom G-code block. If the custom "
 "G-code moves the extruder axis, it should write to this variable so "
-"PrusaSlicer deretracts correctly when it gets control back."
+"LibreSlicer deretracts correctly when it gets control back."
 msgstr ""
 
 #: src/libslic3r/PrintConfig.cpp:5124
@@ -6940,14 +6940,14 @@ msgstr "A konfigurációs pillanatfelvétel készítése nem sikerült."
 
 #: src/slic3r/Config/Snapshot.cpp:602
 msgid ""
-"PrusaSlicer has encountered an error while taking a configuration snapshot."
+"LibreSlicer has encountered an error while taking a configuration snapshot."
 msgstr ""
-"A PrusaSlicer hibába ütközött a konfigurációs pillanatfelvétel készítése "
+"A LibreSlicer hibába ütközött a konfigurációs pillanatfelvétel készítése "
 "közben."
 
 #: src/slic3r/Config/Snapshot.cpp:603
-msgid "PrusaSlicer error"
-msgstr "PrusaSlicer hiba"
+msgid "LibreSlicer error"
+msgstr "LibreSlicer hiba"
 
 #: src/slic3r/Config/Snapshot.cpp:605
 msgid "Continue"
@@ -6994,10 +6994,10 @@ msgstr "GNU Affero General Public License, 3-as verzió"
 
 #: src/slic3r/GUI/AboutDialog.cpp:284
 msgid ""
-"PrusaSlicer is based on Slic3r by Alessandro Ranellucci and the RepRap "
+"LibreSlicer is based on Slic3r by Alessandro Ranellucci and the RepRap "
 "community."
 msgstr ""
-"A PrusaSlicer alapja Alessandro Ranellucci és a RepRap közösség Slic3r-je."
+"A LibreSlicer alapja Alessandro Ranellucci és a RepRap közösség Slic3r-je."
 
 #: src/slic3r/GUI/AboutDialog.cpp:285
 msgid ""
@@ -7098,15 +7098,15 @@ msgstr ""
 
 #: src/slic3r/GUI/BackgroundSlicingProcess.cpp:91
 #, boost-format
-msgid "PrusaSlicer has encountered a fatal error: \"%1%\""
-msgstr "A PrusaSlicer végzetes hibába ütközött: \"%1%\""
+msgid "LibreSlicer has encountered a fatal error: \"%1%\""
+msgstr "A LibreSlicer végzetes hibába ütközött: \"%1%\""
 
 #: src/slic3r/GUI/BackgroundSlicingProcess.cpp:92
 msgid ""
-"Please save your project and restart PrusaSlicer. We would be glad if you "
+"Please save your project and restart LibreSlicer. We would be glad if you "
 "reported the issue."
 msgstr ""
-"Mentse el a projektet, és indítsa újra a PrusaSlicert. Örülnénk, ha "
+"Mentse el a projektet, és indítsa újra a LibreSlicert. Örülnénk, ha "
 "jelentené a problémát."
 
 #: src/slic3r/GUI/BackgroundSlicingProcess.cpp:169
@@ -7556,8 +7556,8 @@ msgid "Active"
 msgstr "Aktív"
 
 #: src/slic3r/GUI/ConfigSnapshotDialog.cpp:64
-msgid "PrusaSlicer version"
-msgstr "PrusaSlicer verzió"
+msgid "LibreSlicer version"
+msgstr "LibreSlicer verzió"
 
 #: src/slic3r/GUI/ConfigSnapshotDialog.cpp:69
 msgid "filaments"
@@ -7572,12 +7572,12 @@ msgid "version"
 msgstr "verzió"
 
 #: src/slic3r/GUI/ConfigSnapshotDialog.cpp:80
-msgid "min PrusaSlicer version"
-msgstr "min PrusaSlicer verzió"
+msgid "min LibreSlicer version"
+msgstr "min LibreSlicer verzió"
 
 #: src/slic3r/GUI/ConfigSnapshotDialog.cpp:82
-msgid "max PrusaSlicer version"
-msgstr "max PrusaSlicer verzió"
+msgid "max LibreSlicer version"
+msgstr "max LibreSlicer verzió"
 
 #: src/slic3r/GUI/ConfigSnapshotDialog.cpp:85
 msgid "model"
@@ -7852,7 +7852,7 @@ msgstr ""
 msgid "Allow built-in downloader"
 msgstr ""
 
-#. TRN ConfigWizard : Downloader : %1% = "printables.com", %2% = "PrusaSlicer"
+#. TRN ConfigWizard : Downloader : %1% = "printables.com", %2% = "LibreSlicer"
 #: src/slic3r/GUI/ConfigWizard.cpp:1502
 #, boost-format
 msgid ""
@@ -7899,12 +7899,12 @@ msgid "Files association"
 msgstr "Fájl társítás"
 
 #: src/slic3r/GUI/ConfigWizard.cpp:1655 src/slic3r/GUI/Preferences.cpp:326
-msgid "Associate .3mf files to PrusaSlicer"
-msgstr "Társítsa a .3mf fájlokat a PrusaSlicerhez"
+msgid "Associate .3mf files to LibreSlicer"
+msgstr "Társítsa a .3mf fájlokat a LibreSlicerhez"
 
 #: src/slic3r/GUI/ConfigWizard.cpp:1656 src/slic3r/GUI/Preferences.cpp:331
-msgid "Associate .stl files to PrusaSlicer"
-msgstr "Társítsa a .stl fájlokat a PrusaSlicerhez"
+msgid "Associate .stl files to LibreSlicer"
+msgstr "Társítsa a .stl fájlokat a LibreSlicerhez"
 
 #: src/slic3r/GUI/ConfigWizard.cpp:1666
 msgid "View mode"
@@ -7912,13 +7912,13 @@ msgstr "Megjelenítési mód"
 
 #: src/slic3r/GUI/ConfigWizard.cpp:1668
 msgid ""
-"PrusaSlicer's user interfaces comes in three variants:\n"
+"LibreSlicer's user interfaces comes in three variants:\n"
 "Simple, Advanced, and Expert.\n"
 "The Simple mode shows only the most frequently used settings relevant for "
 "regular 3D printing. The other two offer progressively more sophisticated "
 "fine-tuning, they are suitable for advanced and expert users, respectively."
 msgstr ""
-"A PrusaSlicer felhasználói felülete három változatban érhető el:\n"
+"A LibreSlicer felhasználói felülete három változatban érhető el:\n"
 "Egyszerű, Haladó, és Szakértő.\n"
 "Az Egyszerű mód csak a 3D nyomtatáshoz szükséges leggyakrabban használt "
 "beállításokat jeleníti meg. A másik kettő fokozatosan kifinomultabb "
@@ -8253,10 +8253,10 @@ msgstr ""
 #: src/slic3r/GUI/DesktopIntegrationDialog.cpp:428
 msgid ""
 "Performing desktop integration failed - could not create Gcodeviewer desktop "
-"file. PrusaSlicer desktop file was probably created successfully."
+"file. LibreSlicer desktop file was probably created successfully."
 msgstr ""
 "Az asztali integráció végrehajtása sikertelen - nem sikerült létrehozni a "
-"Gcodeviewer asztali fájlt. A PrusaSlicer asztali fájl valószínűleg sikeresen "
+"Gcodeviewer asztali fájlt. A LibreSlicer asztali fájl valószínűleg sikeresen "
 "létrejött."
 
 #: src/slic3r/GUI/DesktopIntegrationDialog.cpp:477
@@ -11600,11 +11600,11 @@ msgstr "%1% helyettesítére került a következővel: %2%"
 
 #: src/slic3r/GUI/GUI.cpp:325
 msgid ""
-"Most likely the configuration was produced by a newer version of PrusaSlicer "
-"or by some PrusaSlicer fork."
+"Most likely the configuration was produced by a newer version of LibreSlicer "
+"or by some LibreSlicer fork."
 msgstr ""
-"Valószínűleg a konfigurációt a PrusaSlicer újabb verziója vagy egyéb "
-"PrusaSlicer változat készítette."
+"Valószínűleg a konfigurációt a LibreSlicer újabb verziója vagy egyéb "
+"LibreSlicer változat készítette."
 
 #: src/slic3r/GUI/GUI.cpp:326
 msgid "The following values were substituted:"
@@ -11723,13 +11723,13 @@ msgstr "Végzetes hiba"
 
 #: src/slic3r/GUI/GUI_App.cpp:749
 msgid ""
-"PrusaSlicer has encountered a localization error. Please report to "
-"PrusaSlicer team, what language was active and in which scenario this issue "
+"LibreSlicer has encountered a localization error. Please report to "
+"LibreSlicer team, what language was active and in which scenario this issue "
 "happened. Thank you.\n"
 "\n"
 "The application will now terminate."
 msgstr ""
-"A PrusaSlicer lokalizációs hibát észlelt. Kérjük, jelentse a PrusaSlicer "
+"A LibreSlicer lokalizációs hibát észlelt. Kérjük, jelentse a LibreSlicer "
 "csapatának, hogy melyik nyelv volt aktív, és melyik helyen szerint történt "
 "ez a probléma. Köszönöm.\n"
 "\n"
@@ -11794,17 +11794,17 @@ msgstr "Folytatás és az újabb konfiguráció importálása?"
 
 #: src/slic3r/GUI/GUI_App.cpp:1119
 msgid ""
-"You are running a 32 bit build of PrusaSlicer on 64-bit Windows.\n"
-"32 bit build of PrusaSlicer will likely not be able to utilize all the RAM "
+"You are running a 32 bit build of LibreSlicer on 64-bit Windows.\n"
+"32 bit build of LibreSlicer will likely not be able to utilize all the RAM "
 "available in the system.\n"
-"Please download and install a 64 bit build of PrusaSlicer from https://www."
+"Please download and install a 64 bit build of LibreSlicer from https://www."
 "prusa3d.cz/prusaslicer/.\n"
 "Do you wish to continue?"
 msgstr ""
-"Ön a PrusaSlicer 32 bites verzióját futtatja 64 bites Windows alatt.\n"
-"A PrusaSlicer 32 bites változata valószínűleg nem fogja tudni kihasználni a "
+"Ön a LibreSlicer 32 bites verzióját futtatja 64 bites Windows alatt.\n"
+"A LibreSlicer 32 bites változata valószínűleg nem fogja tudni kihasználni a "
 "rendszerben rendelkezésre álló összes RAM-ot.\n"
-"Kérjük, hogy töltse le és telepítse a PrusaSlicer 64 bites verzióját a "
+"Kérjük, hogy töltse le és telepítse a LibreSlicer 64 bites verzióját a "
 "https://www.prusa3d.cz/prusaslicer/ oldalról.\n"
 "Szeretné folytatni?"
 
@@ -11844,13 +11844,13 @@ msgid "Restore window position on start"
 msgstr "Ablak pozíciójának visszaállítása indításkor"
 
 #: src/slic3r/GUI/GUI_App.cpp:1424
-msgid "PrusaSlicer started after a crash"
-msgstr "A PrusaSlicer összeomlást követően indult el"
+msgid "LibreSlicer started after a crash"
+msgstr "A LibreSlicer összeomlást követően indult el"
 
 #: src/slic3r/GUI/GUI_App.cpp:1425
 #, boost-format
 msgid ""
-"PrusaSlicer crashed last time when attempting to set window position.\n"
+"LibreSlicer crashed last time when attempting to set window position.\n"
 "We are sorry for the inconvenience, it unfortunately happens with certain "
 "multiple-monitor setups.\n"
 "More precise reason for the crash: \"%1%\".\n"
@@ -11859,7 +11859,7 @@ msgid ""
 "To avoid this problem, consider disabling \"%4%\" in \"Preferences\". "
 "Otherwise, the application will most likely crash again next time."
 msgstr ""
-"A PrusaSlicer legutóbb összeomlott, amikor megpróbálta beállítani az ablak "
+"A LibreSlicer legutóbb összeomlott, amikor megpróbálta beállítani az ablak "
 "pozícióját.\n"
 "Elnézést kérünk a kellemetlenségért, ez sajnos előfordul bizonyos "
 "többmonitoros beállítások esetén.\n"
@@ -11892,11 +11892,11 @@ msgstr ""
 
 #: src/slic3r/GUI/GUI_App.cpp:1873
 msgid ""
-"But since this version of PrusaSlicer we don't show this information in "
+"But since this version of LibreSlicer we don't show this information in "
 "Printer Settings anymore.\n"
 "Settings will be available in physical printers settings."
 msgstr ""
-"De a PrusaSlicer ezen verziója óta már nem mutatjuk meg ezt az információt a "
+"De a LibreSlicer ezen verziója óta már nem mutatjuk meg ezt az információt a "
 "nyomtató beállításaiban. \n"
 "A beállítások a fizikai nyomtatók beállításaiban lesznek elérhetőek."
 
@@ -12177,16 +12177,16 @@ msgid "Open hyperlink in default browser?"
 msgstr "Hiperhivatkozás megnyitása az alapértelmezett böngészőben?"
 
 #: src/slic3r/GUI/GUI_App.cpp:3385 src/slic3r/GUI/GUI_App.cpp:3408
-msgid "PrusaSlicer: Open hyperlink"
-msgstr "PrusaSlicer: Hiperhivatkozás megnyitása"
+msgid "LibreSlicer: Open hyperlink"
+msgstr "LibreSlicer: Hiperhivatkozás megnyitása"
 
 #: src/slic3r/GUI/GUI_App.cpp:3390 src/slic3r/GUI/Preferences.cpp:638
 msgid "Suppress to open hyperlink in browser"
 msgstr "A hiperhivatkozások böngészőben való megnyitásának letiltása"
 
 #: src/slic3r/GUI/GUI_App.cpp:3392 src/slic3r/GUI/Plater.cpp:1826
-msgid "PrusaSlicer will remember your choice."
-msgstr "A PrusaSlicer emlékezni fog a választására."
+msgid "LibreSlicer will remember your choice."
+msgstr "A LibreSlicer emlékezni fog a választására."
 
 #: src/slic3r/GUI/GUI_App.cpp:3393
 msgid "You will not be asked about it again on hyperlinks hovering."
@@ -12205,8 +12205,8 @@ msgstr ""
 
 #: src/slic3r/GUI/GUI_App.cpp:3396 src/slic3r/GUI/Plater.cpp:1832
 #: src/slic3r/GUI/UnsavedChangesDialog.cpp:937
-msgid "PrusaSlicer: Don't ask me again"
-msgstr "PrusaSlicer: Ne kérdezzen rá újra"
+msgid "LibreSlicer: Don't ask me again"
+msgstr "LibreSlicer: Ne kérdezzen rá újra"
 
 #: src/slic3r/GUI/GUI_App.cpp:3475
 msgid "Check for application update has failed."
@@ -12522,8 +12522,8 @@ msgstr ""
 "példányaival"
 
 #: src/slic3r/GUI/GUI_Init.cpp:68 src/slic3r/GUI/GUI_Init.cpp:71
-msgid "PrusaSlicer GUI initialization failed"
-msgstr "A PrusaSlicer GUI inicializálása nem sikerült"
+msgid "LibreSlicer GUI initialization failed"
+msgstr "A LibreSlicer GUI inicializálása nem sikerült"
 
 #: src/slic3r/GUI/GUI_Init.cpp:71
 #, boost-format
@@ -12773,7 +12773,7 @@ msgstr ""
 #: src/slic3r/GUI/GUI_ObjectList.cpp:2002
 msgid ""
 "This action will break a cut information.\n"
-"After that PrusaSlicer can't guarantee model consistency."
+"After that LibreSlicer can't guarantee model consistency."
 msgstr ""
 
 #: src/slic3r/GUI/GUI_ObjectList.cpp:2004
@@ -13923,8 +13923,8 @@ msgstr "Gyorsbillentyűk"
 
 #: src/slic3r/GUI/MainFrame.cpp:88 src/slic3r/GUI/MainFrame.cpp:102
 #: src/slic3r/GUI/MainFrame.cpp:1531
-msgid "Open a new PrusaSlicer instance"
-msgstr "Új PrusaSlicer példány megnyitása"
+msgid "Open a new LibreSlicer instance"
+msgstr "Új LibreSlicer példány megnyitása"
 
 #: src/slic3r/GUI/MainFrame.cpp:91 src/slic3r/GUI/MainFrame.cpp:104
 msgid "G-code preview"
@@ -13935,24 +13935,24 @@ msgid "Open G-code viewer"
 msgstr "G-kód nézegető megnyitása"
 
 #: src/slic3r/GUI/MainFrame.cpp:102 src/slic3r/GUI/MainFrame.cpp:1656
-msgid "Open PrusaSlicer"
-msgstr "PrusaSlicer megnyitása"
+msgid "Open LibreSlicer"
+msgstr "LibreSlicer megnyitása"
 
 #: src/slic3r/GUI/MainFrame.cpp:104
 msgid "Open new G-code viewer"
 msgstr "Új G-kód nézegető megnyitása"
 
 #: src/slic3r/GUI/MainFrame.cpp:238
-msgid "Closing PrusaSlicer. Current project is modified."
-msgstr "A PrusaSlicer bezárása. A jelenlegi projekt módosult."
+msgid "Closing LibreSlicer. Current project is modified."
+msgstr "A LibreSlicer bezárása. A jelenlegi projekt módosult."
 
 #: src/slic3r/GUI/MainFrame.cpp:245
-msgid "PrusaSlicer is closing"
-msgstr "A PrusaSlicer kilép"
+msgid "LibreSlicer is closing"
+msgstr "A LibreSlicer kilép"
 
 #: src/slic3r/GUI/MainFrame.cpp:245
-msgid "Closing PrusaSlicer while some presets are modified."
-msgstr "A PrusaSlicer bezárása, miközben egyes előbeállítások módosultak."
+msgid "Closing LibreSlicer while some presets are modified."
+msgstr "A LibreSlicer bezárása, miközben egyes előbeállítások módosultak."
 
 #: src/slic3r/GUI/MainFrame.cpp:341 src/slic3r/GUI/MainFrame.cpp:391
 #: src/slic3r/GUI/Tab.hpp:444 src/slic3r/GUI/Tab.hpp:589
@@ -14573,8 +14573,8 @@ msgid "&Open G-code"
 msgstr "&G-kód megnyitása"
 
 #: src/slic3r/GUI/MainFrame.cpp:1656
-msgid "Open &PrusaSlicer"
-msgstr "PrusaSlicer Megnyitása"
+msgid "Open &LibreSlicer"
+msgstr "LibreSlicer Megnyitása"
 
 #: src/slic3r/GUI/MainFrame.cpp:1670
 msgid "Show legend"
@@ -14771,7 +14771,7 @@ msgstr "Exportálás."
 
 #: src/slic3r/GUI/NotificationManager.hpp:938
 msgid ""
-"PrusaSlicer recieved a download request from Printables.com, but it's not "
+"LibreSlicer recieved a download request from Printables.com, but it's not "
 "allowed. You can allow it"
 msgstr ""
 
@@ -14914,7 +14914,7 @@ msgstr "Tartomány"
 #: src/slic3r/GUI/OpenGLManager.cpp:381
 #, c-format, boost-format
 msgid ""
-"PrusaSlicer requires OpenGL ES 2.0 capable graphics driver to run "
+"LibreSlicer requires OpenGL ES 2.0 capable graphics driver to run "
 "correctly, \n"
 "while OpenGL version %s, render %s, vendor %s was detected."
 msgstr ""
@@ -14922,17 +14922,17 @@ msgstr ""
 #: src/slic3r/GUI/OpenGLManager.cpp:384
 #, c-format, boost-format
 msgid ""
-"PrusaSlicer requires OpenGL %s capable graphics driver to run correctly, \n"
+"LibreSlicer requires OpenGL %s capable graphics driver to run correctly, \n"
 "while OpenGL version %s, render %s, vendor %s was detected."
 msgstr ""
 
 #: src/slic3r/GUI/OpenGLManager.cpp:387
 #, c-format, boost-format
 msgid ""
-"PrusaSlicer requires OpenGL 2.0 capable graphics driver to run correctly, \n"
+"LibreSlicer requires OpenGL 2.0 capable graphics driver to run correctly, \n"
 "while OpenGL version %s, render %s, vendor %s was detected."
 msgstr ""
-"A PrusaSlicer helyes futtatásához OpenGL 2.0 képes grafikus vezérlőre van "
+"A LibreSlicer helyes futtatásához OpenGL 2.0 képes grafikus vezérlőre van "
 "szükség, \n"
 "miközben az alábbiakat észleltük: OpenGL verzió %s, render %s, vendor %s."
 
@@ -14942,10 +14942,10 @@ msgstr "Lehet, hogy frissítenie kell a grafikus kártya illesztőprogramját."
 
 #: src/slic3r/GUI/OpenGLManager.cpp:394
 msgid ""
-"As a workaround, you may run PrusaSlicer with a software rendered 3D "
+"As a workaround, you may run LibreSlicer with a software rendered 3D "
 "graphics by running prusa-slicer.exe with the --sw-renderer parameter."
 msgstr ""
-"Alternatív megoldásként a PrusaSlicer szoftveresen renderelt 3D grafikával "
+"Alternatív megoldásként a LibreSlicer szoftveresen renderelt 3D grafikával "
 "is használható, ha a prusa-slicer.exe programot a --sw-renderer paraméterrel "
 "indítja el."
 
@@ -15287,11 +15287,11 @@ msgstr "Kérdezzen rá a projektben nem mentett változtatásokra"
 #: src/slic3r/GUI/Plater.cpp:1827
 msgid ""
 "You will not be asked about it again, when: \n"
-"- Closing PrusaSlicer,\n"
+"- Closing LibreSlicer,\n"
 "- Loading or creating a new project"
 msgstr ""
 "Nem fogunk többé kérdezni róla, amikor: \n"
-"- A PrusaSlicert bezárja,\n"
+"- A LibreSlicert bezárja,\n"
 "- Új projektet tölt be, vagy hoz létre"
 
 #: src/slic3r/GUI/Plater.cpp:2294
@@ -15319,15 +15319,15 @@ msgstr "Az oldalsáv kibontása"
 #: src/slic3r/GUI/Plater.cpp:2495
 msgid ""
 "The preset below was temporarily installed on the active instance of "
-"PrusaSlicer"
+"LibreSlicer"
 msgid_plural ""
 "The presets below were temporarily installed on the active instance of "
-"PrusaSlicer"
+"LibreSlicer"
 msgstr[0] ""
-"Az alábbi_ előbeállítás ideiglenesen telepítve lett a PrusaSlicer aktív "
+"Az alábbi_ előbeállítás ideiglenesen telepítve lett a LibreSlicer aktív "
 "példányára"
 msgstr[1] ""
-"Az alábbi_ előbeállítások ideiglenesen telepítve lettek a PrusaSlicer aktív "
+"Az alábbi_ előbeállítások ideiglenesen telepítve lettek a LibreSlicer aktív "
 "példányára"
 
 #. TRN The placeholder is either "3MF" or "AMF"
@@ -15366,21 +15366,21 @@ msgstr "Az objektum mérete zéró"
 #, c-format, boost-format
 msgid ""
 "The dimensions of the object from file %s seem to be defined in meters.\n"
-"The internal unit of PrusaSlicer is a millimeter. Do you want to recalculate "
+"The internal unit of LibreSlicer is a millimeter. Do you want to recalculate "
 "the dimensions of the object?"
 msgid_plural ""
 "The dimensions of some objects from file %s seem to be defined in meters.\n"
-"The internal unit of PrusaSlicer is a millimeter. Do you want to recalculate "
+"The internal unit of LibreSlicer is a millimeter. Do you want to recalculate "
 "the dimensions of these objects?"
 msgstr[0] ""
 "Úgy tűnik, hogy a %s fájlból származó objektum méretei méterben vannak "
 "megadva.\n"
-"A PrusaSlicer belső mértékegysége a milliméter. Szeretné újraszámolni az "
+"A LibreSlicer belső mértékegysége a milliméter. Szeretné újraszámolni az "
 "objektum méreteit?"
 msgstr[1] ""
 "Úgy tűnik, hogy a %s fájlból származó objektumok méretei méterben vannak "
 "megadva.\n"
-"A PrusaSlicer belső mértékegysége a milliméter. Szeretné újraszámolni az "
+"A LibreSlicer belső mértékegysége a milliméter. Szeretné újraszámolni az "
 "objektumok méreteit?"
 
 #: src/slic3r/GUI/Plater.cpp:2708 src/slic3r/GUI/Plater.cpp:2730
@@ -15395,21 +15395,21 @@ msgstr "Alkalmazza az összes hátralévő betöltendő kis objektumra."
 #, c-format, boost-format
 msgid ""
 "The dimensions of the object from file %s seem to be defined in inches.\n"
-"The internal unit of PrusaSlicer is a millimeter. Do you want to recalculate "
+"The internal unit of LibreSlicer is a millimeter. Do you want to recalculate "
 "the dimensions of the object?"
 msgid_plural ""
 "The dimensions of some objects from file %s seem to be defined in inches.\n"
-"The internal unit of PrusaSlicer is a millimeter. Do you want to recalculate "
+"The internal unit of LibreSlicer is a millimeter. Do you want to recalculate "
 "the dimensions of these objects?"
 msgstr[0] ""
 "Úgy tűnik, hogy a %s fájlból származó objektum méretei inchben vannak "
 "megadva.\n"
-"A PrusaSlicer belső mértékegysége a milliméter. Szeretné újraszámolni az "
+"A LibreSlicer belső mértékegysége a milliméter. Szeretné újraszámolni az "
 "objektum méreteit?"
 msgstr[1] ""
 "Úgy tűnik, hogy a %s fájlból származó objektumok méretei inchben vannak "
 "megadva.\n"
-"A PrusaSlicer belső mértékegysége a milliméter. Szeretné újraszámolni az "
+"A LibreSlicer belső mértékegysége a milliméter. Szeretné újraszámolni az "
 "objektumok méreteit?"
 
 #: src/slic3r/GUI/Plater.cpp:2744
@@ -15490,7 +15490,7 @@ msgstr ""
 #: src/slic3r/GUI/Plater.cpp:3139
 msgid ""
 "This action will break a cut information.\n"
-"After that PrusaSlicer can't guarantee model consistency"
+"After that LibreSlicer can't guarantee model consistency"
 msgstr ""
 
 #: src/slic3r/GUI/Plater.cpp:3142
@@ -15776,7 +15776,7 @@ msgid "Import 3D models"
 msgstr ""
 
 #: src/slic3r/GUI/Plater.cpp:5832
-msgid "Start a new instance of PrusaSlicer"
+msgid "Start a new instance of LibreSlicer"
 msgstr ""
 
 #: src/slic3r/GUI/Plater.cpp:5846
@@ -15821,7 +15821,7 @@ msgid "Import config only"
 msgstr "Csak a konfiguráció importálása"
 
 #: src/slic3r/GUI/Plater.cpp:6187
-msgid "Start new PrusaSlicer instance"
+msgid "Start new LibreSlicer instance"
 msgstr ""
 
 #: src/slic3r/GUI/Plater.cpp:6190
@@ -16044,15 +16044,15 @@ msgstr ""
 "automatikusan megkeresse és betöltse a fájlokat meghivatkozáskor."
 
 #: src/slic3r/GUI/Preferences.cpp:327
-msgid "If enabled, sets PrusaSlicer as default application to open .3mf files."
+msgid "If enabled, sets LibreSlicer as default application to open .3mf files."
 msgstr ""
-"Ha engedélyezve van, a PrusaSlicert alapértelmezett alkalmazásként állítja "
+"Ha engedélyezve van, a LibreSlicert alapértelmezett alkalmazásként állítja "
 "be a .3mf fájlok megnyitásához."
 
 #: src/slic3r/GUI/Preferences.cpp:332
-msgid "If enabled, sets PrusaSlicer as default application to open .stl files."
+msgid "If enabled, sets LibreSlicer as default application to open .stl files."
 msgstr ""
-"Ha engedélyezve van, a PrusaSlicert alapértelmezett alkalmazásként állítja "
+"Ha engedélyezve van, a LibreSlicert alapértelmezett alkalmazásként állítja "
 "be a .stl fájlok megnyitásához."
 
 #: src/slic3r/GUI/Preferences.cpp:341
@@ -16115,8 +16115,8 @@ msgid ""
 msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:371 src/slic3r/GUI/Preferences.cpp:375
-msgid "Allow just a single PrusaSlicer instance"
-msgstr "Csak egyetlen PrusaSlicer példány engedélyezése"
+msgid "Allow just a single LibreSlicer instance"
+msgstr "Csak egyetlen LibreSlicer példány engedélyezése"
 
 #: src/slic3r/GUI/Preferences.cpp:372
 msgid ""
@@ -16130,22 +16130,22 @@ msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:376
 msgid ""
-"If this is enabled, when starting PrusaSlicer and another instance of the "
-"same PrusaSlicer is already running, that instance will be reactivated "
+"If this is enabled, when starting LibreSlicer and another instance of the "
+"same LibreSlicer is already running, that instance will be reactivated "
 "instead."
 msgstr ""
-"Ha ez engedélyezve van és a PrusaSlicer indításakor ugyanannak a "
-"PrusaSlicernek egy másik példánya már fut, akkor az a példány lesz újra "
+"Ha ez engedélyezve van és a LibreSlicer indításakor ugyanannak a "
+"LibreSlicernek egy másik példánya már fut, akkor az a példány lesz újra "
 "aktiválva."
 
 #: src/slic3r/GUI/Preferences.cpp:384
 msgid ""
 "Always ask for unsaved changes in project, when: \n"
-"- Closing PrusaSlicer,\n"
+"- Closing LibreSlicer,\n"
 "- Loading or creating a new project"
 msgstr ""
 "Mindig kérdezzen rá a projekt nem mentett változtatásaira: \n"
-"- A PrusaSlicer bezárásakor,\n"
+"- A LibreSlicer bezárásakor,\n"
 "- Új projekt betöltésekor, vagy létrehozásakor"
 
 #: src/slic3r/GUI/Preferences.cpp:392
@@ -16160,11 +16160,11 @@ msgstr ""
 #: src/slic3r/GUI/Preferences.cpp:393
 msgid ""
 "Always ask for unsaved changes in presets, when: \n"
-"- Closing PrusaSlicer while some presets are modified,\n"
+"- Closing LibreSlicer while some presets are modified,\n"
 "- Loading a new project while some presets are modified"
 msgstr ""
 "Mindig kérdezzen rá az előbeállítások el nem mentett módosításaira: \n"
-"- A PrusaSlicer bezárásakor, miközben egyes előbeállítások módosultak,\n"
+"- A LibreSlicer bezárásakor, miközben egyes előbeállítások módosultak,\n"
 "- Új projekt betöltésekor, miközben egyes előbeállítások módosultak"
 
 #: src/slic3r/GUI/Preferences.cpp:399
@@ -16196,24 +16196,24 @@ msgstr ""
 "projektet hoz létre"
 
 #: src/slic3r/GUI/Preferences.cpp:411
-msgid "Associate .gcode files to PrusaSlicer G-code Viewer"
-msgstr ".gcode fájlok társítása a PrusaSlicer G-code Viewer alkalmazáshoz"
+msgid "Associate .gcode files to LibreSlicer G-code Viewer"
+msgstr ".gcode fájlok társítása a LibreSlicer G-code Viewer alkalmazáshoz"
 
 #: src/slic3r/GUI/Preferences.cpp:412
 msgid ""
-"If enabled, sets PrusaSlicer G-code Viewer as default application to open ."
+"If enabled, sets LibreSlicer G-code Viewer as default application to open ."
 "gcode files."
 msgstr ""
-"Ha engedélyezve van, beállítja a PrusaSlicer G-code Viewer-t alapértelmezett "
+"Ha engedélyezve van, beállítja a LibreSlicer G-code Viewer-t alapértelmezett "
 "alkalmazásként a .gcode fájlok megnyitásához."
 
 #: src/slic3r/GUI/Preferences.cpp:415
-msgid "Associate .bgcode files to PrusaSlicer G-code Viewer"
+msgid "Associate .bgcode files to LibreSlicer G-code Viewer"
 msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:416
 msgid ""
-"If enabled, sets PrusaSlicer G-code Viewer as default application to open ."
+"If enabled, sets LibreSlicer G-code Viewer as default application to open ."
 "bgcode files."
 msgstr ""
 
@@ -16235,9 +16235,9 @@ msgid "Show splash screen"
 msgstr "Splash screen meglenítése"
 
 #: src/slic3r/GUI/Preferences.cpp:439
-msgid "If enabled, PrusaSlicer will be open at the position it was closed"
+msgid "If enabled, LibreSlicer will be open at the position it was closed"
 msgstr ""
-"Ha engedélyezve van, a PrusaSlicer azon a helyen fog megnyílni, ahol bezárták"
+"Ha engedélyezve van, a LibreSlicer azon a helyen fog megnyílni, ahol bezárták"
 
 #: src/slic3r/GUI/Preferences.cpp:444
 msgid "Clear Undo / Redo stack on new project"
@@ -16430,7 +16430,7 @@ msgid ""
 msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:639
-msgid "If enabled, PrusaSlicer will not open a hyperlinks in your browser."
+msgid "If enabled, LibreSlicer will not open a hyperlinks in your browser."
 msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:645
@@ -16438,7 +16438,7 @@ msgid "Allow downloads from Printables.com"
 msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:646
-msgid "If enabled, PrusaSlicer will be allowed to download from Printables.com"
+msgid "If enabled, LibreSlicer will be allowed to download from Printables.com"
 msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:656
@@ -17163,7 +17163,7 @@ msgid ""
 "identify you later. To detect duplicate entries, a unique number derived "
 "from your system is sent, but the source information cannot be "
 "reconstructed. Apart from that, only general data about your OS, hardware "
-"and OpenGL installation are sent. PrusaSlicer is open source, if you want to "
+"and OpenGL installation are sent. LibreSlicer is open source, if you want to "
 "inspect the code actually performing the communication, see %1%."
 msgstr ""
 "Nem küldünk semmilyen személyes adatot, és semmi olyat, ami lehetővé tenné "
@@ -17171,7 +17171,7 @@ msgstr ""
 "érdekében egy egyedi, az Ön rendszeradataiból származtatott számot küldünk, "
 "de a forrásinformáció nem rekonstruálható. Ezen kívül csak általános "
 "adatokat küldünk az Ön operációs rendszeréről, hardveréről és OpenGL "
-"telepítéséről. A PrusaSlicer nyílt forráskódú, ha a kommunikációt "
+"telepítéséről. A LibreSlicer nyílt forráskódú, ha a kommunikációt "
 "ténylegesen végrehajtó kódot szeretné megvizsgálni, itt találja: %1%."
 
 #: src/slic3r/GUI/SendSystemInfoDialog.cpp:624
@@ -17211,8 +17211,8 @@ msgid "System Information"
 msgstr "Rendszerinformáció"
 
 #: src/slic3r/GUI/SysInfoDialog.cpp:166
-msgid "Blacklisted libraries loaded into PrusaSlicer process:"
-msgstr "Feketelistás könyvtárak kerültek betöltése a PrusaSlicer folyamatba:"
+msgid "Blacklisted libraries loaded into LibreSlicer process:"
+msgstr "Feketelistás könyvtárak kerültek betöltése a LibreSlicer folyamatba:"
 
 #: src/slic3r/GUI/SysInfoDialog.cpp:178
 msgid "Eigen vectorization supported:"
@@ -17570,7 +17570,7 @@ msgid ""
 "right of the Printer profiles combo box, by selecting the \"Add physical "
 "printer\" item in the Printer combo box. The Physical Printer profile editor "
 "opens also when clicking on the \"cog\" icon in the Printer settings tab. "
-"The Physical Printer profiles are being stored into PrusaSlicer/"
+"The Physical Printer profiles are being stored into LibreSlicer/"
 "physical_printer directory."
 msgstr ""
 "Megjegyzés: Az összes paraméter ebből a csoportból átkerül a Fizikai "
@@ -17581,7 +17581,7 @@ msgstr ""
 "legördülő mezőben pedig a \"Fizikai nyomtató hozzáadása\" elemet válassza. A "
 "Fizikai nyomtató profil szerkesztője akkor is megnyílik, ha a Nyomtató "
 "beállításai lapon a \"fogaskerék\" ikonra kattint. A fizikai nyomtató "
-"profilok a PrusaSlicer/physical_printer könyvtárban kerülnek tárolásra."
+"profilok a LibreSlicer/physical_printer könyvtárban kerülnek tárolásra."
 
 #: src/slic3r/GUI/Tab.cpp:2594
 msgid ""
@@ -18165,17 +18165,17 @@ msgstr ""
 msgid ""
 "You will not be asked about the unsaved changes in presets the next time "
 "you: \n"
-"- Closing PrusaSlicer while some presets are modified,\n"
+"- Closing LibreSlicer while some presets are modified,\n"
 "- Loading a new project while some presets are modified"
 msgstr ""
 "Az előbeállítások nem mentett módosításaira legközelebb nem kérdez rá a "
 "rendszer: \n"
-"- A PrusaSlicer bezárásakor, miközben egyes előbeállítások módosultak,\n"
+"- A LibreSlicer bezárásakor, miközben egyes előbeállítások módosultak,\n"
 "- Új projekt betöltésekor, miközben egyes előbeállítások módosultak"
 
 #: src/slic3r/GUI/UnsavedChangesDialog.cpp:934
-msgid "PrusaSlicer will remember your action."
-msgstr "A PrusaSlicer emlékezni fog a műveletére."
+msgid "LibreSlicer will remember your action."
+msgstr "A LibreSlicer emlékezni fog a műveletére."
 
 #: src/slic3r/GUI/UnsavedChangesDialog.cpp:935
 #, boost-format
@@ -18443,11 +18443,11 @@ msgstr "Konfiguráció frissítés"
 
 #: src/slic3r/GUI/UpdateDialogs.cpp:276
 msgid ""
-"PrusaSlicer is not using the newest configuration available.\n"
+"LibreSlicer is not using the newest configuration available.\n"
 "Configuration Wizard may not offer the latest printers, filaments and SLA "
 "materials to be installed."
 msgstr ""
-"A PrusaSlicer nem a legújabb elérhető konfigurációt használja.\n"
+"A LibreSlicer nem a legújabb elérhető konfigurációt használja.\n"
 "A Konfigurációs Varázsló nem biztos, hogy a legújabb nyomtatókat, "
 "filamenteket és SLA anyagokat kínálja fel a telepítéshez."
 
@@ -18591,7 +18591,7 @@ msgstr ""
 msgid "For more information please visit our wiki page:"
 msgstr "További információkért kérjük, látogasson el a wiki oldalunkra:"
 
-#. TRN %s = PrusaSlicer
+#. TRN %s = LibreSlicer
 #: src/slic3r/GUI/UpdateDialogs.cpp:478
 #, c-format, boost-format
 msgid "%s 1.40 configuration update"
@@ -18614,7 +18614,7 @@ msgstr "A(z) %s nem rendelkezik elérhető konfigurációs frissítéssel."
 msgid "App update"
 msgstr ""
 
-#. TRN %1% is PrusaSlicer
+#. TRN %1% is LibreSlicer
 #: src/slic3r/GUI/UpdateDialogs.cpp:515
 #, boost-format
 msgid "Your %1% is up to date."
@@ -18950,17 +18950,17 @@ msgstr ""
 
 #: src/slic3r/Utils/Http.cpp:79
 msgid ""
-"Could not detect system SSL certificate store. PrusaSlicer will be unable to "
+"Could not detect system SSL certificate store. LibreSlicer will be unable to "
 "establish secure network connections."
 msgstr ""
-"Nem sikerült észlelni a rendszer SSL-tanúsítványtárolóját. A PrusaSlicer nem "
+"Nem sikerült észlelni a rendszer SSL-tanúsítványtárolóját. A LibreSlicer nem "
 "tud biztonságos hálózati kapcsolatot létrehozni."
 
 #: src/slic3r/Utils/Http.cpp:84
 #, boost-format
-msgid "PrusaSlicer detected system SSL certificate store in: %1%"
+msgid "LibreSlicer detected system SSL certificate store in: %1%"
 msgstr ""
-"A PrusaSlicer észlelte a rendszer SSL tanúsítványtárolóját a következő "
+"A LibreSlicer észlelte a rendszer SSL tanúsítványtárolóját a következő "
 "helyen: %1%"
 
 #: src/slic3r/Utils/Http.cpp:88
@@ -18974,10 +18974,10 @@ msgstr ""
 
 #: src/slic3r/Utils/Http.cpp:97
 msgid ""
-"CURL init has failed. PrusaSlicer will be unable to establish network "
+"CURL init has failed. LibreSlicer will be unable to establish network "
 "connections. See logs for additional details."
 msgstr ""
-"A CURL inicializálása nem sikerült. A PrusaSlicer nem tud hálózati "
+"A CURL inicializálása nem sikerült. A LibreSlicer nem tud hálózati "
 "kapcsolatot létrehozni. További részletekért lásd a naplókat."
 
 #: src/slic3r/Utils/MKS.cpp:61
@@ -19181,12 +19181,12 @@ msgstr ""
 #: resources/data/hints.ini: [hint:Shapes gallery]
 msgid ""
 "Shapes gallery\n"
-"Did you know that PrusaSlicer has a Shapes Gallery? You can use the included "
+"Did you know that LibreSlicer has a Shapes Gallery? You can use the included "
 "models as modifiers, negative volumes or as printable objects. Right-click "
 "the platter and select<a>Add Shape - Gallery</a>."
 msgstr ""
 "Alakzat galéria\n"
-"Tudta, hogy a PrusaSlicer rendelkezik alakzat galériával? A galéria "
+"Tudta, hogy a LibreSlicer rendelkezik alakzat galériával? A galéria "
 "modelljeit használhatja módosítóként, negatív térfogatként vagy nyomtatható "
 "objektumként. Kattintson a jobb gombbal a tárgyasztalra, és válassza az "
 "<a>Alakzat hozzáadása - Galéria</a> lehetőséget."
@@ -19207,13 +19207,13 @@ msgid ""
 "Negative volume\n"
 "Did you know that you can subtract one mesh from another using the Negative "
 "volume modifier? That way you can, for example, create easily resizable "
-"holes directly in PrusaSlicer. Read more in the documentation. (Requires "
+"holes directly in LibreSlicer. Read more in the documentation. (Requires "
 "Advanced or Expert mode.)"
 msgstr ""
 "Negatív térfogat\n"
 "Tudta, hogy a Negatív térfogat módosítóval kivonhat egy hálót egy másikból? "
 "Így például könnyen átméretezhető lyukakat hozhat létre közvetlenül a "
-"PrusaSlicerben. Bővebben a dokumentációban olvashat. (Haladó vagy szakértői "
+"LibreSlicerben. Bővebben a dokumentációban olvashat. (Haladó vagy szakértői "
 "módot igényel.)"
 
 #: resources/data/hints.ini: [hint:Simplify mesh]
@@ -19232,12 +19232,12 @@ msgstr ""
 msgid ""
 "Reload from disk\n"
 "Did you know that if you created a newer version of your model, you can "
-"simply reload it in PrusaSlicer? Right-click the model in the 3D view and "
+"simply reload it in LibreSlicer? Right-click the model in the 3D view and "
 "choose Reload from disk. Read more in the documentation."
 msgstr ""
 "Újratöltés lemezről\n"
 "Tudta, hogy ha elkészítette a modell egy újabb verzióját, egyszerűen újra "
-"betöltheti a PrusaSlicerben? Kattintson a jobb gombbal a modellre a 3D "
+"betöltheti a LibreSlicerben? Kattintson a jobb gombbal a modellre a 3D "
 "nézetben, és válassza az Újratöltés lemezről) lehetőséget. Bővebben a "
 "dokumentációban olvashat."
 
@@ -19358,11 +19358,11 @@ msgstr ""
 msgid ""
 "Search functionality\n"
 "Did you know that you use the<a>Search</a>tool to quickly find a specific "
-"PrusaSlicer setting? Or use the familiar shortcut <b>Ctrl+F</b>."
+"LibreSlicer setting? Or use the familiar shortcut <b>Ctrl+F</b>."
 msgstr ""
 "Keresés funkció\n"
 "Tudta, hogy a<a>Keresés</a>eszközzel gyorsan megtalálhatja bármelyik "
-"PrusaSlicer-beállítást? Vagy használhatja a jól ismert "
+"LibreSlicer-beállítást? Vagy használhatja a jól ismert "
 "gyorsbillentyűparancsot <b>Ctrl+F</b>."
 
 #: resources/data/hints.ini: [hint:Box selection]
@@ -19568,18 +19568,18 @@ msgstr ""
 #: resources/data/hints.ini: [hint:Fullscreen mode]
 msgid ""
 "Fullscreen mode\n"
-"Did you know that you can switch PrusaSlicer to fullscreen mode? Use the "
+"Did you know that you can switch LibreSlicer to fullscreen mode? Use the "
 "<b>F11</b> hotkey."
 msgstr ""
 "Teljes képernyős mód\n"
-"Tudta, hogy a PrusaSlicer teljes képernyős módba is kapcsolható? Használja a "
+"Tudta, hogy a LibreSlicer teljes képernyős módba is kapcsolható? Használja a "
 "<b>F11</b> gyorsbillentyűt."
 
 #: resources/data/hints.ini: [hint:Printables integration]
 msgid ""
 "Printables.com integration\n"
 "Did you know that when you are browsing Printables.com, you can send 3D "
-"model files to PrusaSlicer with a single click? Learn more in the "
+"model files to LibreSlicer with a single click? Learn more in the "
 "documentation."
 msgstr ""
 

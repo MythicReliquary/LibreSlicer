@@ -4,7 +4,7 @@
 ///|/ Copyright (c) Prusa Research 2017 Vojtěch Bubník @bubnikv
 ///|/ Copyright (c) Slic3r 2012 - 2015 Alessandro Ranellucci @alranel
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef slic3r_Format_AMF_hpp_
 #define slic3r_Format_AMF_hpp_

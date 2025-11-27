@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2019 - 2023 Oleksandra Iushchenko @YuSanka, Vojtěch Bubník @bubnikv, Lukáš Matěna @lukasmatena, Enrico Turri @enricoturri1966, Filip Sykala @Jony01, Vojtěch Král @vojtechkral
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "GLGizmoCut.hpp"
 #include "slic3r/GUI/GLCanvas3D.hpp"
@@ -3278,7 +3278,7 @@ static void check_objects_after_cut(const ModelObjectPtrs& objects)
         names += ", " + from_u8(err_objects_names[i]);
     WarningDialog(wxGetApp().plater(), format_wxstr("Objects(%1%) have duplicated connectors. "
                                 "Some connectors may be missing in slicing result.\n"
-                                "Please report to PrusaSlicer team in which scenario this issue happened.\n"
+                                "Please report to LibreSlicer team in which scenario this issue happened.\n"
                                 "Thank you.", names)).ShowModal();
 }
 

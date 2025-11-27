@@ -6,7 +6,7 @@
 ///|/ Copyright (c) Prusa Research 2016 - 2022 Vojtěch Bubník @bubnikv
 ///|/ Copyright (c) Slic3r 2011 - 2016 Alessandro Ranellucci @alranel
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "Layer.hpp"
 #include "ClipperZUtils.hpp"

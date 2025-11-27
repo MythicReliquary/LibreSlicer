@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2022 Tomáš Mészáros @tamasmeszaros
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef ZIPPERARCHIVEIMPORT_HPP
 #define ZIPPERARCHIVEIMPORT_HPP

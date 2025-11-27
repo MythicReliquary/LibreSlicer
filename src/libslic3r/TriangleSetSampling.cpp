@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2022 Pavel Mikuš @Godrak
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "TriangleSetSampling.hpp"
 #include <map>

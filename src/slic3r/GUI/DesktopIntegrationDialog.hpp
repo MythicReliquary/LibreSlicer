@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2021 - 2023 David Kocík @kocikdav
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifdef __linux__
 #ifndef slic3r_DesktopIntegrationDialog_hpp_

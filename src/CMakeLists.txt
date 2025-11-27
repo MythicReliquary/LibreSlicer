@@ -7,7 +7,7 @@ if(WIN32)
 endif()
 
 cmake_minimum_required(VERSION 3.13)
-project(PrusaSlicer-native)
+project(LibreSlicer-native)
 
 set(_slic3r_version_inc "${CMAKE_SOURCE_DIR}/version.inc")
 if(EXISTS "${_slic3r_version_inc}")
@@ -144,60 +144,60 @@ endif()
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/LibreSlicer.rc.in ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer.rc @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/LibreSlicer.manifest ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer.manifest @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/LibreSlicer-gcodeviewer.rc.in ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer-gcodeviewer.rc @ONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/PrusaSlicer.manifest.in ${CMAKE_CURRENT_BINARY_DIR}/PrusaSlicer.manifest @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/msw/LibreSlicer.manifest.in ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer.manifest @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/platform/osx/Info.plist.in ${CMAKE_CURRENT_BINARY_DIR}/Info.plist @ONLY)
 if (WIN32)
-    add_library(PrusaSlicer SHARED PrusaSlicer.cpp PrusaSlicer.hpp)
+    add_library(LibreSlicer SHARED LibreSlicer.cpp LibreSlicer.hpp)
 else ()
-    add_executable(PrusaSlicer PrusaSlicer.cpp PrusaSlicer.hpp)
+    add_executable(LibreSlicer LibreSlicer.cpp LibreSlicer.hpp)
 endif ()
 
 if (MINGW)
-    target_link_options(PrusaSlicer PUBLIC "-Wl,-allow-multiple-definition")
-    set_target_properties(PrusaSlicer PROPERTIES PREFIX "")
+    target_link_options(LibreSlicer PUBLIC "-Wl,-allow-multiple-definition")
+    set_target_properties(LibreSlicer PROPERTIES PREFIX "")
 endif (MINGW)
 
 if (NOT WIN32 AND NOT APPLE)
     # Binary name on unix like systems (Linux, Unix)
-    set_target_properties(PrusaSlicer PROPERTIES OUTPUT_NAME "libreslicer")
+    set_target_properties(LibreSlicer PROPERTIES OUTPUT_NAME "libreslicer")
 endif ()
 
-target_link_libraries(PrusaSlicer PRIVATE libslic3r libcereal nowide)
+target_link_libraries(LibreSlicer PRIVATE libslic3r libcereal nowide)
 
 if (APPLE)
 #    add_compile_options(-stdlib=libc++)
 #    add_definitions(-DBOOST_THREAD_DONT_USE_CHRONO -DBOOST_NO_CXX11_RVALUE_REFERENCES -DBOOST_THREAD_USES_MOVE)
     # -liconv: boost links to libiconv by default
-    target_link_libraries(PrusaSlicer PRIVATE "-liconv -framework IOKit" "-framework CoreFoundation" -lc++)
+    target_link_libraries(LibreSlicer PRIVATE "-liconv -framework IOKit" "-framework CoreFoundation" -lc++)
 elseif (MSVC)
     # Manifest is provided through LibreSlicer.rc, don't generate your own.
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /MANIFEST:NO")
 else ()
     # Boost on Raspberry-Pi does not link to pthreads explicitely.
-    target_link_libraries(PrusaSlicer PRIVATE ${CMAKE_DL_LIBS} -lstdc++ Threads::Threads)
+    target_link_libraries(LibreSlicer PRIVATE ${CMAKE_DL_LIBS} -lstdc++ Threads::Threads)
 endif ()
 
 # Add the Slic3r GUI library, libcurl, OpenGL and GLU libraries.
 if (SLIC3R_GUI)
-#    target_link_libraries(PrusaSlicer ws2_32 uxtheme setupapi libslic3r_gui ${wxWidgets_LIBRARIES})
-target_link_libraries(PrusaSlicer PRIVATE libslic3r_gui)
+#    target_link_libraries(LibreSlicer ws2_32 uxtheme setupapi libslic3r_gui ${wxWidgets_LIBRARIES})
+target_link_libraries(LibreSlicer PRIVATE libslic3r_gui)
     if (MSVC)
         # Generate debug symbols even in release mode.
-        target_link_options(PrusaSlicer PUBLIC "$<$<CONFIG:RELEASE>:/DEBUG>")
-        target_link_libraries(PrusaSlicer PRIVATE user32.lib Setupapi.lib)
+        target_link_options(LibreSlicer PUBLIC "$<$<CONFIG:RELEASE>:/DEBUG>")
+        target_link_libraries(LibreSlicer PRIVATE user32.lib Setupapi.lib)
     elseif (MINGW)
-        target_link_libraries(PrusaSlicer PRIVATE ws2_32 uxtheme setupapi)
+        target_link_libraries(LibreSlicer PRIVATE ws2_32 uxtheme setupapi)
     elseif (APPLE)
-        target_link_libraries(PrusaSlicer PRIVATE "-framework OpenGL")
+        target_link_libraries(LibreSlicer PRIVATE "-framework OpenGL")
     else ()
-        target_link_libraries(PrusaSlicer PRIVATE -ldl)
+        target_link_libraries(LibreSlicer PRIVATE -ldl)
     endif ()
     if (WIN32)
         find_library(PSAPI_LIB NAMES Psapi)
         if(PSAPI_LIB)
-            target_link_libraries(PrusaSlicer PRIVATE ${PSAPI_LIB})
+            target_link_libraries(LibreSlicer PRIVATE ${PSAPI_LIB})
         else()
-            target_link_libraries(PrusaSlicer PRIVATE Psapi.lib)
+            target_link_libraries(LibreSlicer PRIVATE Psapi.lib)
         endif()
     endif ()
 endif ()
@@ -209,54 +209,54 @@ if (WIN32)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -municode")
     endif()
 
-    add_executable(PrusaSlicer_app_gui WIN32 PrusaSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer.rc)
+    add_executable(LibreSlicer_app_gui WIN32 LibreSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer.rc)
     # Generate debug symbols even in release mode.
     if(MSVC)
-        target_link_options(PrusaSlicer_app_gui PUBLIC "$<$<CONFIG:RELEASE>:/DEBUG>")
+        target_link_options(LibreSlicer_app_gui PUBLIC "$<$<CONFIG:RELEASE>:/DEBUG>")
     endif()
-    target_compile_definitions(PrusaSlicer_app_gui PRIVATE -DSLIC3R_WRAPPER_NOCONSOLE)
-    add_dependencies(PrusaSlicer_app_gui PrusaSlicer)
-    set_target_properties(PrusaSlicer_app_gui PROPERTIES OUTPUT_NAME "libreslicer")
-    target_link_libraries(PrusaSlicer_app_gui PRIVATE boost_headeronly)
+    target_compile_definitions(LibreSlicer_app_gui PRIVATE -DSLIC3R_WRAPPER_NOCONSOLE)
+    add_dependencies(LibreSlicer_app_gui LibreSlicer)
+    set_target_properties(LibreSlicer_app_gui PROPERTIES OUTPUT_NAME "libreslicer")
+    target_link_libraries(LibreSlicer_app_gui PRIVATE boost_headeronly)
 
-    add_executable(PrusaSlicer_app_console PrusaSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer.rc)
+    add_executable(LibreSlicer_app_console LibreSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer.rc)
     # Generate debug symbols even in release mode.
     if (MSVC)
-        target_link_options(PrusaSlicer_app_console PUBLIC "$<$<CONFIG:RELEASE>:/DEBUG>")
+        target_link_options(LibreSlicer_app_console PUBLIC "$<$<CONFIG:RELEASE>:/DEBUG>")
     endif ()
-    target_compile_definitions(PrusaSlicer_app_console PRIVATE -DSLIC3R_WRAPPER_CONSOLE)
-    add_dependencies(PrusaSlicer_app_console PrusaSlicer)
-    set_target_properties(PrusaSlicer_app_console PROPERTIES OUTPUT_NAME "libreslicer-console")
-    target_link_libraries(PrusaSlicer_app_console PRIVATE boost_headeronly)
+    target_compile_definitions(LibreSlicer_app_console PRIVATE -DSLIC3R_WRAPPER_CONSOLE)
+    add_dependencies(LibreSlicer_app_console LibreSlicer)
+    set_target_properties(LibreSlicer_app_console PROPERTIES OUTPUT_NAME "libreslicer-console")
+    target_link_libraries(LibreSlicer_app_console PRIVATE boost_headeronly)
 
-    add_executable(PrusaSlicer_app_gcodeviewer WIN32 PrusaSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer-gcodeviewer.rc)
+    add_executable(LibreSlicer_app_gcodeviewer WIN32 LibreSlicer_app_msvc.cpp ${CMAKE_CURRENT_BINARY_DIR}/LibreSlicer-gcodeviewer.rc)
     # Generate debug symbols even in release mode.
     if (MSVC)
-        target_link_options(PrusaSlicer_app_gcodeviewer PUBLIC "$<$<CONFIG:RELEASE>:/DEBUG>")
+        target_link_options(LibreSlicer_app_gcodeviewer PUBLIC "$<$<CONFIG:RELEASE>:/DEBUG>")
     endif ()
-    target_compile_definitions(PrusaSlicer_app_gcodeviewer PRIVATE -DSLIC3R_WRAPPER_NOCONSOLE -DSLIC3R_WRAPPER_GCODEVIEWER)
-    add_dependencies(PrusaSlicer_app_gcodeviewer PrusaSlicer)
-    set_target_properties(PrusaSlicer_app_gcodeviewer PROPERTIES OUTPUT_NAME "libreslicer-gcodeviewer")
-    target_link_libraries(PrusaSlicer_app_gcodeviewer PRIVATE boost_headeronly)
+    target_compile_definitions(LibreSlicer_app_gcodeviewer PRIVATE -DSLIC3R_WRAPPER_NOCONSOLE -DSLIC3R_WRAPPER_GCODEVIEWER)
+    add_dependencies(LibreSlicer_app_gcodeviewer LibreSlicer)
+    set_target_properties(LibreSlicer_app_gcodeviewer PROPERTIES OUTPUT_NAME "libreslicer-gcodeviewer")
+    target_link_libraries(LibreSlicer_app_gcodeviewer PRIVATE boost_headeronly)
 
     if(DEFINED ENV{LS_BRAND_ASSETS})
         set(LS_BRAND_ASSETS "$ENV{LS_BRAND_ASSETS}")
         message(STATUS "Using external brand assets: ${LS_BRAND_ASSETS}")
-        if(TARGET PrusaSlicer_app_gui)
-            add_custom_command(TARGET PrusaSlicer_app_gui POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:PrusaSlicer_app_gui>/resources/icons"
+        if(TARGET LibreSlicer_app_gui)
+            add_custom_command(TARGET LibreSlicer_app_gui POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:LibreSlicer_app_gui>/resources/icons"
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different
                     "${LS_BRAND_ASSETS}/LibreSlicer.ico"
                     "${LS_BRAND_ASSETS}/LibreSlicer_192px.png"
                     "${LS_BRAND_ASSETS}/LibreSlicer_wizard_banner.png"
-                    "$<TARGET_FILE_DIR:PrusaSlicer_app_gui>/resources/icons"
+                    "$<TARGET_FILE_DIR:LibreSlicer_app_gui>/resources/icons"
             )
         endif()
     endif()
     # Conditionally add libreslicer.rc to the GUI target if it exists
-    set(_gui_target PrusaSlicer_app_gui)
+    set(_gui_target LibreSlicer_app_gui)
     if(NOT TARGET ${_gui_target})
-        set(_gui_target PrusaSlicer)
+        set(_gui_target LibreSlicer)
     endif()
 
 
@@ -270,7 +270,7 @@ if (WIN32)
 endif() # closes the outer if (WIN32)
 
 if(COMMAND brand_assets_for_target)
-    foreach(_brand_target PrusaSlicer PrusaSlicer_app_gui PrusaSlicer_app_console PrusaSlicer_app_gcodeviewer)
+    foreach(_brand_target LibreSlicer LibreSlicer_app_gui LibreSlicer_app_console LibreSlicer_app_gcodeviewer)
         if(TARGET ${_brand_target})
             brand_assets_for_target(${_brand_target})
         endif()
@@ -283,7 +283,7 @@ if (WIN32)
         foreach (CONF ${CMAKE_CONFIGURATION_TYPES})
             file(TO_NATIVE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${CONF}" WIN_CONF_OUTPUT_DIR)
             file(TO_NATIVE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${CONF}/resources" WIN_RESOURCES_SYMLINK)
-            add_custom_command(TARGET PrusaSlicer POST_BUILD
+            add_custom_command(TARGET LibreSlicer POST_BUILD
                 COMMAND if exist "${WIN_CONF_OUTPUT_DIR}" "("
                         if not exist "${WIN_RESOURCES_SYMLINK}" "("
                             mklink /J "${WIN_RESOURCES_SYMLINK}" "${SLIC3R_RESOURCES_DIR_WIN}"
@@ -295,7 +295,7 @@ if (WIN32)
         endforeach ()
     else ()
         file(TO_NATIVE_PATH "${CMAKE_CURRENT_BINARY_DIR}/resources" WIN_RESOURCES_SYMLINK)
-        add_custom_command(TARGET PrusaSlicer POST_BUILD
+        add_custom_command(TARGET LibreSlicer POST_BUILD
             COMMAND if not exist "${WIN_RESOURCES_SYMLINK}" "(" mklink /J "${WIN_RESOURCES_SYMLINK}" "${SLIC3R_RESOURCES_DIR_WIN}" ")"
             COMMENT "Symlinking the resources directory into the build tree"
             VERBATIM
@@ -303,24 +303,24 @@ if (WIN32)
     endif ()
 
     # This has to be a separate target due to the windows command line lenght limits
-    add_custom_target(PrusaSlicerDllsCopy ALL DEPENDS PrusaSlicer)
-    prusaslicer_copy_dlls(PrusaSlicerDllsCopy)
+    add_custom_target(LibreSlicerDllsCopy ALL DEPENDS LibreSlicer)
+    prusaslicer_copy_dlls(LibreSlicerDllsCopy)
 
 else ()
     if (APPLE)
         # On OSX, the name of the binary matches the name of the Application.
-        add_custom_command(TARGET PrusaSlicer POST_BUILD
-            COMMAND ln -sf PrusaSlicer libreslicer
-            COMMAND ln -sf PrusaSlicer libreslicer-gcodeviewer
-            COMMAND ln -sf PrusaSlicer LibreSlicerGCodeViewer
-            WORKING_DIRECTORY "$<TARGET_FILE_DIR:PrusaSlicer>"
-            COMMENT "Symlinking the G-code viewer to PrusaSlicer under LibreSlicer names"
+        add_custom_command(TARGET LibreSlicer POST_BUILD
+            COMMAND ln -sf LibreSlicer libreslicer
+            COMMAND ln -sf LibreSlicer libreslicer-gcodeviewer
+            COMMAND ln -sf LibreSlicer LibreSlicerGCodeViewer
+            WORKING_DIRECTORY "$<TARGET_FILE_DIR:LibreSlicer>"
+            COMMENT "Symlinking the G-code viewer to LibreSlicer under LibreSlicer names"
             VERBATIM)
     else ()
-        add_custom_command(TARGET PrusaSlicer POST_BUILD
+        add_custom_command(TARGET LibreSlicer POST_BUILD
             COMMAND ln -sf libreslicer libreslicer-gcodeviewer
-            WORKING_DIRECTORY "$<TARGET_FILE_DIR:PrusaSlicer>"
-            COMMENT "Symlinking the G-code viewer to PrusaSlicer"
+            WORKING_DIRECTORY "$<TARGET_FILE_DIR:LibreSlicer>"
+            COMMENT "Symlinking the G-code viewer to LibreSlicer"
             VERBATIM)
     endif ()
     if (XCODE)
@@ -329,7 +329,7 @@ else ()
     else ()
         set(BIN_RESOURCES_DIR "${CMAKE_CURRENT_BINARY_DIR}/../resources")
     endif ()
-    add_custom_command(TARGET PrusaSlicer POST_BUILD
+    add_custom_command(TARGET LibreSlicer POST_BUILD
         COMMAND ln -sfn "${SLIC3R_RESOURCES_DIR}" "${BIN_RESOURCES_DIR}"
         COMMENT "Symlinking the resources directory into the build tree"
         VERBATIM)
@@ -337,13 +337,13 @@ endif ()
 
 # Slic3r binary install target
 if (WIN32)
-    install(TARGETS PrusaSlicer RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}")
+    install(TARGETS LibreSlicer RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}")
     if (MSVC)
-        install(TARGETS PrusaSlicer_app_gui RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}")
-        install(TARGETS PrusaSlicer_app_console RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}")
+        install(TARGETS LibreSlicer_app_gui RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}")
+        install(TARGETS LibreSlicer_app_console RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}")
     endif ()
 else ()
-    install(TARGETS PrusaSlicer RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
+    install(TARGETS LibreSlicer RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
 
     # Install the symlink for gcodeviewer
     install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink libreslicer libreslicer-gcodeviewer WORKING_DIRECTORY \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})")

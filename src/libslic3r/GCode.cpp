@@ -19,7 +19,7 @@
 ///|/ Copyright (c) 2012 Mark Hindess
 ///|/ Copyright (c) 2012 Henrik Brix Andersen @henrikbrixandersen
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "Config.hpp"
 #include "Geometry/Circle.hpp"
@@ -360,7 +360,7 @@ GCodeGenerator::ObjectsLayerToPrint GCodeGenerator::collect_layers_to_print(cons
                 + layer_to_print.layer()->height
                 + std::max(0., extra_gap);
             // Negative support_contact_z is not taken into account, it can result in false positives in cases
-            // where previous layer has object extrusions too (https://github.com/prusa3d/PrusaSlicer/issues/2752)
+            // where previous layer has object extrusions too (https://github.com/prusa3d/LibreSlicer/issues/2752)
 
             if (has_extrusions && layer_to_print.print_z() > maximal_print_z + 2. * EPSILON)
                 warning_ranges.emplace_back(std::make_pair((last_extrusion_layer ? last_extrusion_layer->print_z() : 0.), layers_to_print.back().print_z()));
@@ -676,7 +676,7 @@ namespace DoExport {
                     {
                         // Minimal volumetric flow should not be calculated over ironing extrusions.
                         // Use following lambda instead of the built-it method.
-                        // https://github.com/prusa3d/PrusaSlicer/issues/5082
+                        // https://github.com/prusa3d/LibreSlicer/issues/5082
                         auto min_mm3_per_mm_no_ironing = [](const ExtrusionEntityCollection& eec) -> double {
                             double min = std::numeric_limits<double>::max();
                             for (const ExtrusionEntity* ee : eec.entities)
@@ -1331,7 +1331,7 @@ void GCodeGenerator::_do_export(Print& print, GCodeOutputStream &file, Thumbnail
                     }
                 } else {
                     // This is not Marlin, M1 command is probably not supported.
-                    // (See https://github.com/prusa3d/PrusaSlicer/issues/5441.)
+                    // (See https://github.com/prusa3d/LibreSlicer/issues/5441.)
                     if (overlap) {
                         print.active_step_add_warning(PrintStateBase::WarningLevel::CRITICAL,
                             _u8L("Your print is very close to the priming regions. "
@@ -1385,7 +1385,7 @@ void GCodeGenerator::_do_export(Print& print, GCodeOutputStream &file, Thumbnail
     file.write(m_writer.postamble());
 
     // From now to the end of G-code, the G-code find / replace post-processor will be disabled.
-    // Thus the PrusaSlicer generated config will NOT be processed by the G-code post-processor, see GH issue #7952.
+    // Thus the LibreSlicer generated config will NOT be processed by the G-code post-processor, see GH issue #7952.
     file.find_replace_supress();
 
     // adds tags for time estimators
@@ -1431,7 +1431,7 @@ void GCodeGenerator::_do_export(Print& print, GCodeOutputStream &file, Thumbnail
 
         // if exporting gcode in ascii format, config export is done here
         // Append full config, delimited by two 'phony' configuration keys prusaslicer_config = begin and prusaslicer_config = end.
-        // The delimiters are structured as configuration key / value pairs to be parsable by older versions of PrusaSlicer G-code viewer.
+        // The delimiters are structured as configuration key / value pairs to be parsable by older versions of LibreSlicer G-code viewer.
         {
             file.write("\n; prusaslicer_config = begin\n");
             std::string full_config;
@@ -2082,14 +2082,14 @@ namespace Skirt {
             assert(valid);
             // This print_z has not been extruded yet (sequential print)
             // FIXME: The skirt_done should not be empty at this point. The check is a workaround
-            // of https://github.com/prusa3d/PrusaSlicer/issues/5652, but it deserves a real fix.
+            // of https://github.com/prusa3d/LibreSlicer/issues/5652, but it deserves a real fix.
             if (valid) {
 #if 0
                 // Prime just the first printing extruder. This is original Slic3r's implementation.
                 skirt_loops_per_extruder_out[layer_tools.extruders.front()] = std::pair<size_t, size_t>(0, print.config().skirts.value);
 #else
                 // Prime all extruders planned for this layer, see
-                // https://github.com/prusa3d/PrusaSlicer/issues/469#issuecomment-322450619
+                // https://github.com/prusa3d/LibreSlicer/issues/469#issuecomment-322450619
                 skirt_loops_per_extruder_all_printing(print, layer_tools, skirt_loops_per_extruder_out);
 #endif
                 assert(!skirt_done.empty());

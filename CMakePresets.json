@@ -17,12 +17,29 @@
         "ENABLE_SLA": "ON",
         "USE_OPENVDB": "ON"
       }
+    },
+    {
+      "name": "supporter-updater",
+      "displayName": "Supporter Updater Overlay",
+      "inherits": "windows-msvc-rel",
+      "cacheVariables": {
+        "LIBRESLICER_ENABLE_UPDATER": "ON",
+        "LIBRESLICER_ENABLE_UPDATE_CHECKER": "ON",
+        "LIBRESLICER_VENDOR_HOST": "updates.libreslicer.dev",
+        "LIBRESLICER_VERSION_CHECK_URL": "https://updates.libreslicer.dev/releases/version.manifest",
+        "LIBRESLICER_INDEX_ARCHIVE_URL": "https://updates.libreslicer.dev/vendor/vendor_indices.zip",
+        "LIBRESLICER_PROFILE_FOLDER_URL": "https://updates.libreslicer.dev/vendor/profiles"
+      }
     }
   ],
   "buildPresets": [
     {
       "name": "rel",
       "configurePreset": "windows-msvc-rel"
+    },
+    {
+      "name": "supporter-updater-rel",
+      "configurePreset": "supporter-updater"
     }
   ]
 }

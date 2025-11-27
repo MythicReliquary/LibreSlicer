@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2018 - 2023 Oleksandra Iushchenko @YuSanka, Lukáš Matěna @lukasmatena, Vojtěch Bubník @bubnikv, Enrico Turri @enricoturri1966, David Kocík @kocikdav, Lukáš Hejl @hejllukas, Vojtěch Král @vojtechkral
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "MsgDialog.hpp"
 
@@ -112,7 +112,7 @@ void MsgDialog::apply_style(long style)
 
     std::string icon_name = style & wxICON_WARNING        ? "exclamation" :
                             style & wxICON_INFORMATION    ? "info"        :
-                            style & wxICON_QUESTION       ? "question"    : "PrusaSlicer";
+                            style & wxICON_QUESTION       ? "question"    : "LibreSlicer";
     logo->SetBitmap(*get_bmp_bundle(icon_name, 64));
 }
 

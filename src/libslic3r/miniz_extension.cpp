@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2019 - 2023 Oleksandra Iushchenko @YuSanka, Tomáš Mészáros @tamasmeszaros, Enrico Turri @enricoturri1966
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include <exception>
 
@@ -41,7 +41,7 @@ bool open_zip(mz_zip_archive *zip, const char *fname, bool isread)
         if (!res)
             // if we get here it means we tried to open a non-zip file
             // we need to close the file here because the call to mz_zip_get_cfile() made into close_zip() returns a null pointer
-            // see: https://github.com/prusa3d/PrusaSlicer/issues/3536
+            // see: https://github.com/prusa3d/LibreSlicer/issues/3536
             fclose(f);
     }
     else

@@ -1,7 +1,7 @@
 ///|/ Copyright (c) Prusa Research 2022 - 2023 Oleksandra Iushchenko @YuSanka, David Kocík @kocikdav, Vojtěch Bubník @bubnikv, Enrico Turri @enricoturri1966, Lukáš Matěna @lukasmatena
 ///|/ Copyright (c) 2022 KARBOWSKI Piotr
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "AppUpdater.hpp"
 
@@ -72,7 +72,7 @@ namespace {
             const char* argv1[] = { "hdiutil", "attach", path.string().c_str(), nullptr };
             ::wxExecute(const_cast<char**>(argv1), wxEXEC_ASYNC, nullptr);
             // open inside attached as a folder in finder
-            const char* argv2[] = { "open", "/Volumes/PrusaSlicer", nullptr };
+            const char* argv2[] = { "open", "/Volumes/LibreSlicer", nullptr };
 			::wxExecute(const_cast<char**>(argv2), wxEXEC_ASYNC, nullptr);
 			return true;
 		}
@@ -466,7 +466,7 @@ void AppUpdater::priv::parse_version_string(const std::string& body)
 	GUI::wxGetApp().QueueEvent(evt);
 }
 
-#if 0 //lm:is this meant to be ressurected? //dk: it is code that parses PrusaSlicer.version2 in 2.4.0, It was deleted from PresetUpdater.cpp and I would keep it here for possible reference.
+#if 0 //lm:is this meant to be ressurected? //dk: it is code that parses LibreSlicer.version2 in 2.4.0, It was deleted from PresetUpdater.cpp and I would keep it here for possible reference.
 void AppUpdater::priv::parse_version_string_old(const std::string& body) const
 {
 

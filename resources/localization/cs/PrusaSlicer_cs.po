@@ -968,8 +968,8 @@ msgid "Allow downloads from Printables.com"
 msgstr "Povolit stahování z Printables.com"
 
 #: src/slic3r/GUI/Preferences.cpp:371 src/slic3r/GUI/Preferences.cpp:375
-msgid "Allow just a single PrusaSlicer instance"
-msgstr "Povolit pouze jednu instanci PrusaSliceru"
+msgid "Allow just a single LibreSlicer instance"
+msgstr "Povolit pouze jednu instanci LibreSliceru"
 
 #: src/slic3r/GUI/ExtruderSequenceDialog.cpp:177
 msgid "Allow next color repetition"
@@ -1039,11 +1039,11 @@ msgstr "Alt + kolečko myši"
 #: src/slic3r/GUI/Preferences.cpp:393
 msgid ""
 "Always ask for unsaved changes in presets, when: \n"
-"- Closing PrusaSlicer while some presets are modified,\n"
+"- Closing LibreSlicer while some presets are modified,\n"
 "- Loading a new project while some presets are modified"
 msgstr ""
 "Vždy se dotázat na neuložené změny přednastavení během: \n"
-"- zavírání PrusaSliceru, pokud došlo k úpravě některých přednastavení,\n"
+"- zavírání LibreSliceru, pokud došlo k úpravě některých přednastavení,\n"
 "- načítání nového projektu,  pokud došlo k úpravě některých přednastavení."
 
 #: src/slic3r/GUI/Preferences.cpp:405
@@ -1062,11 +1062,11 @@ msgstr ""
 #: src/slic3r/GUI/Preferences.cpp:384
 msgid ""
 "Always ask for unsaved changes in project, when: \n"
-"- Closing PrusaSlicer,\n"
+"- Closing LibreSlicer,\n"
 "- Loading or creating a new project"
 msgstr ""
 "Vždy se dotázat na neuložené změny přednastavení během: \n"
-"- zavírání PrusaSliceru,\n"
+"- zavírání LibreSliceru,\n"
 "- načítání nebo vytváření nového projektu."
 
 #: src/slic3r/GUI/Gizmos/GLGizmoSimplify.cpp:311
@@ -1425,10 +1425,10 @@ msgstr ""
 
 #: src/slic3r/GUI/OpenGLManager.cpp:394
 msgid ""
-"As a workaround, you may run PrusaSlicer with a software rendered 3D "
+"As a workaround, you may run LibreSlicer with a software rendered 3D "
 "graphics by running prusa-slicer.exe with the --sw-renderer parameter."
 msgstr ""
-"PrusaSlicer můžete spustit se softwarovým vykreslováním 3D grafiky pomocí "
+"LibreSlicer můžete spustit se softwarovým vykreslováním 3D grafiky pomocí "
 "spuštění programu prusa-slicer.exe s parametrem --sw-renderer."
 
 #: src/slic3r/GUI/Preferences.cpp:404
@@ -1475,20 +1475,20 @@ msgid "Assembling model from parts"
 msgstr "Sestavení modelu z dílů"
 
 #: src/slic3r/GUI/ConfigWizard.cpp:1655 src/slic3r/GUI/Preferences.cpp:326
-msgid "Associate .3mf files to PrusaSlicer"
-msgstr "Otevírat .3mf soubory v PrusaSliceru"
+msgid "Associate .3mf files to LibreSlicer"
+msgstr "Otevírat .3mf soubory v LibreSliceru"
 
 #: src/slic3r/GUI/Preferences.cpp:415
-msgid "Associate .bgcode files to PrusaSlicer G-code Viewer"
-msgstr "Přidružení souborů .bgcode k PrusaSlicer G-code Vieweru"
+msgid "Associate .bgcode files to LibreSlicer G-code Viewer"
+msgstr "Přidružení souborů .bgcode k LibreSlicer G-code Vieweru"
 
 #: src/slic3r/GUI/Preferences.cpp:411
-msgid "Associate .gcode files to PrusaSlicer G-code Viewer"
-msgstr "Otevírat .gcode soubory v prohlížeči PrusaSlicer G-code Vieweru"
+msgid "Associate .gcode files to LibreSlicer G-code Viewer"
+msgstr "Otevírat .gcode soubory v prohlížeči LibreSlicer G-code Vieweru"
 
 #: src/slic3r/GUI/ConfigWizard.cpp:1656 src/slic3r/GUI/Preferences.cpp:331
-msgid "Associate .stl files to PrusaSlicer"
-msgstr "Otevírat .stl soubory v PrusaSliceru"
+msgid "Associate .stl files to LibreSlicer"
+msgstr "Otevírat .stl soubory v LibreSliceru"
 
 #: src/slic3r/GUI/GLCanvas3D.cpp:7446
 msgid "A toolpath outside the print area was detected."
@@ -1737,8 +1737,8 @@ msgid "Between objects G-code (for sequential printing)"
 msgstr "G-code mezi objekty (pro sekvenční tisk)"
 
 #: src/slic3r/GUI/SysInfoDialog.cpp:166
-msgid "Blacklisted libraries loaded into PrusaSlicer process:"
-msgstr "Blacklistované knihovny byly načteny do procesu PrusaSlicer:"
+msgid "Blacklisted libraries loaded into LibreSlicer process:"
+msgstr "Blacklistované knihovny byly načteny do procesu LibreSlicer:"
 
 #: src/slic3r/GUI/Gizmos/GLGizmoSeam.cpp:42
 #: src/slic3r/GUI/Gizmos/GLGizmoSeam.cpp:256
@@ -1977,11 +1977,11 @@ msgstr "Poměr vyboulení v závislosti na poloměru"
 
 #: src/slic3r/GUI/GUI_App.cpp:1873
 msgid ""
-"But since this version of PrusaSlicer we don't show this information in "
+"But since this version of LibreSlicer we don't show this information in "
 "Printer Settings anymore.\n"
 "Settings will be available in physical printers settings."
 msgstr ""
-"Ale od této verze PrusaSliceru již nebudeme tyto informace zobrazovat v "
+"Ale od této verze LibreSliceru již nebudeme tyto informace zobrazovat v "
 "Nastavení tiskárny.\n"
 "Nastavení bude k dispozici v nastavení fyzických tiskáren."
 
@@ -2582,12 +2582,12 @@ msgid "Closing distance"
 msgstr "Vzdálenost uzavření"
 
 #: src/slic3r/GUI/MainFrame.cpp:238
-msgid "Closing PrusaSlicer. Current project is modified."
-msgstr "Zavírání PrusaSliceru. Aktuální projekt je upravený."
+msgid "Closing LibreSlicer. Current project is modified."
+msgstr "Zavírání LibreSliceru. Aktuální projekt je upravený."
 
 #: src/slic3r/GUI/MainFrame.cpp:245
-msgid "Closing PrusaSlicer while some presets are modified."
-msgstr "Zavírání PrusaSliceru. Některá přednastavení jsou změněná."
+msgid "Closing LibreSlicer while some presets are modified."
+msgstr "Zavírání LibreSliceru. Některá přednastavení jsou změněná."
 
 #: src/libslic3r/PrintConfig.cpp:2894
 msgid "Closing radius"
@@ -2871,7 +2871,7 @@ msgstr ""
 msgid ""
 "Connect an infill line to an internal perimeter with a short segment of an "
 "additional perimeter. If expressed as percentage (example: 15%) it is "
-"calculated over infill extrusion width. PrusaSlicer tries to connect two "
+"calculated over infill extrusion width. LibreSlicer tries to connect two "
 "close infill lines to a short perimeter segment. If no such perimeter "
 "segment shorter than infill_anchor_max is found, the infill line is "
 "connected to a perimeter segment at just one side and the length of the "
@@ -2881,7 +2881,7 @@ msgid ""
 msgstr ""
 "Připojení výplně k vnitřnímu perimetru krátkým segmentem dalšího perimetru. "
 "Pokud je vyjádřeno v procentech (příklad: 15%), vypočítává se z šířky "
-"extruze infilu. PrusaSlicer se pokouší spojit dvě blízké výplňová čáry "
+"extruze infilu. LibreSlicer se pokouší spojit dvě blízké výplňová čáry "
 "krátkým obvodovým perimetrem. Pokud není nalezen žádný takový obvodový "
 "perimetr kratší než infill_anchor_max, je výplňová čára spojena s obvodovým "
 "perimetrem pouze na jedné straně a délka odebraného obvodového perimetru je "
@@ -2893,7 +2893,7 @@ msgstr ""
 msgid ""
 "Connect an infill line to an internal perimeter with a short segment of an "
 "additional perimeter. If expressed as percentage (example: 15%) it is "
-"calculated over infill extrusion width. PrusaSlicer tries to connect two "
+"calculated over infill extrusion width. LibreSlicer tries to connect two "
 "close infill lines to a short perimeter segment. If no such perimeter "
 "segment shorter than this parameter is found, the infill line is connected "
 "to a perimeter segment at just one side and the length of the perimeter "
@@ -2902,7 +2902,7 @@ msgid ""
 msgstr ""
 "Připojení výplně k vnitřnímu perimetru krátkým segmentem dalšího perimetru. "
 "Pokud je vyjádřeno v procentech (příklad: 15%), vypočítává se z šířky "
-"extruze infilu. PrusaSlicer se pokouší spojit dvě blízké výplňová čáry "
+"extruze infilu. LibreSlicer se pokouší spojit dvě blízké výplňová čáry "
 "krátkým obvodovým perimetrem. Pokud není nalezen žádný takový obvodový "
 "perimetr kratší než tento parametr, je výplňová čára spojena s obvodovým "
 "perimetrem pouze na jedné straně a délka odebraného obvodového perimetru je "
@@ -3247,10 +3247,10 @@ msgstr "Nelze se připojit k Repetieru"
 
 #: src/slic3r/Utils/Http.cpp:79
 msgid ""
-"Could not detect system SSL certificate store. PrusaSlicer will be unable to "
+"Could not detect system SSL certificate store. LibreSlicer will be unable to "
 "establish secure network connections."
 msgstr ""
-"Úložiště systémových certifikátů SSL se nepodařilo zjistit. PrusaSlicer "
+"Úložiště systémových certifikátů SSL se nepodařilo zjistit. LibreSlicer "
 "nebude schopen navázat zabezpečené síťové připojení."
 
 #: src/slic3r/GUI/PhysicalPrinterDialog.cpp:322
@@ -3358,10 +3358,10 @@ msgstr "Kubický"
 
 #: src/slic3r/Utils/Http.cpp:97
 msgid ""
-"CURL init has failed. PrusaSlicer will be unable to establish network "
+"CURL init has failed. LibreSlicer will be unable to establish network "
 "connections. See logs for additional details."
 msgstr ""
-"CURL init selhal. PrusaSlicer nebude schopen navázat síťová připojení. Další "
+"CURL init selhal. LibreSlicer nebude schopen navázat síťová připojení. Další "
 "podrobnosti najdete v logu."
 
 #. TRN Means "current color"
@@ -4967,7 +4967,7 @@ msgstr ""
 "Zadejte hmotnost prázdné cívky. Díky tomu budete moci určit, zda máte na "
 "cívce dostatečné množství filamentu pro dokončení tisku. Zvážíte cívku s "
 "částečně spotřebovaným filamentem a hodnotu porovnáte s vypočtenou hmotností "
-"vypočítanou PrusaSlicerem."
+"vypočítanou LibreSlicerem."
 
 #: src/libslic3r/PrintConfig.cpp:1232
 msgid ""
@@ -6306,11 +6306,11 @@ msgstr "Fullscreen"
 #: resources/data/hints.ini: [hint:Fullscreen mode]
 msgid ""
 "Fullscreen mode\n"
-"Did you know that you can switch PrusaSlicer to fullscreen mode? Use the "
+"Did you know that you can switch LibreSlicer to fullscreen mode? Use the "
 "<b>F11</b> hotkey."
 msgstr ""
 "Režim celé obrazovky\n"
-"Věděli jste, že PrusaSlicer můžete přepnout do režimu celé obrazovky? "
+"Věděli jste, že LibreSlicer můžete přepnout do režimu celé obrazovky? "
 "Použijte klávesovou zkratku <b>F11</b>."
 
 #: src/libslic3r/PrintConfig.cpp:1413 src/libslic3r/PrintConfig.cpp:1414
@@ -7116,29 +7116,29 @@ msgstr ""
 
 #: src/libslic3r/PrintConfig.cpp:2366
 msgid ""
-"If enabled, PrusaSlicer detects obstacles along the travel path and makes "
+"If enabled, LibreSlicer detects obstacles along the travel path and makes "
 "the slope steeper in case an obstacle might be hit during the initial phase "
 "of the travel."
 msgstr ""
-"Pokud je tato funkce povolena, PrusaSlicer detekuje překážky po dráze "
+"Pokud je tato funkce povolena, LibreSlicer detekuje překážky po dráze "
 "přejezdu a nastaví strmější sklon pro případ, že by v počáteční fázi pohybu "
 "mohlo dojít k nárazu do překážky."
 
 #: src/slic3r/GUI/Preferences.cpp:646
-msgid "If enabled, PrusaSlicer will be allowed to download from Printables.com"
+msgid "If enabled, LibreSlicer will be allowed to download from Printables.com"
 msgstr ""
-"Pokud je tato možnost povolena, PrusaSlicer bude moci stahovat soubory z "
+"Pokud je tato možnost povolena, LibreSlicer bude moci stahovat soubory z "
 "webu Printables.com."
 
 #: src/slic3r/GUI/Preferences.cpp:439
-msgid "If enabled, PrusaSlicer will be open at the position it was closed"
+msgid "If enabled, LibreSlicer will be open at the position it was closed"
 msgstr ""
-"Pokud je povoleno, PrusaSlicer se otevře na pozici, na které byl zavřen."
+"Pokud je povoleno, LibreSlicer se otevře na pozici, na které byl zavřen."
 
 #: src/slic3r/GUI/Preferences.cpp:639
-msgid "If enabled, PrusaSlicer will not open a hyperlinks in your browser."
+msgid "If enabled, LibreSlicer will not open a hyperlinks in your browser."
 msgstr ""
-"Pokud je tato funkce povolena, PrusaSlicer nebude otevírat hypertextové "
+"Pokud je tato funkce povolena, LibreSlicer nebude otevírat hypertextové "
 "odkazy v prohlížeči."
 
 #: src/slic3r/GUI/ExtruderSequenceDialog.cpp:171
@@ -7189,31 +7189,31 @@ msgstr ""
 "k dispozici nové přednastavení, zobrazí se upozornění při startu programu."
 
 #: src/slic3r/GUI/Preferences.cpp:327
-msgid "If enabled, sets PrusaSlicer as default application to open .3mf files."
+msgid "If enabled, sets LibreSlicer as default application to open .3mf files."
 msgstr ""
-"Pokud je zašktnuto, PrusaSlicer bude výchozí aplikaci pro otevírání "
+"Pokud je zašktnuto, LibreSlicer bude výchozí aplikaci pro otevírání "
 "souborů .3mf."
 
 #: src/slic3r/GUI/Preferences.cpp:332
-msgid "If enabled, sets PrusaSlicer as default application to open .stl files."
+msgid "If enabled, sets LibreSlicer as default application to open .stl files."
 msgstr ""
-"Pokud je zašktnuto, PrusaSlicer bude výchozí aplikaci pro otevírání souborů ."
+"Pokud je zašktnuto, LibreSlicer bude výchozí aplikaci pro otevírání souborů ."
 "stl."
 
 #: src/slic3r/GUI/Preferences.cpp:416
 msgid ""
-"If enabled, sets PrusaSlicer G-code Viewer as default application to open ."
+"If enabled, sets LibreSlicer G-code Viewer as default application to open ."
 "bgcode files."
 msgstr ""
-"Pokud je povoleno, PrusaSlicer nastaví G-code Viewer jako výchozí aplikaci "
+"Pokud je povoleno, LibreSlicer nastaví G-code Viewer jako výchozí aplikaci "
 "pro otevírání souborů .bgcode."
 
 #: src/slic3r/GUI/Preferences.cpp:412
 msgid ""
-"If enabled, sets PrusaSlicer G-code Viewer as default application to open ."
+"If enabled, sets LibreSlicer G-code Viewer as default application to open ."
 "gcode files."
 msgstr ""
-"Pokud je zašktnuto, PrusaSlicer bude výchozí aplikaci pro otevírání souborů ."
+"Pokud je zašktnuto, LibreSlicer bude výchozí aplikaci pro otevírání souborů ."
 "gcode."
 
 #: src/slic3r/GUI/Preferences.cpp:568
@@ -7267,12 +7267,12 @@ msgstr ""
 #: src/libslic3r/PrintConfig.cpp:5061
 msgid ""
 "If enabled, the command line arguments are sent to an existing instance of "
-"GUI PrusaSlicer, or an existing PrusaSlicer window is activated. Overrides "
+"GUI LibreSlicer, or an existing LibreSlicer window is activated. Overrides "
 "the \"single_instance\" configuration value from application preferences."
 msgstr ""
 "Pokud je povoleno, argumenty příkazového řádku se odešlou do existující "
-"instance grafického uživatelského rozhraní PrusaSlicer,u nebo se aktivuje "
-"existující okno PrusaSlicer. Přepíše hodnotu konfigurace „single_instance“ z "
+"instance grafického uživatelského rozhraní LibreSlicer,u nebo se aktivuje "
+"existující okno LibreSlicer. Přepíše hodnotu konfigurace „single_instance“ z "
 "nastavení aplikace."
 
 #: src/slic3r/GUI/Preferences.cpp:451
@@ -7346,7 +7346,7 @@ msgid "If enabled, you can change size of toolbar icons manually."
 msgstr ""
 "Pokud je zaškrtnuto,  můžete nastavit velikost ikon na panelu nástrojů."
 
-#. TRN ConfigWizard : Downloader : %1% = "printables.com", %2% = "PrusaSlicer"
+#. TRN ConfigWizard : Downloader : %1% = "printables.com", %2% = "LibreSlicer"
 #: src/slic3r/GUI/ConfigWizard.cpp:1502
 #, boost-format
 msgid ""
@@ -7481,12 +7481,12 @@ msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:376
 msgid ""
-"If this is enabled, when starting PrusaSlicer and another instance of the "
-"same PrusaSlicer is already running, that instance will be reactivated "
+"If this is enabled, when starting LibreSlicer and another instance of the "
+"same LibreSlicer is already running, that instance will be reactivated "
 "instead."
 msgstr ""
-"Pokud je tato možnost povolena,  tak v případě již běžícího PrusaSliceru "
-"bude při pokusu spuštění dalšího PrusaSliceru aktivována právě tato instance."
+"Pokud je tato možnost povolena,  tak v případě již běžícího LibreSliceru "
+"bude při pokusu spuštění dalšího LibreSliceru aktivována právě tato instance."
 
 #: src/slic3r/GUI/SendSystemInfoDialog.cpp:595
 msgid ""
@@ -9103,8 +9103,8 @@ msgid "Max print speed"
 msgstr "Maximální rychlost tisku"
 
 #: src/slic3r/GUI/ConfigSnapshotDialog.cpp:82
-msgid "max PrusaSlicer version"
-msgstr "max PrusaSlicer verze"
+msgid "max LibreSlicer version"
+msgstr "max LibreSlicer verze"
 
 #: src/libslic3r/PrintConfig.cpp:1982
 msgid "Max volumetric slope negative"
@@ -9354,8 +9354,8 @@ msgid "Min print speed"
 msgstr "Minimální rychlost tisku"
 
 #: src/slic3r/GUI/ConfigSnapshotDialog.cpp:80
-msgid "min PrusaSlicer version"
-msgstr "min PrusaSlicer verze"
+msgid "min LibreSlicer version"
+msgstr "min LibreSlicer verze"
 
 #: src/libslic3r/PrintConfig.cpp:5320
 msgid "Minute"
@@ -9654,11 +9654,11 @@ msgstr "Více informací na"
 
 #: src/slic3r/GUI/GUI.cpp:325
 msgid ""
-"Most likely the configuration was produced by a newer version of PrusaSlicer "
-"or by some PrusaSlicer fork."
+"Most likely the configuration was produced by a newer version of LibreSlicer "
+"or by some LibreSlicer fork."
 msgstr ""
-"Konfiguraci pravděpodobně vytvořila novější verze programu PrusaSlicer nebo "
-"nějaký fork PrusaSliceru."
+"Konfiguraci pravděpodobně vytvořila novější verze programu LibreSlicer nebo "
+"nějaký fork LibreSliceru."
 
 #: src/slic3r/GUI/Gizmos/GLGizmoSlaSupports.cpp:1281
 msgid "Mouse wheel"
@@ -9893,12 +9893,12 @@ msgid ""
 "Negative volume\n"
 "Did you know that you can subtract one mesh from another using the Negative "
 "volume modifier? That way you can, for example, create easily resizable "
-"holes directly in PrusaSlicer. Read more in the documentation. (Requires "
+"holes directly in LibreSlicer. Read more in the documentation. (Requires "
 "Advanced or Expert mode.)"
 msgstr ""
 "Negativní objem\n"
 "Věděli jste, že pomocí modifikátoru Negativní objem můžete odečíst jeden "
-"objekt od druhého? Tímto způsobem můžete například přímo v PrusaSliceru "
+"objekt od druhého? Tímto způsobem můžete například přímo v LibreSliceru "
 "vytvářet snadno upravitelné otvory. Více informací se dozvíte v dokumentaci. "
 "(Vyžaduje režim Pokročilý nebo Expert.)"
 
@@ -10104,7 +10104,7 @@ msgid ""
 "right of the Printer profiles combo box, by selecting the \"Add physical "
 "printer\" item in the Printer combo box. The Physical Printer profile editor "
 "opens also when clicking on the \"cog\" icon in the Printer settings tab. "
-"The Physical Printer profiles are being stored into PrusaSlicer/"
+"The Physical Printer profiles are being stored into LibreSlicer/"
 "physical_printer directory."
 msgstr ""
 "Poznámka: Všechna nastavení z této sekce jsou přesunuta do nastavení Fyzické "
@@ -10114,7 +10114,7 @@ msgstr ""
 "kolečka“ vpravo od pole se seznamem profilů tiskáren a výběrem položky "
 "„Přidat fyzickou tiskárnu“. Editor fyzické tiskárny se otevře po kliknutí na "
 "ikonu „ozubeného kolečka“ na kartě Nastavení tiskárny. Profily fyzických "
-"tiskáren se ukládají do adresáře PrusaSlicer/physical_printer directory."
+"tiskáren se ukládají do adresáře LibreSlicer/physical_printer directory."
 
 #: src/slic3r/Utils/AstroBox.cpp:99
 msgid "Note: AstroBox version at least 1.1.0 is required."
@@ -10664,8 +10664,8 @@ msgstr "Otevřít G-code"
 
 #: src/slic3r/GUI/MainFrame.cpp:88 src/slic3r/GUI/MainFrame.cpp:102
 #: src/slic3r/GUI/MainFrame.cpp:1531
-msgid "Open a new PrusaSlicer instance"
-msgstr "Otevře novou instanci PrusaSliceru"
+msgid "Open a new LibreSlicer instance"
+msgstr "Otevře novou instanci LibreSliceru"
 
 #: src/slic3r/GUI/MainFrame.cpp:1270
 msgid "Open a project file"
@@ -10757,12 +10757,12 @@ msgid "Open project AMF/3MF with config, clear plater"
 msgstr "Otevřít projekt AMF/3MF s konfigurací, odstranit modely na podložce"
 
 #: src/slic3r/GUI/MainFrame.cpp:1656
-msgid "Open &PrusaSlicer"
-msgstr "Otevřít &PrusaSlicer"
+msgid "Open &LibreSlicer"
+msgstr "Otevřít &LibreSlicer"
 
 #: src/slic3r/GUI/MainFrame.cpp:102 src/slic3r/GUI/MainFrame.cpp:1656
-msgid "Open PrusaSlicer"
-msgstr "Otevřít PrusaSlicer"
+msgid "Open LibreSlicer"
+msgstr "Otevřít LibreSlicer"
 
 #: src/slic3r/GUI/MainFrame.cpp:1222
 msgid ""
@@ -11354,10 +11354,10 @@ msgstr ""
 #: src/slic3r/GUI/DesktopIntegrationDialog.cpp:428
 msgid ""
 "Performing desktop integration failed - could not create Gcodeviewer desktop "
-"file. PrusaSlicer desktop file was probably created successfully."
+"file. LibreSlicer desktop file was probably created successfully."
 msgstr ""
 "Integrace do systému se nezdařila - na ploše se nepodařilo vytvořit odkaz na "
-"Gcodeviewer.  Odkaz na PrusaSlicer byl pravděpodobně na ploše úspěšně "
+"Gcodeviewer.  Odkaz na LibreSlicer byl pravděpodobně na ploše úspěšně "
 "vytvořen."
 
 #: src/slic3r/GUI/DesktopIntegrationDialog.cpp:248
@@ -11599,10 +11599,10 @@ msgstr ""
 
 #: src/slic3r/GUI/BackgroundSlicingProcess.cpp:92
 msgid ""
-"Please save your project and restart PrusaSlicer. We would be glad if you "
+"Please save your project and restart LibreSlicer. We would be glad if you "
 "reported the issue."
 msgstr ""
-"Uložte projekt a restartujte PrusaSlicer. Budeme rádi, když nám problém "
+"Uložte projekt a restartujte LibreSlicer. Budeme rádi, když nám problém "
 "nahlásíte."
 
 #: src/slic3r/GUI/Plater.cpp:3812
@@ -11656,10 +11656,10 @@ msgstr "Pozice začátku perimetrů."
 msgid ""
 "Position of the extruder at the beginning of the custom G-code block. If the "
 "custom G-code travels somewhere else, it should write to this variable so "
-"PrusaSlicer knows where it travels from when it gets control back."
+"LibreSlicer knows where it travels from when it gets control back."
 msgstr ""
 "Poloha extruderu na začátku vlastního bloku G-code. Pokud vlastní G-code "
-"vytváří pohyb, měl by pohyb zapsat do této proměnné, aby PrusaSlicer věděl, "
+"vytváří pohyb, měl by pohyb zapsat do této proměnné, aby LibreSlicer věděl, "
 "odkud se pohybuje, až získá zpět kontrolu."
 
 #: src/libslic3r/PrintConfig.cpp:3281
@@ -11890,12 +11890,12 @@ msgstr "Tisknout objekt"
 msgid ""
 "Printables.com integration\n"
 "Did you know that when you are browsing Printables.com, you can send 3D "
-"model files to PrusaSlicer with a single click? Learn more in the "
+"model files to LibreSlicer with a single click? Learn more in the "
 "documentation."
 msgstr ""
 "Integrace s Printables.com\n"
 "Věděli jste, že při procházení modelů na Printables.com můžete jediným "
-"kliknutím odeslat soubory 3D modelů do aplikace PrusaSlicer? Více se dozvíte "
+"kliknutím odeslat soubory 3D modelů do aplikace LibreSlicer? Více se dozvíte "
 "v dokumentaci."
 
 #: resources/data/hints.ini: [hint:Printable toggle]
@@ -12169,7 +12169,7 @@ msgstr "Prusa tiskárny technologie MSLA"
 #: src/slic3r/GUI/GUI_App.cpp:1425
 #, boost-format
 msgid ""
-"PrusaSlicer crashed last time when attempting to set window position.\n"
+"LibreSlicer crashed last time when attempting to set window position.\n"
 "We are sorry for the inconvenience, it unfortunately happens with certain "
 "multiple-monitor setups.\n"
 "More precise reason for the crash: \"%1%\".\n"
@@ -12178,7 +12178,7 @@ msgid ""
 "To avoid this problem, consider disabling \"%4%\" in \"Preferences\". "
 "Otherwise, the application will most likely crash again next time."
 msgstr ""
-"PrusaSlicer byl neočekávaně ukončen při pokusu o nastavení pozice okna.\n"
+"LibreSlicer byl neočekávaně ukončen při pokusu o nastavení pozice okna.\n"
 "Omlouváme se za nepříjemnosti, bohužel se to stává při určitých nastaveních "
 "s více monitory.\n"
 "Upřesnění důvodu pádu aplikace: \"%1%\".\n"
@@ -12190,37 +12190,37 @@ msgstr ""
 
 #: src/slic3r/Utils/Http.cpp:84
 #, boost-format
-msgid "PrusaSlicer detected system SSL certificate store in: %1%"
-msgstr "PrusaSlicer detekoval úložiště SSL certifikátu v: %1%"
+msgid "LibreSlicer detected system SSL certificate store in: %1%"
+msgstr "LibreSlicer detekoval úložiště SSL certifikátu v: %1%"
 
 #: src/slic3r/GUI/GUI_App.cpp:3396 src/slic3r/GUI/Plater.cpp:1832
 #: src/slic3r/GUI/UnsavedChangesDialog.cpp:937
-msgid "PrusaSlicer: Don't ask me again"
-msgstr "PrusaSlicer: Již se znovu neptat"
+msgid "LibreSlicer: Don't ask me again"
+msgstr "LibreSlicer: Již se znovu neptat"
 
 #: src/slic3r/Config/Snapshot.cpp:603
-msgid "PrusaSlicer error"
-msgstr "Chyba programu PrusaSlicer"
+msgid "LibreSlicer error"
+msgstr "Chyba programu LibreSlicer"
 
 #: src/slic3r/GUI/GUI_Init.cpp:68 src/slic3r/GUI/GUI_Init.cpp:71
-msgid "PrusaSlicer GUI initialization failed"
+msgid "LibreSlicer GUI initialization failed"
 msgstr ""
-"Inicializace grafického uživatelského rozhraní PrusaSliceru se nezdařila"
+"Inicializace grafického uživatelského rozhraní LibreSliceru se nezdařila"
 
 #: src/slic3r/GUI/BackgroundSlicingProcess.cpp:91
 #, boost-format
-msgid "PrusaSlicer has encountered a fatal error: \"%1%\""
-msgstr "PrusaSlicer narazil na fatální chybu: \"%1%\""
+msgid "LibreSlicer has encountered a fatal error: \"%1%\""
+msgstr "LibreSlicer narazil na fatální chybu: \"%1%\""
 
 #: src/slic3r/GUI/GUI_App.cpp:749
 msgid ""
-"PrusaSlicer has encountered a localization error. Please report to "
-"PrusaSlicer team, what language was active and in which scenario this issue "
+"LibreSlicer has encountered a localization error. Please report to "
+"LibreSlicer team, what language was active and in which scenario this issue "
 "happened. Thank you.\n"
 "\n"
 "The application will now terminate."
 msgstr ""
-"V aplikaci PrusaSlicer došlo k chybě v lokalizaci. Nahlaste PrusaSlicer "
+"V aplikaci LibreSlicer došlo k chybě v lokalizaci. Nahlaste LibreSlicer "
 "týmu, jaký jazyk byl aktivní a ve kterém scénáři k tomuto problému došlo. "
 "Děkujeme.\n"
 "\n"
@@ -12228,101 +12228,101 @@ msgstr ""
 
 #: src/slic3r/Config/Snapshot.cpp:602
 msgid ""
-"PrusaSlicer has encountered an error while taking a configuration snapshot."
-msgstr "PrusaSlicer narazil na chybu při pořizování zálohy konfigurace."
+"LibreSlicer has encountered an error while taking a configuration snapshot."
+msgstr "LibreSlicer narazil na chybu při pořizování zálohy konfigurace."
 
 #: src/slic3r/GUI/AboutDialog.cpp:284
 msgid ""
-"PrusaSlicer is based on Slic3r by Alessandro Ranellucci and the RepRap "
+"LibreSlicer is based on Slic3r by Alessandro Ranellucci and the RepRap "
 "community."
 msgstr ""
-"PrusaSlicer je založen na Slic3r od Alessandra Ranellucciho a RepRap "
+"LibreSlicer je založen na Slic3r od Alessandra Ranellucciho a RepRap "
 "komunity."
 
 #: src/slic3r/GUI/MainFrame.cpp:245
-msgid "PrusaSlicer is closing"
-msgstr "PrusaSlicer se zavírá"
+msgid "LibreSlicer is closing"
+msgstr "LibreSlicer se zavírá"
 
 #: src/slic3r/GUI/UpdateDialogs.cpp:276
 msgid ""
-"PrusaSlicer is not using the newest configuration available.\n"
+"LibreSlicer is not using the newest configuration available.\n"
 "Configuration Wizard may not offer the latest printers, filaments and SLA "
 "materials to be installed."
 msgstr ""
-"PrusaSlicer nepoužívá nejnovější dostupnou konfiguraci.\n"
+"LibreSlicer nepoužívá nejnovější dostupnou konfiguraci.\n"
 "Průvodce nastavením proto nemusí k instalaci nabízet nejnovější tiskárny, "
 "filamenty a SLA materiály."
 
 #: src/slic3r/GUI/GUI_App.cpp:3385 src/slic3r/GUI/GUI_App.cpp:3408
-msgid "PrusaSlicer: Open hyperlink"
-msgstr "PrusaSlicer: Otevřít hypertextový odkaz"
+msgid "LibreSlicer: Open hyperlink"
+msgstr "LibreSlicer: Otevřít hypertextový odkaz"
 
 #: src/slic3r/GUI/NotificationManager.hpp:938
 msgid ""
-"PrusaSlicer recieved a download request from Printables.com, but it's not "
+"LibreSlicer recieved a download request from Printables.com, but it's not "
 "allowed. You can allow it"
 msgstr ""
-"PrusaSlicer obdržel požadavek na stažení souboru z webu Printables.com, ale "
+"LibreSlicer obdržel požadavek na stažení souboru z webu Printables.com, ale "
 "není to povolené. Můžete to povolit"
 
 #: src/slic3r/GUI/OpenGLManager.cpp:387
 #, c-format, boost-format
 msgid ""
-"PrusaSlicer requires OpenGL 2.0 capable graphics driver to run correctly, \n"
+"LibreSlicer requires OpenGL 2.0 capable graphics driver to run correctly, \n"
 "while OpenGL version %s, render %s, vendor %s was detected."
 msgstr ""
-"PrusaSlicer vyžaduje grafický ovladač s funkčním OpenGL 2.0. Zatímco byla "
+"LibreSlicer vyžaduje grafický ovladač s funkčním OpenGL 2.0. Zatímco byla "
 "detekována verze OpenGL %s, render %s, výrobce %s."
 
 #: src/slic3r/GUI/OpenGLManager.cpp:381
 #, c-format, boost-format
 msgid ""
-"PrusaSlicer requires OpenGL ES 2.0 capable graphics driver to run "
+"LibreSlicer requires OpenGL ES 2.0 capable graphics driver to run "
 "correctly, \n"
 "while OpenGL version %s, render %s, vendor %s was detected."
 msgstr ""
-"PrusaSlicer vyžaduje grafický ovladač s funkčním OpenGL ES 2.0. Zatímco byla "
+"LibreSlicer vyžaduje grafický ovladač s funkčním OpenGL ES 2.0. Zatímco byla "
 "detekována verze OpenGL %s, render %s, výrobce %s."
 
 #: src/slic3r/GUI/OpenGLManager.cpp:384
 #, c-format, boost-format
 msgid ""
-"PrusaSlicer requires OpenGL %s capable graphics driver to run correctly, \n"
+"LibreSlicer requires OpenGL %s capable graphics driver to run correctly, \n"
 "while OpenGL version %s, render %s, vendor %s was detected."
 msgstr ""
-"PrusaSlicer vyžaduje ke správnému běhu grafický ovladač podporující OpenGL "
+"LibreSlicer vyžaduje ke správnému běhu grafický ovladač podporující OpenGL "
 "%s, \n"
 "zatím byla zjištěna verze OpenGL %s, vykreslování %s, výrobce %s."
 
 #: src/slic3r/GUI/GUI_App.cpp:1424
-msgid "PrusaSlicer started after a crash"
-msgstr "PrusaSlicer se spustil po neočekávaném ukončení"
+msgid "LibreSlicer started after a crash"
+msgstr "LibreSlicer se spustil po neočekávaném ukončení"
 
 #: src/slic3r/GUI/ConfigWizard.cpp:1668
 msgid ""
-"PrusaSlicer's user interfaces comes in three variants:\n"
+"LibreSlicer's user interfaces comes in three variants:\n"
 "Simple, Advanced, and Expert.\n"
 "The Simple mode shows only the most frequently used settings relevant for "
 "regular 3D printing. The other two offer progressively more sophisticated "
 "fine-tuning, they are suitable for advanced and expert users, respectively."
 msgstr ""
-"Uživatelské rozhraní PrusaSlicer je k dispozici ve třech variantách:\n"
+"Uživatelské rozhraní LibreSlicer je k dispozici ve třech variantách:\n"
 "Jednoduché, pokročilé a expertní.\n"
 "Jednoduchý režim zobrazuje pouze nejčastěji používaná nastavení relevantní "
 "pro běžný 3D tisk. Další dva nabízejí detailnější doladění a proto jsou "
 "vhodné pro pokročilé a expertní uživatele."
 
 #: src/slic3r/GUI/ConfigSnapshotDialog.cpp:64
-msgid "PrusaSlicer version"
-msgstr "verze PrusaSliceru"
+msgid "LibreSlicer version"
+msgstr "verze LibreSliceru"
 
 #: src/slic3r/GUI/UnsavedChangesDialog.cpp:934
-msgid "PrusaSlicer will remember your action."
-msgstr "PrusaSlicer si vaši akci zapamatuje."
+msgid "LibreSlicer will remember your action."
+msgstr "LibreSlicer si vaši akci zapamatuje."
 
 #: src/slic3r/GUI/GUI_App.cpp:3392 src/slic3r/GUI/Plater.cpp:1826
-msgid "PrusaSlicer will remember your choice."
-msgstr "PrusaSlicer si zapamatuje vaši volbu."
+msgid "LibreSlicer will remember your choice."
+msgstr "LibreSlicer si zapamatuje vaši volbu."
 
 #: src/libslic3r/PrintConfig.cpp:3338
 msgid ""
@@ -12629,12 +12629,12 @@ msgstr "Znovu &načíst z disku"
 msgid ""
 "Reload from disk\n"
 "Did you know that if you created a newer version of your model, you can "
-"simply reload it in PrusaSlicer? Right-click the model in the 3D view and "
+"simply reload it in LibreSlicer? Right-click the model in the 3D view and "
 "choose Reload from disk. Read more in the documentation."
 msgstr ""
 "Znovu načíst z disku\n"
 "Věděli jste, že pokud jste vytvořili novější verzi modelu, můžete ji "
-"jednoduše znovu načíst v PrusaSliceru? Klepněte pravým tlačítkem myši na "
+"jednoduše znovu načíst v LibreSliceru? Klepněte pravým tlačítkem myši na "
 "model ve 3D zobrazení a zvolte možnost Znovu načíst z disku. Více informací "
 "najdete v dokumentaci."
 
@@ -13072,10 +13072,10 @@ msgstr "Rychlost retrakce"
 msgid ""
 "Retraction state at the beginning of the custom G-code block. If the custom "
 "G-code moves the extruder axis, it should write to this variable so "
-"PrusaSlicer deretracts correctly when it gets control back."
+"LibreSlicer deretracts correctly when it gets control back."
 msgstr ""
 "Stav retrakce na začátku vlastního G-code. Pokud vlastní G-code pohybuje "
-"osou extruderu, měl by do této proměnné zapisovat, aby PrusaSlicer správně "
+"osou extruderu, měl by do této proměnné zapisovat, aby LibreSlicer správně "
 "zrušil deretrakce, když mu bude znovu předáno řízení."
 
 #: src/slic3r/GUI/Tab.cpp:3303
@@ -13306,7 +13306,7 @@ msgstr "Spustit %s"
 msgid "s"
 msgstr "s"
 
-#. TRN %s = PrusaSlicer
+#. TRN %s = LibreSlicer
 #: src/slic3r/GUI/UpdateDialogs.cpp:478
 #, c-format, boost-format
 msgid "%s 1.40 configuration update"
@@ -13579,11 +13579,11 @@ msgstr "Vyhledávání"
 msgid ""
 "Search functionality\n"
 "Did you know that you use the<a>Search</a>tool to quickly find a specific "
-"PrusaSlicer setting? Or use the familiar shortcut <b>Ctrl+F</b>."
+"LibreSlicer setting? Or use the familiar shortcut <b>Ctrl+F</b>."
 msgstr ""
 "Funkce vyhledávání\n"
 "Věděli jste, že nástroj<a>Hledat</a> slouží k rychlému nalezení konkrétního "
-"nastavení v PrusaSliceru? Lze použít i známou klávesovou zkratku <b>Ctrl+F</"
+"nastavení v LibreSliceru? Lze použít i známou klávesovou zkratku <b>Ctrl+F</"
 "b>."
 
 #: src/slic3r/GUI/ImGuiWrapper.cpp:1199 src/slic3r/GUI/Search.cpp:534
@@ -14344,12 +14344,12 @@ msgstr "Tvar je označen jako neviditelný (%1%)."
 #: resources/data/hints.ini: [hint:Shapes gallery]
 msgid ""
 "Shapes gallery\n"
-"Did you know that PrusaSlicer has a Shapes Gallery? You can use the included "
+"Did you know that LibreSlicer has a Shapes Gallery? You can use the included "
 "models as modifiers, negative volumes or as printable objects. Right-click "
 "the platter and select<a>Add Shape - Gallery</a>."
 msgstr ""
 "Galerie tvarů\n"
-"Věděli jste, že PrusaSlicer má galerii tvarů? Modely můžete použít jako "
+"Věděli jste, že LibreSlicer má galerii tvarů? Modely můžete použít jako "
 "modifikátory, negativní objemy nebo jako tisknutelné objekty. Klepněte "
 "pravým tlačítkem myši na podložku a vyberte možnost <a>Přidat Tvar - "
 "Galerie</a>."
@@ -15122,12 +15122,12 @@ msgstr "Některé filamenty byly odinstalovány."
 msgid ""
 "Some G/M-code commands, including temperature control and others, are not "
 "universal. Set this option to your printer's firmware to get a compatible "
-"output. The \"No extrusion\" flavor prevents PrusaSlicer from exporting any "
+"output. The \"No extrusion\" flavor prevents LibreSlicer from exporting any "
 "extrusion value at all."
 msgstr ""
 "Některé příkazy G/M-code, včetně řízení teplot a další, nejsou univerzální. "
 "Vyberte typ firmware, který používá vaše tiskárna pro dosažení "
-"kompatibilního výstupu. Příkazy typu \"No extrusion\" zabraňují PrusaSliceru "
+"kompatibilního výstupu. Příkazy typu \"No extrusion\" zabraňují LibreSliceru "
 "zcela exportovat jakoukoliv hodnotu extruze."
 
 #: src/libslic3r/GCode.cpp:377
@@ -15504,8 +15504,8 @@ msgid "Stars"
 msgstr "Hvězdy"
 
 #: src/slic3r/GUI/Plater.cpp:5832
-msgid "Start a new instance of PrusaSlicer"
-msgstr "Spustit novou instanci PrusaSliceru"
+msgid "Start a new instance of LibreSlicer"
+msgstr "Spustit novou instanci LibreSliceru"
 
 #: src/slic3r/GUI/MainFrame.cpp:1267
 msgid "Start a new project"
@@ -15559,8 +15559,8 @@ msgstr ""
 "Co chcete udělat?"
 
 #: src/slic3r/GUI/Plater.cpp:6187
-msgid "Start new PrusaSlicer instance"
-msgstr "Spustit novou instanci PrusaSliceru"
+msgid "Start new LibreSlicer instance"
+msgstr "Spustit novou instanci LibreSliceru"
 
 #: src/slic3r/GUI/MainFrame.cpp:1408
 msgid "Start new slicing process"
@@ -16215,54 +16215,54 @@ msgstr ""
 #, c-format, boost-format
 msgid ""
 "The dimensions of the object from file %s seem to be defined in inches.\n"
-"The internal unit of PrusaSlicer is a millimeter. Do you want to recalculate "
+"The internal unit of LibreSlicer is a millimeter. Do you want to recalculate "
 "the dimensions of the object?"
 msgid_plural ""
 "The dimensions of some objects from file %s seem to be defined in inches.\n"
-"The internal unit of PrusaSlicer is a millimeter. Do you want to recalculate "
+"The internal unit of LibreSlicer is a millimeter. Do you want to recalculate "
 "the dimensions of these objects?"
 msgstr[0] ""
 "Zdá se, že rozměry objektu ze souboru %s jsou definovány v palcích.\n"
-"Interní jednotkou PrusaSliceru je milimetr. Chcete přepočítat rozměry "
+"Interní jednotkou LibreSliceru je milimetr. Chcete přepočítat rozměry "
 "objektu?"
 msgstr[1] ""
 "Zdá se, že rozměry objektů ze souboru %s jsou definovány v palcích.\n"
-"Interní jednotkou PrusaSliceru je milimetr. Chcete přepočítat rozměry "
+"Interní jednotkou LibreSliceru je milimetr. Chcete přepočítat rozměry "
 "objektů?"
 msgstr[2] ""
 "Zdá se, že rozměry objektů ze souboru %s jsou definovány v palcích.\n"
-"Interní jednotkou PrusaSliceru je milimetr. Chcete přepočítat rozměry "
+"Interní jednotkou LibreSliceru je milimetr. Chcete přepočítat rozměry "
 "objektů?"
 msgstr[3] ""
 "Zdá se, že rozměry objektů ze souboru %s jsou definovány v palcích.\n"
-"Interní jednotkou PrusaSliceru je milimetr. Chcete přepočítat rozměry "
+"Interní jednotkou LibreSliceru je milimetr. Chcete přepočítat rozměry "
 "objektů?"
 
 #: src/slic3r/GUI/Plater.cpp:2704
 #, c-format, boost-format
 msgid ""
 "The dimensions of the object from file %s seem to be defined in meters.\n"
-"The internal unit of PrusaSlicer is a millimeter. Do you want to recalculate "
+"The internal unit of LibreSlicer is a millimeter. Do you want to recalculate "
 "the dimensions of the object?"
 msgid_plural ""
 "The dimensions of some objects from file %s seem to be defined in meters.\n"
-"The internal unit of PrusaSlicer is a millimeter. Do you want to recalculate "
+"The internal unit of LibreSlicer is a millimeter. Do you want to recalculate "
 "the dimensions of these objects?"
 msgstr[0] ""
 "Zdá se, že rozměry objektu ze souboru %s jsou definovány v metrech.\n"
-"Interní jednotkou PrusaSliceru je milimetr. Chcete přepočítat rozměry "
+"Interní jednotkou LibreSliceru je milimetr. Chcete přepočítat rozměry "
 "objektu?"
 msgstr[1] ""
 "Zdá se, že rozměry objektů ze souboru %s jsou definovány v metrech.\n"
-"Interní jednotkou PrusaSliceru je milimetr. Chcete přepočítat rozměry "
+"Interní jednotkou LibreSliceru je milimetr. Chcete přepočítat rozměry "
 "objektů?"
 msgstr[2] ""
 "Zdá se, že rozměry objektů ze souboru %s jsou definovány v metrech.\n"
-"Interní jednotkou PrusaSliceru je milimetr. Chcete přepočítat rozměry "
+"Interní jednotkou LibreSliceru je milimetr. Chcete přepočítat rozměry "
 "objektů?"
 msgstr[3] ""
 "Zdá se, že rozměry objektů ze souboru %s jsou definovány v metrech.\n"
-"Interní jednotkou PrusaSliceru je milimetr. Chcete přepočítat rozměry "
+"Interní jednotkou LibreSliceru je milimetr. Chcete přepočítat rozměry "
 "objektů?"
 
 #: src/slic3r/GUI/Downloader.cpp:185
@@ -16731,22 +16731,22 @@ msgstr ""
 #: src/slic3r/GUI/Plater.cpp:2495
 msgid ""
 "The preset below was temporarily installed on the active instance of "
-"PrusaSlicer"
+"LibreSlicer"
 msgid_plural ""
 "The presets below were temporarily installed on the active instance of "
-"PrusaSlicer"
+"LibreSlicer"
 msgstr[0] ""
 "Níže uvedené přednastavení bylo dočasně nainstalováno do aktivní instance "
-"PrusaSliceru"
+"LibreSliceru"
 msgstr[1] ""
 "Níže uvedená přednastavení byla dočasně nainstalována do aktivní instance "
-"PrusaSliceru"
+"LibreSliceru"
 msgstr[2] ""
 "Níže uvedená přednastavení byla dočasně nainstalována do aktivní instance "
-"PrusaSliceru"
+"LibreSliceru"
 msgstr[3] ""
 "Níže uvedená přednastavení byla dočasně nainstalována do aktivní instance "
-"PrusaSliceru"
+"LibreSliceru"
 
 #: src/slic3r/GUI/UnsavedChangesDialog.cpp:1327
 msgid "The preset modifications are successfully saved"
@@ -16871,26 +16871,26 @@ msgstr ""
 #: src/libslic3r/Format/3mf.cpp:1950
 msgid ""
 "The selected 3MF contains FDM supports painted object using a newer version "
-"of PrusaSlicer and is not compatible."
+"of LibreSlicer and is not compatible."
 msgstr ""
 "Vybraný 3MF soubor obsahuje objekt s namalovanými podpěrami novější verze "
-"PrusaSliceru a proto není kompatibilní."
+"LibreSliceru a proto není kompatibilní."
 
 #: src/libslic3r/Format/3mf.cpp:1958
 msgid ""
 "The selected 3MF contains multi-material painted object using a newer "
-"version of PrusaSlicer and is not compatible."
+"version of LibreSlicer and is not compatible."
 msgstr ""
 "Vybraný 3MF soubor obsahuje objekt multimateriálovým malováním pomocí "
-"novější verze PrusaSliceru a proto není kompatibilní."
+"novější verze LibreSliceru a proto není kompatibilní."
 
 #: src/libslic3r/Format/3mf.cpp:1954
 msgid ""
 "The selected 3MF contains seam painted object using a newer version of "
-"PrusaSlicer and is not compatible."
+"LibreSlicer and is not compatible."
 msgstr ""
 "Vybraný 3MF soubor obsahuje objekt s namalovaný švem pomocí novější verze "
-"PrusaSliceru a proto není kompatibilní."
+"LibreSliceru a proto není kompatibilní."
 
 #: src/libslic3r/Format/3mf.cpp:1939
 #, boost-format
@@ -17226,18 +17226,18 @@ msgstr ""
 #: src/slic3r/GUI/Plater.cpp:3139
 msgid ""
 "This action will break a cut information.\n"
-"After that PrusaSlicer can't guarantee model consistency"
+"After that LibreSlicer can't guarantee model consistency"
 msgstr ""
 "Tato akce způsobí ztrátu informací o řezu.\n"
-"Poté PrusaSlicer nemůže zaručit konzistenci modelu."
+"Poté LibreSlicer nemůže zaručit konzistenci modelu."
 
 #: src/slic3r/GUI/GUI_ObjectList.cpp:2002
 msgid ""
 "This action will break a cut information.\n"
-"After that PrusaSlicer can't guarantee model consistency."
+"After that LibreSlicer can't guarantee model consistency."
 msgstr ""
 "Tato akce způsobí ztrátu informací o řezu.\n"
-"Poté PrusaSlicer nemůže zaručit konzistenci modelu."
+"Poté LibreSlicer nemůže zaručit konzistenci modelu."
 
 #: src/slic3r/GUI/DoubleSlider.cpp:2159
 msgid "This action will cause deletion of all ticks on vertical slider."
@@ -17284,17 +17284,17 @@ msgstr ""
 #: src/libslic3r/PrintConfig.cpp:3142
 msgid ""
 "This custom code is inserted before every toolchange. Placeholder variables "
-"for all PrusaSlicer settings as well as {toolchange_z}, {previous_extruder} "
+"for all LibreSlicer settings as well as {toolchange_z}, {previous_extruder} "
 "and {next_extruder} can be used. When a tool-changing command which changes "
-"to the correct extruder is included (such as T{next_extruder}), PrusaSlicer "
+"to the correct extruder is included (such as T{next_extruder}), LibreSlicer "
 "will emit no other such command. It is therefore possible to script custom "
 "behaviour both before and after the toolchange."
 msgstr ""
 "Tento vlastní kód je vložen při každé změně nástroje (extruderu). Lze "
-"používat zástupné proměnné pro všechna nastavení PrusaSliceru stejně jako "
+"používat zástupné proměnné pro všechna nastavení LibreSliceru stejně jako "
 "{toolchange_z}, {previous_extruder} a {next_extruder}. Když je použit příkaz "
 "pro výměnu extruderu, který mění na požadovaný extruder (jako je T "
-"{next_extruder}), PrusaSlicer nevytvoří žádný jiný takový příkaz. Je tedy "
+"{next_extruder}), LibreSlicer nevytvoří žádný jiný takový příkaz. Je tedy "
 "možné skriptovat vlastní chování před i po výměně nástroje."
 
 #: src/libslic3r/PrintConfig.cpp:845
@@ -17302,22 +17302,22 @@ msgid ""
 "This end procedure is inserted at the end of the output file, before the "
 "printer end gcode (and before any toolchange from this filament in case of "
 "multimaterial printers). Note that you can use placeholder variables for all "
-"PrusaSlicer settings. If you have multiple extruders, the gcode is processed "
+"LibreSlicer settings. If you have multiple extruders, the gcode is processed "
 "in extruder order."
 msgstr ""
 "Tento kód je vložen na konec výstupního souboru před tím, než tiskárna "
 "dokončí gcode (a před všechny změny extruderu z tohoto filamentu v případě "
 "multimateriálových tiskáren). Můžete přidávat zástupné proměnné pro veškeré "
-"nastavení PrusaSliceru. Pokud máte tiskárnu s více extrudery, G-code je "
+"nastavení LibreSliceru. Pokud máte tiskárnu s více extrudery, G-code je "
 "zpracováván v pořadí extruderů."
 
 #: src/libslic3r/PrintConfig.cpp:835
 msgid ""
 "This end procedure is inserted at the end of the output file. Note that you "
-"can use placeholder variables for all PrusaSlicer settings."
+"can use placeholder variables for all LibreSlicer settings."
 msgstr ""
 "Tento kód je vložen na konec výstupního souboru. Můžete také přidávat "
-"zástupné proměnné pro veškeré nastavení PrusaSliceru."
+"zástupné proměnné pro veškeré nastavení LibreSliceru."
 
 #: src/libslic3r/PrintConfig.cpp:1983
 msgid ""
@@ -17806,21 +17806,21 @@ msgid ""
 "This start procedure is inserted at the beginning, after any printer start "
 "gcode (and after any toolchange to this filament in case of multi-material "
 "printers). This is used to override settings for a specific filament. If "
-"PrusaSlicer detects M104, M109, M140 or M190 in your custom codes, such "
+"LibreSlicer detects M104, M109, M140 or M190 in your custom codes, such "
 "commands will not be prepended automatically so you're free to customize the "
 "order of heating commands and other custom actions. Note that you can use "
-"placeholder variables for all PrusaSlicer settings, so you can put a \"M109 "
+"placeholder variables for all LibreSlicer settings, so you can put a \"M109 "
 "S[first_layer_temperature]\" command wherever you want. If you have multiple "
 "extruders, the gcode is processed in extruder order."
 msgstr ""
 "Tento kód je vložen na začátek tisku. Jakmile tiskárna začne zpracovávat "
 "gcode (a po jakékoliv změně extruderu na tento filament v případě "
 "multimateriálového tisku). Slouží k přepsání nastavení pro konkrétní "
-"filament. Pokud PrusaSlicer detekuje příkazy M104, M109, M140 nebo M190 v "
+"filament. Pokud LibreSlicer detekuje příkazy M104, M109, M140 nebo M190 v "
 "uživatelsky definovaném kódu, tyto příkazy nebudou automaticky připojeny, "
 "takže si můžete přizpůsobit pořadí příkazů předehřevu a dalších vlastních "
 "akcí. Také můžete přidávat zástupné proměnné pro veškeré nastavení "
-"PrusaSliceru, takže můžete vložit příkaz “M109 S[first_layer_temperature]” "
+"LibreSliceru, takže můžete vložit příkaz “M109 S[first_layer_temperature]” "
 "kamkoliv chcete. Pokud máte tiskárnu s více extrudery, G-code je zpracováván "
 "v pořadí extruderů."
 
@@ -17869,13 +17869,13 @@ msgstr ""
 
 #: src/libslic3r/PrintConfig.cpp:5040
 msgid ""
-"This version of PrusaSlicer may not understand configurations produced by "
-"the newest PrusaSlicer versions. For example, newer PrusaSlicer may extend "
+"This version of LibreSlicer may not understand configurations produced by "
+"the newest LibreSlicer versions. For example, newer LibreSlicer may extend "
 "the list of supported firmware flavors. One may decide to bail out or to "
 "substitute an unknown value with a default silently or verbosely."
 msgstr ""
-"Tato verze PrusaSliceru nemusí být kompatibilní s konfiguracemi vytvořenými "
-"nejnovějšími verzemi PrusaSliceru. Novější verze PrusaSliceru mohou "
+"Tato verze LibreSliceru nemusí být kompatibilní s konfiguracemi vytvořenými "
+"nejnovějšími verzemi LibreSliceru. Novější verze LibreSliceru mohou "
 "například rozšířit seznam podporovaných druhů firmwaru. Lze se rozhodnout, "
 "že to budeme ignorovat, nebo že neznámou hodnotu nahradíme výchozí hodnotou."
 
@@ -18859,7 +18859,7 @@ msgstr "Použít povrch"
 
 #: src/slic3r/GUI/Preferences.cpp:694
 msgid "Use system menu for application"
-msgstr "V PrusaSliceru používat systémové nabídky"
+msgstr "V LibreSliceru používat systémové nabídky"
 
 #: src/libslic3r/PrintConfig.cpp:983
 msgid ""
@@ -19107,14 +19107,14 @@ msgid ""
 "identify you later. To detect duplicate entries, a unique number derived "
 "from your system is sent, but the source information cannot be "
 "reconstructed. Apart from that, only general data about your OS, hardware "
-"and OpenGL installation are sent. PrusaSlicer is open source, if you want to "
+"and OpenGL installation are sent. LibreSlicer is open source, if you want to "
 "inspect the code actually performing the communication, see %1%."
 msgstr ""
 "Neposíláme žádné osobní údaje ani nic, co by nám umožnilo vaši pozdější "
 "identifikaci. Pro detekování duplicitních záznamů je odesláno jedinečné "
 "číslo odvozené z vašeho systému, ale zdrojové informace nelze rekonstruovat. "
 "Kromě toho jsou odesílány pouze obecné údaje o vašem operačním systému, "
-"hardwaru a instalaci OpenGL. PrusaSlicer je otevřený zdrojový kód, pokud "
+"hardwaru a instalaci OpenGL. LibreSlicer je otevřený zdrojový kód, pokud "
 "chcete nahlédnout do kódu, který skutečně provádí komunikaci, viz %1%."
 
 #: src/libslic3r/PrintConfig.cpp:5227
@@ -19173,30 +19173,30 @@ msgstr ""
 
 #: src/libslic3r/PrintConfig.cpp:2625
 msgid ""
-"When enabled, PrusaSlicer will check whether your Custom Start G-Code "
+"When enabled, LibreSlicer will check whether your Custom Start G-Code "
 "contains M104 or M190. If so, the temperatures will not be emitted "
 "automatically so you're free to customize the order of heating commands and "
 "other custom actions. Note that you can use placeholder variables for all "
-"PrusaSlicer settings, so you can put a \"M109 S[first_layer_temperature]\" "
+"LibreSlicer settings, so you can put a \"M109 S[first_layer_temperature]\" "
 "command wherever you want.\n"
-"If your Custom Start G-Code does NOT contain M104 or M190, PrusaSlicer will "
+"If your Custom Start G-Code does NOT contain M104 or M190, LibreSlicer will "
 "execute the Start G-Code after bed reached its target temperature and "
 "extruder just started heating.\n"
 "\n"
-"When disabled, PrusaSlicer will NOT emit commands to heat up extruder and "
+"When disabled, LibreSlicer will NOT emit commands to heat up extruder and "
 "bed, leaving both to Custom Start G-Code."
 msgstr ""
-"Je-li tato funkce povolena, PrusaSlicer zkontroluje, zda váš vlastní Začátek "
+"Je-li tato funkce povolena, LibreSlicer zkontroluje, zda váš vlastní Začátek "
 "G-codu obsahuje M104 nebo M190. Pokud ano, teploty nebudou automaticky "
 "vkládány, takže si můžete volně přizpůsobit pořadí příkazů pro zahřívání a "
 "další vlastní akce. Všimněte si, že můžete použít zástupné proměnné pro "
-"všechna nastavení PrusaSliceru, takže můžete vložit příkaz \"M109 "
+"všechna nastavení LibreSliceru, takže můžete vložit příkaz \"M109 "
 "S[first_layer_temperature]\", kamkoli chcete.\n"
-"Pokud váš vlastní Začátek G-codu NEobsahuje M104 nebo M190, PrusaSlicer "
+"Pokud váš vlastní Začátek G-codu NEobsahuje M104 nebo M190, LibreSlicer "
 "spustí Začátek G-codu poté, co podložka dosáhne cílové teploty a extruder se "
 "začal ohřívat.\n"
 "\n"
-"Pokud funkce není povolena, PrusaSlicer NEvkládá příkazy k ohřevu extruderu "
+"Pokud funkce není povolena, LibreSlicer NEvkládá příkazy k ohřevu extruderu "
 "a podložky, obojí ponechá na vašem vlastním Začátku G-code."
 
 #: src/slic3r/GUI/PresetHints.cpp:197
@@ -19625,17 +19625,17 @@ msgstr "Otevíráte %1% verze %2%."
 
 #: src/slic3r/GUI/GUI_App.cpp:1119
 msgid ""
-"You are running a 32 bit build of PrusaSlicer on 64-bit Windows.\n"
-"32 bit build of PrusaSlicer will likely not be able to utilize all the RAM "
+"You are running a 32 bit build of LibreSlicer on 64-bit Windows.\n"
+"32 bit build of LibreSlicer will likely not be able to utilize all the RAM "
 "available in the system.\n"
-"Please download and install a 64 bit build of PrusaSlicer from https://www."
+"Please download and install a 64 bit build of LibreSlicer from https://www."
 "prusa3d.cz/prusaslicer/.\n"
 "Do you wish to continue?"
 msgstr ""
-"Používáte 32bitovou aplikaci PrusaSlicer v 64bitovém systému Windows.\n"
-"32bitovová aplikace PrusaSliceru pravděpodobně nebude schopna využít "
+"Používáte 32bitovou aplikaci LibreSlicer v 64bitovém systému Windows.\n"
+"32bitovová aplikace LibreSliceru pravděpodobně nebude schopna využít "
 "veškerou dostupnou paměť RAM v systému.\n"
-"Stáhněte si a nainstalujte 64bitovou verzi PrusaSliceru ze stránek https://"
+"Stáhněte si a nainstalujte 64bitovou verzi LibreSliceru ze stránek https://"
 "www.prusa3d.cz/prusaslicer/.\n"
 "Přejete si pokračovat?"
 
@@ -19776,7 +19776,7 @@ msgstr ""
 msgid "You must install a configuration update."
 msgstr "Je nutné nainstalovat aktualizaci konfigurace."
 
-#. TRN %1% is PrusaSlicer
+#. TRN %1% is LibreSlicer
 #: src/slic3r/GUI/UpdateDialogs.cpp:515
 #, boost-format
 msgid "Your %1% is up to date."
@@ -19851,22 +19851,22 @@ msgstr "Nebudete znovu dotázáni při najetí myší na odkazy."
 #: src/slic3r/GUI/Plater.cpp:1827
 msgid ""
 "You will not be asked about it again, when: \n"
-"- Closing PrusaSlicer,\n"
+"- Closing LibreSlicer,\n"
 "- Loading or creating a new project"
 msgstr ""
 "Nebudete znovu dotázáni při:\n"
-"- zavření PrusaSliceru,\n"
+"- zavření LibreSliceru,\n"
 "- načítání nebo vytváření nového projektu."
 
 #: src/slic3r/GUI/UnsavedChangesDialog.cpp:931
 msgid ""
 "You will not be asked about the unsaved changes in presets the next time "
 "you: \n"
-"- Closing PrusaSlicer while some presets are modified,\n"
+"- Closing LibreSlicer while some presets are modified,\n"
 "- Loading a new project while some presets are modified"
 msgstr ""
 "Příště již nebudete dotázáni na neuložené změny během: \n"
-"- zavírání PrusaSliceru, pokud došlo k úpravě některých přednastavení,\n"
+"- zavírání LibreSliceru, pokud došlo k úpravě některých přednastavení,\n"
 "- načítání nového projektu, zatímco v přednastavení máte neuložené změny."
 
 #: src/slic3r/GUI/UnsavedChangesDialog.cpp:929

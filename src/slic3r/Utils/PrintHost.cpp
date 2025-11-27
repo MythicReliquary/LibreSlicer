@@ -5,7 +5,7 @@
 ///|/ Copyright (c) 2019 Stephan Reichhelm @stephanr
 ///|/ Copyright (c) 2018 Martin Loidl @LoidlM
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "PrintHost.hpp"
 

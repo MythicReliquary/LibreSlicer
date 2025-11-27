@@ -1,7 +1,7 @@
 ///|/ Copyright (c) 2023 Pedro Lamas @PedroLamas
 ///|/ Copyright (c) Prusa Research 2023 David Kocík @kocikdav
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef slic3r_Moonraker_hpp_
 #define slic3r_Moonraker_hpp_

@@ -17,7 +17,7 @@
 ///|/ Copyright (c) 2012 Johannes Reinhardt
 ///|/ Copyright (c) 2011 Clarence Risher
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef slic3r_Config_hpp_
 #define slic3r_Config_hpp_
@@ -255,8 +255,8 @@ class  ConfigOptionDef;
 struct ConfigOptionDeleter { void operator()(ConfigOption* p); };
 using  ConfigOptionUniquePtr = std::unique_ptr<ConfigOption, ConfigOptionDeleter>;
 
-// When parsing a configuration value, if the old_value is not understood by this PrusaSlicer version,
-// it is being substituted with some default value that this PrusaSlicer could work with.
+// When parsing a configuration value, if the old_value is not understood by this LibreSlicer version,
+// it is being substituted with some default value that this LibreSlicer could work with.
 // This structure serves to inform the user about the substitutions having been done during file import.
 struct ConfigSubstitution {
     const ConfigOptionDef   *opt_def { nullptr };

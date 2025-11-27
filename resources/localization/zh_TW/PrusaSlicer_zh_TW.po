@@ -132,21 +132,21 @@ msgstr "所選 3mf 檔案已使用較新版本的 %1% 保存，並且不相容�
 #: src/libslic3r/Format/3mf.cpp:1950
 msgid ""
 "The selected 3MF contains FDM supports painted object using a newer version "
-"of PrusaSlicer and is not compatible."
+"of LibreSlicer and is not compatible."
 msgstr ""
-"所選 3MF 包含 FDM 支援使用較新版本的 PrusaSlicer 繪製的模型並且不相容。"
+"所選 3MF 包含 FDM 支援使用較新版本的 LibreSlicer 繪製的模型並且不相容。"
 
 #: src/libslic3r/Format/3mf.cpp:1954
 msgid ""
 "The selected 3MF contains seam painted object using a newer version of "
-"PrusaSlicer and is not compatible."
-msgstr "所選 3MF 包含使用較新版本 PrusaSlicer 的接縫繪製模型，並且不相容。"
+"LibreSlicer and is not compatible."
+msgstr "所選 3MF 包含使用較新版本 LibreSlicer 的接縫繪製模型，並且不相容。"
 
 #: src/libslic3r/Format/3mf.cpp:1958
 msgid ""
 "The selected 3MF contains multi-material painted object using a newer "
-"version of PrusaSlicer and is not compatible."
-msgstr "所選 3MF 包含使用更新版本的 PrusaSlicer 的多材料繪製模型，並且不相容。"
+"version of LibreSlicer and is not compatible."
+msgstr "所選 3MF 包含使用更新版本的 LibreSlicer 的多材料繪製模型，並且不相容。"
 
 #: src/libslic3r/Format/AMF.cpp:1005
 #, boost-format
@@ -904,7 +904,7 @@ msgid ""
 "name and password into the URL in the following format: https://username:"
 "password@your-octopi-address/"
 msgstr ""
-"PrusaSlicer 可以將 G-code 檔案上傳到打印機主機。整個字串應包含打印機主機實際"
+"LibreSlicer 可以將 G-code 檔案上傳到打印機主機。整個字串應包含打印機主機實際"
 "的主機名稱、IP 位址或 URL。啟用基本身份驗證的 HAProxy 背後的打印主機可以經由"
 "將使用者名稱和密碼按以下格式輸入 URL 來存取：https://username:password@your-"
 "octopi-address/"
@@ -918,7 +918,7 @@ msgid ""
 "Slic3r can upload G-code files to a printer host. This field should contain "
 "the API Key or the password required for authentication."
 msgstr ""
-"PrusaSlicer 可以將 G-code 檔案上傳到打印機主機。此字串應包含身份驗證所需的 "
+"LibreSlicer 可以將 G-code 檔案上傳到打印機主機。此字串應包含身份驗證所需的 "
 "API 密鑰或密碼。"
 
 #: src/libslic3r/PrintConfig.cpp:369 src/slic3r/GUI/GCodeViewer.cpp:4126
@@ -1068,7 +1068,7 @@ msgid ""
 "as [layer_num] and [layer_z]."
 msgstr ""
 "此自定義代碼將在每次打印層在 Z 軸移動前插入。請注意，您可以為所有 "
-"PrusaSlicer 設定以及 [layer_num] 和 [layer_z] 使用佔位符號變數。"
+"LibreSlicer 設定以及 [layer_num] 和 [layer_z] 使用佔位符號變數。"
 
 #: src/libslic3r/PrintConfig.cpp:501
 msgid "Between objects G-code"
@@ -1084,8 +1084,8 @@ msgid ""
 "S[first_layer_temperature]\" command wherever you want."
 msgstr ""
 "使用順序打印時，將此代碼插入模型之間。預設情況下使用非等待命令重置擠出機和載"
-"台溫度；但若在此自定義代碼中檢測到 M104、M109、M140 或 M190，PrusaSlicer 將不"
-"會添加溫度命令。請注意，您可以為所有 PrusaSlicer 設定使用佔位符號變數，因此您"
+"台溫度；但若在此自定義代碼中檢測到 M104、M109、M140 或 M190，LibreSlicer 將不"
+"會添加溫度命令。請注意，您可以為所有 LibreSlicer 設定使用佔位符號變數，因此您"
 "可以在任何需要的地方放置“M109 S[first_layer_temperature]”命令。"
 
 #. TRN Print Settings: "Bottom solid layers"
@@ -1407,7 +1407,7 @@ msgid ""
 "warn and prevent you from extruder collisions, but beware."
 msgstr ""
 "當打印多個模型或副本時，此功能將完成每個模型，然後再移動到下一個模型（並從底"
-"層開始）。此功能有助於避免損壞打印件的風險。 PrusaSlicer 應會警告並防止您發生"
+"層開始）。此功能有助於避免損壞打印件的風險。 LibreSlicer 應會警告並防止您發生"
 "擠出機碰撞，但還是要小心。"
 
 #: src/libslic3r/PrintConfig.cpp:762
@@ -1521,9 +1521,9 @@ msgstr "用於載台中排列模型自動設定距離的功能。"
 #: src/libslic3r/PrintConfig.cpp:835
 msgid ""
 "This end procedure is inserted at the end of the output file. Note that you "
-"can use placeholder variables for all PrusaSlicer settings."
+"can use placeholder variables for all LibreSlicer settings."
 msgstr ""
-"這個結束過程將會插入到輸出檔案的末端。請注意，您可以為所有 PrusaSlicer 設定使"
+"這個結束過程將會插入到輸出檔案的末端。請注意，您可以為所有 LibreSlicer 設定使"
 "用佔位符號變數。"
 
 #: src/libslic3r/PrintConfig.cpp:845
@@ -1531,11 +1531,11 @@ msgid ""
 "This end procedure is inserted at the end of the output file, before the "
 "printer end gcode (and before any toolchange from this filament in case of "
 "multimaterial printers). Note that you can use placeholder variables for all "
-"PrusaSlicer settings. If you have multiple extruders, the gcode is processed "
+"LibreSlicer settings. If you have multiple extruders, the gcode is processed "
 "in extruder order."
 msgstr ""
 "這個結束過程會被插入到輸出檔案的末端，在打印機結束 gcode 之前（在多材料打印機"
-"的情況下，在從這個線材改變到任何工具之前）。請注意，您可以為所有 PrusaSlicer "
+"的情況下，在從這個線材改變到任何工具之前）。請注意，您可以為所有 LibreSlicer "
 "設定使用佔位符號變數。如果您有多個擠出機，則 gcode 將會按照擠出機順序處理。"
 
 #: src/libslic3r/PrintConfig.cpp:856
@@ -1743,7 +1743,7 @@ msgstr "擠出機顏色"
 #: src/libslic3r/PrintConfig.cpp:966 src/libslic3r/PrintConfig.cpp:1029
 #: src/libslic3r/PrintConfig.cpp:3890
 msgid "This is only used in the Slic3r interface as a visual help."
-msgstr "這只是在 PrusaSlicer 介面中作為視覺輔助。"
+msgstr "這只是在 LibreSlicer 介面中作為視覺輔助。"
 
 #: src/libslic3r/PrintConfig.cpp:972
 msgid "Extruder offset"
@@ -1798,7 +1798,7 @@ msgid ""
 "expressed as percentage (for example: 230%), it will be computed over layer "
 "height."
 msgstr ""
-"將此設定為非零值以允許手動擠出寬度。如果保留為零，PrusaSlicer 將由噴嘴直徑匯"
+"將此設定為非零值以允許手動擠出寬度。如果保留為零，LibreSlicer 將由噴嘴直徑匯"
 "出擠出寬度（請參閱邊緣擠出寬度、填充擠出寬度等的工具提示）。如果以百分比表示"
 "（例如：230%），它將以層高的百分比為計算方式。"
 
@@ -1951,7 +1951,7 @@ msgid ""
 "to produce successive infill or sacrificial object extrusions reliably."
 msgstr ""
 "替換工具後，新加載的線材在噴嘴內的確切位置可能未知，在此之前線材壓力可能還不"
-"穩定。因此在將打印充入填充物或犧牲品之前，PrusaSlicer 將先打印在擦拭塔，以可"
+"穩定。因此在將打印充入填充物或犧牲品之前，LibreSlicer 將先打印在擦拭塔，以可"
 "靠的產生連續填充物或廢棄線之擠壓。"
 
 #: src/libslic3r/PrintConfig.cpp:1118 src/libslic3r/PrintConfig.cpp:1165
@@ -2126,7 +2126,7 @@ msgid ""
 "this. Bridges will be infilled using the best direction Slic3r can detect, "
 "so this setting does not affect them."
 msgstr ""
-"填充的預設方向角度。交叉劃線將會應用在此方式，橋接則將使用 PrusaSlicer 的線狀"
+"填充的預設方向角度。交叉劃線將會應用在此方式，橋接則將使用 LibreSlicer 的線狀"
 "填充，因此這個設定不會影響它們。"
 
 #: src/libslic3r/PrintConfig.cpp:1269
@@ -2398,11 +2398,11 @@ msgstr "G-code 訊息"
 msgid ""
 "Some G/M-code commands, including temperature control and others, are not "
 "universal. Set this option to your printer's firmware to get a compatible "
-"output. The \"No extrusion\" flavor prevents PrusaSlicer from exporting any "
+"output. The \"No extrusion\" flavor prevents LibreSlicer from exporting any "
 "extrusion value at all."
 msgstr ""
 "有一些 G/M -code 的命令，包括溫度控制與其他命令之間並不能通用。您可以將此選項"
-"設定為打印機的韌體以獲得相容的輸出。 “無擠出”的形式將阻止 PrusaSlicer 匯出任"
+"設定為打印機的韌體以獲得相容的輸出。 “無擠出”的形式將阻止 LibreSlicer 匯出任"
 "何帶有線材擠出值的內容。"
 
 #: src/libslic3r/PrintConfig.cpp:1487
@@ -2511,7 +2511,7 @@ msgstr "填充錨定的長度"
 msgid ""
 "Connect an infill line to an internal perimeter with a short segment of an "
 "additional perimeter. If expressed as percentage (example: 15%) it is "
-"calculated over infill extrusion width. PrusaSlicer tries to connect two "
+"calculated over infill extrusion width. LibreSlicer tries to connect two "
 "close infill lines to a short perimeter segment. If no such perimeter "
 "segment shorter than infill_anchor_max is found, the infill line is "
 "connected to a perimeter segment at just one side and the length of the "
@@ -2520,7 +2520,7 @@ msgid ""
 "perimeters connected to a single infill line."
 msgstr ""
 "將填充線連接到內部邊緣並有額外邊緣的短打印段。如果以百分比表示（例如：15%）它"
-"是經由填充擠出寬度計算的。PrusaSlicer 嘗試將兩條緊密填充線連接到短邊緣段。如"
+"是經由填充擠出寬度計算的。LibreSlicer 嘗試將兩條緊密填充線連接到短邊緣段。如"
 "果找不到短於 infill_anchor_max 的此類邊緣段，則填充線僅在一側連接到邊緣段，所"
 "取得的邊緣段的長度僅限於此參數，但不超過anchor_length_max的設定值。您可以將此"
 "參數設定為零，以禁用連接到單個填充線的錨定邊緣。"
@@ -2557,7 +2557,7 @@ msgstr "填充錨定的最大長度"
 msgid ""
 "Connect an infill line to an internal perimeter with a short segment of an "
 "additional perimeter. If expressed as percentage (example: 15%) it is "
-"calculated over infill extrusion width. PrusaSlicer tries to connect two "
+"calculated over infill extrusion width. LibreSlicer tries to connect two "
 "close infill lines to a short perimeter segment. If no such perimeter "
 "segment shorter than this parameter is found, the infill line is connected "
 "to a perimeter segment at just one side and the length of the perimeter "
@@ -2565,7 +2565,7 @@ msgid ""
 "parameter. Set this parameter to zero to disable anchoring."
 msgstr ""
 "將填充線連接到內部邊緣，並附有額外邊緣的短段。如果以百分比表示（例如：15%）它"
-"是經由填充擠出寬度計算的。PrusaSlicer 嘗試將兩條緊密填充線連接到短邊緣段。如"
+"是經由填充擠出寬度計算的。LibreSlicer 嘗試將兩條緊密填充線連接到短邊緣段。如"
 "果找不到比此參數短的此類邊緣段，則填充線僅在一側連接到邊緣段，所拍攝的邊緣段"
 "的長度限制為infill_anchor，但不超過此參數。將此參數設定為零以禁用錨定。"
 
@@ -2718,7 +2718,7 @@ msgid ""
 "[layer_z]."
 msgstr ""
 "此自定義代碼在每次打印層更改時插入，其在 Z 移動之後和擠出機移動到第一個打印層"
-"之前。請注意，您可以為所有 PrusaSlicer 設定以及 [layer_num] 和 [layer_z] 使用"
+"之前。請注意，您可以為所有 LibreSlicer 設定以及 [layer_num] 和 [layer_z] 使用"
 "佔位符變數。"
 
 #: src/libslic3r/PrintConfig.cpp:1774
@@ -2952,7 +2952,7 @@ msgid ""
 "speed in order to keep constant extruder pressure. This experimental setting "
 "is used to set the highest print speed you want to allow."
 msgstr ""
-"當將其速度設定為 0 時，PrusaSlicer 將會自動計算最佳速度以保持恆定的擠出機壓"
+"當將其速度設定為 0 時，LibreSlicer 將會自動計算最佳速度以保持恆定的擠出機壓"
 "力。此實驗設定用於設定您所容許的最高打印速度。"
 
 #: src/libslic3r/PrintConfig.cpp:1962
@@ -3020,7 +3020,7 @@ msgstr "最小打印速度"
 
 #: src/libslic3r/PrintConfig.cpp:2013
 msgid "Slic3r will not scale speed down below this speed."
-msgstr "PrusaSlicer 不會將速度降低到低於此設定的速度。"
+msgstr "LibreSlicer 不會將速度降低到低於此設定的速度。"
 
 #: src/libslic3r/PrintConfig.cpp:2020
 msgid "Minimal filament extrusion length"
@@ -3064,7 +3064,7 @@ msgid ""
 "Slic3r can upload G-code files to a printer host. This field must contain "
 "the kind of the host."
 msgstr ""
-"PrusaSlicer 可以將 G-code 檔案上傳到打印機主機。該字串必須包含主機的種類。"
+"LibreSlicer 可以將 G-code 檔案上傳到打印機主機。該字串必須包含主機的種類。"
 
 #: src/libslic3r/PrintConfig.cpp:2065
 msgid "Only retract when crossing perimeters"
@@ -3188,7 +3188,7 @@ msgid ""
 "surfaces which benefit from a higher number of perimeters if the Extra "
 "Perimeters option is enabled."
 msgstr ""
-"此選項設定為每個打印層生成的邊緣數量。請注意，PrusaSlicer 可能會在檢測到傾斜"
+"此選項設定為每個打印層生成的邊緣數量。請注意，LibreSlicer 可能會在檢測到傾斜"
 "的表面時自動增加此數字，如果啟用了額外邊緣選項，則傾斜的表面會受益於更多的邊"
 "緣。"
 
@@ -3210,7 +3210,7 @@ msgid ""
 msgstr ""
 "如果您想經由自定義腳本處理輸出的 G-code，只需在此處列出它們的絕對路徑即可。用"
 "分號來分隔多個腳本。腳本將作為第一個參數傳遞到 G-code 檔案的絕對路徑，並且它"
-"們可以經由讀取環境變數來存取 PrusaSlicer 設定檔之設定。"
+"們可以經由讀取環境變數來存取 LibreSlicer 設定檔之設定。"
 
 #: src/libslic3r/PrintConfig.cpp:2190
 msgid "Printer type"
@@ -3422,7 +3422,7 @@ msgstr ""
 
 #: src/libslic3r/PrintConfig.cpp:2366
 msgid ""
-"If enabled, PrusaSlicer detects obstacles along the travel path and makes "
+"If enabled, LibreSlicer detects obstacles along the travel path and makes "
 "the slope steeper in case an obstacle might be hit during the initial phase "
 "of the travel."
 msgstr ""
@@ -3692,7 +3692,7 @@ msgid ""
 "according to nozzle diameter and layer height."
 msgstr ""
 "此功能允許在每個指定的層數上強制一個實體層。設為零表示禁用。您可以將其設定為"
-"任意值（例如 9999）； PrusaSlicer 會根據噴嘴直徑和層高自動選擇最大可能的層數"
+"任意值（例如 9999）； LibreSlicer 會根據噴嘴直徑和層高自動選擇最大可能的層數"
 "進行組合。"
 
 #: src/libslic3r/PrintConfig.cpp:2566
@@ -3760,17 +3760,17 @@ msgstr ""
 
 #: src/libslic3r/PrintConfig.cpp:2625
 msgid ""
-"When enabled, PrusaSlicer will check whether your Custom Start G-Code "
+"When enabled, LibreSlicer will check whether your Custom Start G-Code "
 "contains M104 or M190. If so, the temperatures will not be emitted "
 "automatically so you're free to customize the order of heating commands and "
 "other custom actions. Note that you can use placeholder variables for all "
-"PrusaSlicer settings, so you can put a \"M109 S[first_layer_temperature]\" "
+"LibreSlicer settings, so you can put a \"M109 S[first_layer_temperature]\" "
 "command wherever you want.\n"
-"If your Custom Start G-Code does NOT contain M104 or M190, PrusaSlicer will "
+"If your Custom Start G-Code does NOT contain M104 or M190, LibreSlicer will "
 "execute the Start G-Code after bed reached its target temperature and "
 "extruder just started heating.\n"
 "\n"
-"When disabled, PrusaSlicer will NOT emit commands to heat up extruder and "
+"When disabled, LibreSlicer will NOT emit commands to heat up extruder and "
 "bed, leaving both to Custom Start G-Code."
 msgstr ""
 
@@ -3785,18 +3785,18 @@ msgid ""
 "This start procedure is inserted at the beginning, after any printer start "
 "gcode (and after any toolchange to this filament in case of multi-material "
 "printers). This is used to override settings for a specific filament. If "
-"PrusaSlicer detects M104, M109, M140 or M190 in your custom codes, such "
+"LibreSlicer detects M104, M109, M140 or M190 in your custom codes, such "
 "commands will not be prepended automatically so you're free to customize the "
 "order of heating commands and other custom actions. Note that you can use "
-"placeholder variables for all PrusaSlicer settings, so you can put a \"M109 "
+"placeholder variables for all LibreSlicer settings, so you can put a \"M109 "
 "S[first_layer_temperature]\" command wherever you want. If you have multiple "
 "extruders, the gcode is processed in extruder order."
 msgstr ""
 "這個程序在開始啟動時插入，在任何打印機啟動 gcode 之後（在多材料打印機的情況"
 "下，在對該線材進行任何工具更改之後）。這用於覆寫特定線材的設定。如果 "
-"PrusaSlicer 在您的自定義代碼中檢測到 M104、M109、M140 或 M190，這些命令將不會"
+"LibreSlicer 在您的自定義代碼中檢測到 M104、M109、M140 或 M190，這些命令將不會"
 "自動添加到前面，因此您可以自由自定義加熱命令和其他自定義操作的順序。請注意，"
-"您可以為所有 PrusaSlicer 設定使用佔位符號變數，也因此您可以在任何需要的地方放"
+"您可以為所有 LibreSlicer 設定使用佔位符號變數，也因此您可以在任何需要的地方放"
 "置“M109 S[first_layer_temperature]”這個命令。若您有多個擠出機，則 gcode 按擠"
 "出機順序處理。"
 
@@ -3949,7 +3949,7 @@ msgid ""
 "this to 0 will also prevent Slic3r from using bridge flow and speed for the "
 "first object layer."
 msgstr ""
-"模型與支撐材料介面之間的垂直距離。將此設定為 0 也將會阻止 PrusaSlicer 對第一"
+"模型與支撐材料介面之間的垂直距離。將此設定為 0 也將會阻止 LibreSlicer 對第一"
 "個模型層使用橋接流量和速度。"
 
 #: src/libslic3r/PrintConfig.cpp:2787
@@ -4347,15 +4347,15 @@ msgstr ""
 #: src/libslic3r/PrintConfig.cpp:3142
 msgid ""
 "This custom code is inserted before every toolchange. Placeholder variables "
-"for all PrusaSlicer settings as well as {toolchange_z}, {previous_extruder} "
+"for all LibreSlicer settings as well as {toolchange_z}, {previous_extruder} "
 "and {next_extruder} can be used. When a tool-changing command which changes "
-"to the correct extruder is included (such as T{next_extruder}), PrusaSlicer "
+"to the correct extruder is included (such as T{next_extruder}), LibreSlicer "
 "will emit no other such command. It is therefore possible to script custom "
 "behaviour both before and after the toolchange."
 msgstr ""
-"此自定義代碼在每次切換工具之前插入。可以使用所有 PrusaSlicer 設定的佔位符號變"
+"此自定義代碼在每次切換工具之前插入。可以使用所有 LibreSlicer 設定的佔位符號變"
 "數以及 {toolchange_z}、{previous_extruder} 和 {next_extruder}。當包含更改為正"
-"確擠出機的更換工具命令（例如 T{next_extruder}）時，PrusaSlicer 將不會再發出此"
+"確擠出機的更換工具命令（例如 T{next_extruder}）時，LibreSlicer 將不會再發出此"
 "類命令。因此可以在工具更改之前和之後編寫自定義行為腳本。"
 
 #: src/libslic3r/PrintConfig.cpp:3155
@@ -4464,7 +4464,7 @@ msgid ""
 msgstr ""
 "這個試驗參數是在 E 值中使用立方公尺爲單位而不是使用公分為單位。如果韌體不知道"
 "線線直徑，你可以在起始 G-code 中輸入如 'M200 D[filament_diameter_0] T0' 以開"
-"啓體積 E 值模式，並使用在PrusaSlicer 中已選用的線材直徑。這功能只有在最新版 "
+"啓體積 E 值模式，並使用在LibreSlicer 中已選用的線材直徑。這功能只有在最新版 "
 "Marlin 中才支援。"
 
 #: src/libslic3r/PrintConfig.cpp:3243
@@ -5792,13 +5792,13 @@ msgstr "從設定檔和項目檔案（3MF、AMF）匯入設定時向下相容的
 
 #: src/libslic3r/PrintConfig.cpp:5040
 msgid ""
-"This version of PrusaSlicer may not understand configurations produced by "
-"the newest PrusaSlicer versions. For example, newer PrusaSlicer may extend "
+"This version of LibreSlicer may not understand configurations produced by "
+"the newest LibreSlicer versions. For example, newer LibreSlicer may extend "
 "the list of supported firmware flavors. One may decide to bail out or to "
 "substitute an unknown value with a default silently or verbosely."
 msgstr ""
-"此版本的 PrusaSlicer 可能無法理解最新 PrusaSlicer 版本產生的設定。例如較新的 "
-"PrusaSlicer 可能會延伸支援韌體版本的列表。一般可能會決定放棄或用預設值來取代"
+"此版本的 LibreSlicer 可能無法理解最新 LibreSlicer 版本產生的設定。例如較新的 "
+"LibreSlicer 可能會延伸支援韌體版本的列表。一般可能會決定放棄或用預設值來取代"
 "未知的設定值，讓軟體默默進行工作。"
 
 #: src/libslic3r/PrintConfig.cpp:5044
@@ -5844,11 +5844,11 @@ msgstr "單實例模式"
 #: src/libslic3r/PrintConfig.cpp:5061
 msgid ""
 "If enabled, the command line arguments are sent to an existing instance of "
-"GUI PrusaSlicer, or an existing PrusaSlicer window is activated. Overrides "
+"GUI LibreSlicer, or an existing LibreSlicer window is activated. Overrides "
 "the \"single_instance\" configuration value from application preferences."
 msgstr ""
-"如果啟用，命令列參數將發送到 GUI PrusaSlicer 的現有實例，或者啟動現有的 "
-"PrusaSlicer 許可證視窗。從應用首選項中覆蓋\"single_instance\"設定值。"
+"如果啟用，命令列參數將發送到 GUI LibreSlicer 的現有實例，或者啟動現有的 "
+"LibreSlicer 許可證視窗。從應用首選項中覆蓋\"single_instance\"設定值。"
 
 #: src/libslic3r/PrintConfig.cpp:5066
 msgid "Data directory"
@@ -5906,7 +5906,7 @@ msgstr "位置"
 msgid ""
 "Position of the extruder at the beginning of the custom G-code block. If the "
 "custom G-code travels somewhere else, it should write to this variable so "
-"PrusaSlicer knows where it travels from when it gets control back."
+"LibreSlicer knows where it travels from when it gets control back."
 msgstr ""
 
 #: src/libslic3r/PrintConfig.cpp:5119 src/slic3r/GUI/Tab.cpp:3293
@@ -5917,7 +5917,7 @@ msgstr "回抽"
 msgid ""
 "Retraction state at the beginning of the custom G-code block. If the custom "
 "G-code moves the extruder axis, it should write to this variable so "
-"PrusaSlicer deretracts correctly when it gets control back."
+"LibreSlicer deretracts correctly when it gets control back."
 msgstr ""
 
 #: src/libslic3r/PrintConfig.cpp:5124
@@ -6555,12 +6555,12 @@ msgstr "取得設定快照失敗。"
 
 #: src/slic3r/Config/Snapshot.cpp:602
 msgid ""
-"PrusaSlicer has encountered an error while taking a configuration snapshot."
-msgstr "PrusaSlicer 在取得設定快照時遇到錯誤。"
+"LibreSlicer has encountered an error while taking a configuration snapshot."
+msgstr "LibreSlicer 在取得設定快照時遇到錯誤。"
 
 #: src/slic3r/Config/Snapshot.cpp:603
-msgid "PrusaSlicer error"
-msgstr "PrusaSlicer 錯誤"
+msgid "LibreSlicer error"
+msgstr "LibreSlicer 錯誤"
 
 #: src/slic3r/Config/Snapshot.cpp:605
 msgid "Continue"
@@ -6605,7 +6605,7 @@ msgstr "GNU 通用公共許可證，版本 3"
 
 #: src/slic3r/GUI/AboutDialog.cpp:284
 msgid ""
-"PrusaSlicer is based on Slic3r by Alessandro Ranellucci and the RepRap "
+"LibreSlicer is based on Slic3r by Alessandro Ranellucci and the RepRap "
 "community."
 msgstr "Prusaslicer軟體是基於Alessandro Ranellucci和Reprap 社區的Slic3R軟體。"
 
@@ -6706,14 +6706,14 @@ msgstr ""
 
 #: src/slic3r/GUI/BackgroundSlicingProcess.cpp:91
 #, boost-format
-msgid "PrusaSlicer has encountered a fatal error: \"%1%\""
-msgstr "PrusaSlicer 遇到嚴重的錯誤 : \"%1%\""
+msgid "LibreSlicer has encountered a fatal error: \"%1%\""
+msgstr "LibreSlicer 遇到嚴重的錯誤 : \"%1%\""
 
 #: src/slic3r/GUI/BackgroundSlicingProcess.cpp:92
 msgid ""
-"Please save your project and restart PrusaSlicer. We would be glad if you "
+"Please save your project and restart LibreSlicer. We would be glad if you "
 "reported the issue."
-msgstr "請儲存您的項目並重新啟動 PrusaSlicer，我們會很高興收到您回報這個錯誤。"
+msgstr "請儲存您的項目並重新啟動 LibreSlicer，我們會很高興收到您回報這個錯誤。"
 
 #: src/slic3r/GUI/BackgroundSlicingProcess.cpp:169
 #: src/slic3r/GUI/BackgroundSlicingProcess.cpp:207
@@ -7150,8 +7150,8 @@ msgid "Active"
 msgstr "有效的"
 
 #: src/slic3r/GUI/ConfigSnapshotDialog.cpp:64
-msgid "PrusaSlicer version"
-msgstr "PrusaSlicer 版本"
+msgid "LibreSlicer version"
+msgstr "LibreSlicer 版本"
 
 #: src/slic3r/GUI/ConfigSnapshotDialog.cpp:69
 msgid "filaments"
@@ -7166,12 +7166,12 @@ msgid "version"
 msgstr "版本"
 
 #: src/slic3r/GUI/ConfigSnapshotDialog.cpp:80
-msgid "min PrusaSlicer version"
-msgstr "最低 PrusaSlicer 版本"
+msgid "min LibreSlicer version"
+msgstr "最低 LibreSlicer 版本"
 
 #: src/slic3r/GUI/ConfigSnapshotDialog.cpp:82
-msgid "max PrusaSlicer version"
-msgstr "最高 PrusaSlicer 版本"
+msgid "max LibreSlicer version"
+msgstr "最高 LibreSlicer 版本"
 
 #: src/slic3r/GUI/ConfigSnapshotDialog.cpp:85
 msgid "model"
@@ -7431,7 +7431,7 @@ msgstr ""
 msgid "Allow built-in downloader"
 msgstr ""
 
-#. TRN ConfigWizard : Downloader : %1% = "printables.com", %2% = "PrusaSlicer"
+#. TRN ConfigWizard : Downloader : %1% = "printables.com", %2% = "LibreSlicer"
 #: src/slic3r/GUI/ConfigWizard.cpp:1502
 #, boost-format
 msgid ""
@@ -7474,12 +7474,12 @@ msgid "Files association"
 msgstr "檔案關聯"
 
 #: src/slic3r/GUI/ConfigWizard.cpp:1655 src/slic3r/GUI/Preferences.cpp:326
-msgid "Associate .3mf files to PrusaSlicer"
-msgstr "將 .3mf 檔案關聯至 PrusaSlicer"
+msgid "Associate .3mf files to LibreSlicer"
+msgstr "將 .3mf 檔案關聯至 LibreSlicer"
 
 #: src/slic3r/GUI/ConfigWizard.cpp:1656 src/slic3r/GUI/Preferences.cpp:331
-msgid "Associate .stl files to PrusaSlicer"
-msgstr "將 .stl 檔案關聯至 PrusaSlicer"
+msgid "Associate .stl files to LibreSlicer"
+msgstr "將 .stl 檔案關聯至 LibreSlicer"
 
 #: src/slic3r/GUI/ConfigWizard.cpp:1666
 msgid "View mode"
@@ -7487,7 +7487,7 @@ msgstr "觀看模式"
 
 #: src/slic3r/GUI/ConfigWizard.cpp:1668
 msgid ""
-"PrusaSlicer's user interfaces comes in three variants:\n"
+"LibreSlicer's user interfaces comes in three variants:\n"
 "Simple, Advanced, and Expert.\n"
 "The Simple mode shows only the most frequently used settings relevant for "
 "regular 3D printing. The other two offer progressively more sophisticated "
@@ -7809,7 +7809,7 @@ msgstr "由於找不到套用程式目錄，因此執行桌面整合失敗了。
 #: src/slic3r/GUI/DesktopIntegrationDialog.cpp:428
 msgid ""
 "Performing desktop integration failed - could not create Gcodeviewer desktop "
-"file. PrusaSlicer desktop file was probably created successfully."
+"file. LibreSlicer desktop file was probably created successfully."
 msgstr ""
 "執行桌面整合失敗 - 無法建立 GcodeViewer 桌面檔案。但 Prusaslicer 桌面檔案可能"
 "成功建立了。"
@@ -11101,10 +11101,10 @@ msgstr "%1% 已取代為 %2%"
 
 #: src/slic3r/GUI/GUI.cpp:325
 msgid ""
-"Most likely the configuration was produced by a newer version of PrusaSlicer "
-"or by some PrusaSlicer fork."
+"Most likely the configuration was produced by a newer version of LibreSlicer "
+"or by some LibreSlicer fork."
 msgstr ""
-"那個設定很可能是由更新版本的 PrusaSlicer 或某些 PrusaSlicer 分支產生的。"
+"那個設定很可能是由更新版本的 LibreSlicer 或某些 LibreSlicer 分支產生的。"
 
 #: src/slic3r/GUI/GUI.cpp:326
 msgid "The following values were substituted:"
@@ -11217,13 +11217,13 @@ msgstr "發生嚴重錯誤"
 
 #: src/slic3r/GUI/GUI_App.cpp:749
 msgid ""
-"PrusaSlicer has encountered a localization error. Please report to "
-"PrusaSlicer team, what language was active and in which scenario this issue "
+"LibreSlicer has encountered a localization error. Please report to "
+"LibreSlicer team, what language was active and in which scenario this issue "
 "happened. Thank you.\n"
 "\n"
 "The application will now terminate."
 msgstr ""
-"PrusaSlicer 遇到了當地語系翻譯錯誤。請向PrusaSlicer 團隊報告，哪些語言是有效"
+"LibreSlicer 遇到了當地語系翻譯錯誤。請向LibreSlicer 團隊報告，哪些語言是有效"
 "的，以及此問題發生在哪個狀況中。謝謝。\n"
 "\n"
 "現在套用程式將終止。"
@@ -11281,17 +11281,17 @@ msgstr "繼續並匯入更新的設定？"
 
 #: src/slic3r/GUI/GUI_App.cpp:1119
 msgid ""
-"You are running a 32 bit build of PrusaSlicer on 64-bit Windows.\n"
-"32 bit build of PrusaSlicer will likely not be able to utilize all the RAM "
+"You are running a 32 bit build of LibreSlicer on 64-bit Windows.\n"
+"32 bit build of LibreSlicer will likely not be able to utilize all the RAM "
 "available in the system.\n"
-"Please download and install a 64 bit build of PrusaSlicer from https://www."
+"Please download and install a 64 bit build of LibreSlicer from https://www."
 "prusa3d.cz/prusaslicer/.\n"
 "Do you wish to continue?"
 msgstr ""
-"您正在 64 位 Windows 上運行 32 位版本的 PrusaSlicer。\n"
-"PrusaSlicer 的 32 位構建可能無法利用系統中所有可用的 RAM。\n"
+"您正在 64 位 Windows 上運行 32 位版本的 LibreSlicer。\n"
+"LibreSlicer 的 32 位構建可能無法利用系統中所有可用的 RAM。\n"
 "請從 https://www.prusa3d.cz/prusaslicer/ 下載並安裝 64 位版本的 "
-"PrusaSlicer。\n"
+"LibreSlicer。\n"
 "你想繼續嗎？"
 
 #: src/slic3r/GUI/GUI_App.cpp:1206
@@ -11330,13 +11330,13 @@ msgid "Restore window position on start"
 msgstr "啟動時恢復視窗位置"
 
 #: src/slic3r/GUI/GUI_App.cpp:1424
-msgid "PrusaSlicer started after a crash"
-msgstr "PrusaSlicer 在當機後重新啟動"
+msgid "LibreSlicer started after a crash"
+msgstr "LibreSlicer 在當機後重新啟動"
 
 #: src/slic3r/GUI/GUI_App.cpp:1425
 #, boost-format
 msgid ""
-"PrusaSlicer crashed last time when attempting to set window position.\n"
+"LibreSlicer crashed last time when attempting to set window position.\n"
 "We are sorry for the inconvenience, it unfortunately happens with certain "
 "multiple-monitor setups.\n"
 "More precise reason for the crash: \"%1%\".\n"
@@ -11345,7 +11345,7 @@ msgid ""
 "To avoid this problem, consider disabling \"%4%\" in \"Preferences\". "
 "Otherwise, the application will most likely crash again next time."
 msgstr ""
-"上次嘗試設定視窗位置時，PrusaSlicer 當機了。\n"
+"上次嘗試設定視窗位置時，LibreSlicer 當機了。\n"
 "對於給您帶來的不便，我們深表歉意。不幸的是在某些多顯示器設定下會發生這種情"
 "況。\n"
 "更詳細的當機原因是：“%1%”。\n"
@@ -11371,11 +11371,11 @@ msgstr "您有以下預設，其中包含“打印主機上傳”的已儲存選
 
 #: src/slic3r/GUI/GUI_App.cpp:1873
 msgid ""
-"But since this version of PrusaSlicer we don't show this information in "
+"But since this version of LibreSlicer we don't show this information in "
 "Printer Settings anymore.\n"
 "Settings will be available in physical printers settings."
 msgstr ""
-"但由於此版本的PrusaSlicer 許可證，我們不再在打印機設定中顯示此資訊。\n"
+"但由於此版本的LibreSlicer 許可證，我們不再在打印機設定中顯示此資訊。\n"
 "這個設定將在實體打印機的設定中提供。"
 
 #: src/slic3r/GUI/GUI_App.cpp:1875
@@ -11652,16 +11652,16 @@ msgid "Open hyperlink in default browser?"
 msgstr "在預設瀏覽器中打開超連結？"
 
 #: src/slic3r/GUI/GUI_App.cpp:3385 src/slic3r/GUI/GUI_App.cpp:3408
-msgid "PrusaSlicer: Open hyperlink"
-msgstr "PrusaSlicer：打開超連結"
+msgid "LibreSlicer: Open hyperlink"
+msgstr "LibreSlicer：打開超連結"
 
 #: src/slic3r/GUI/GUI_App.cpp:3390 src/slic3r/GUI/Preferences.cpp:638
 msgid "Suppress to open hyperlink in browser"
 msgstr "禁止在瀏覽器中打開超連結"
 
 #: src/slic3r/GUI/GUI_App.cpp:3392 src/slic3r/GUI/Plater.cpp:1826
-msgid "PrusaSlicer will remember your choice."
-msgstr "PrusaSlicer 會記住您的選擇。"
+msgid "LibreSlicer will remember your choice."
+msgstr "LibreSlicer 會記住您的選擇。"
 
 #: src/slic3r/GUI/GUI_App.cpp:3393
 msgid "You will not be asked about it again on hyperlinks hovering."
@@ -11678,8 +11678,8 @@ msgstr ""
 
 #: src/slic3r/GUI/GUI_App.cpp:3396 src/slic3r/GUI/Plater.cpp:1832
 #: src/slic3r/GUI/UnsavedChangesDialog.cpp:937
-msgid "PrusaSlicer: Don't ask me again"
-msgstr "PrusaSlicer：別再問我了"
+msgid "LibreSlicer: Don't ask me again"
+msgstr "LibreSlicer：別再問我了"
 
 #: src/slic3r/GUI/GUI_App.cpp:3475
 msgid "Check for application update has failed."
@@ -11992,8 +11992,8 @@ msgid "Fill the remaining area of bed with instances of the selected object"
 msgstr "用所選模型的實例填滿載台的剩餘區域"
 
 #: src/slic3r/GUI/GUI_Init.cpp:68 src/slic3r/GUI/GUI_Init.cpp:71
-msgid "PrusaSlicer GUI initialization failed"
-msgstr "PrusaSlicer GUI 初始化失敗"
+msgid "LibreSlicer GUI initialization failed"
+msgstr "LibreSlicer GUI 初始化失敗"
 
 #: src/slic3r/GUI/GUI_Init.cpp:71
 #, boost-format
@@ -12233,7 +12233,7 @@ msgstr ""
 #: src/slic3r/GUI/GUI_ObjectList.cpp:2002
 msgid ""
 "This action will break a cut information.\n"
-"After that PrusaSlicer can't guarantee model consistency."
+"After that LibreSlicer can't guarantee model consistency."
 msgstr ""
 
 #: src/slic3r/GUI/GUI_ObjectList.cpp:2004
@@ -13342,8 +13342,8 @@ msgstr "快捷鍵"
 
 #: src/slic3r/GUI/MainFrame.cpp:88 src/slic3r/GUI/MainFrame.cpp:102
 #: src/slic3r/GUI/MainFrame.cpp:1531
-msgid "Open a new PrusaSlicer instance"
-msgstr "打開一個新的PrusaSlicer實例"
+msgid "Open a new LibreSlicer instance"
+msgstr "打開一個新的LibreSlicer實例"
 
 #: src/slic3r/GUI/MainFrame.cpp:91 src/slic3r/GUI/MainFrame.cpp:104
 msgid "G-code preview"
@@ -13354,24 +13354,24 @@ msgid "Open G-code viewer"
 msgstr "打開 G-code查看器"
 
 #: src/slic3r/GUI/MainFrame.cpp:102 src/slic3r/GUI/MainFrame.cpp:1656
-msgid "Open PrusaSlicer"
-msgstr "打開PrusaSlicer"
+msgid "Open LibreSlicer"
+msgstr "打開LibreSlicer"
 
 #: src/slic3r/GUI/MainFrame.cpp:104
 msgid "Open new G-code viewer"
 msgstr "打開新的 G-code查看器"
 
 #: src/slic3r/GUI/MainFrame.cpp:238
-msgid "Closing PrusaSlicer. Current project is modified."
-msgstr "關閉 PrusaSlicer。當前項目已修改。"
+msgid "Closing LibreSlicer. Current project is modified."
+msgstr "關閉 LibreSlicer。當前項目已修改。"
 
 #: src/slic3r/GUI/MainFrame.cpp:245
-msgid "PrusaSlicer is closing"
-msgstr "PrusaSlicer 正在關閉"
+msgid "LibreSlicer is closing"
+msgstr "LibreSlicer 正在關閉"
 
 #: src/slic3r/GUI/MainFrame.cpp:245
-msgid "Closing PrusaSlicer while some presets are modified."
-msgstr "在修改某些預設時關閉 PrusaSlicer。"
+msgid "Closing LibreSlicer while some presets are modified."
+msgstr "在修改某些預設時關閉 LibreSlicer。"
 
 #: src/slic3r/GUI/MainFrame.cpp:341 src/slic3r/GUI/MainFrame.cpp:391
 #: src/slic3r/GUI/Tab.hpp:444 src/slic3r/GUI/Tab.hpp:589
@@ -13989,8 +13989,8 @@ msgid "&Open G-code"
 msgstr "打開G-code碼(&O)"
 
 #: src/slic3r/GUI/MainFrame.cpp:1656
-msgid "Open &PrusaSlicer"
-msgstr "打開PrusaSlicer(&P)"
+msgid "Open &LibreSlicer"
+msgstr "打開LibreSlicer(&P)"
 
 #: src/slic3r/GUI/MainFrame.cpp:1670
 msgid "Show legend"
@@ -14180,7 +14180,7 @@ msgstr "匯出。"
 
 #: src/slic3r/GUI/NotificationManager.hpp:938
 msgid ""
-"PrusaSlicer recieved a download request from Printables.com, but it's not "
+"LibreSlicer recieved a download request from Printables.com, but it's not "
 "allowed. You can allow it"
 msgstr ""
 
@@ -14317,7 +14317,7 @@ msgstr "範圍"
 #: src/slic3r/GUI/OpenGLManager.cpp:381
 #, c-format, boost-format
 msgid ""
-"PrusaSlicer requires OpenGL ES 2.0 capable graphics driver to run "
+"LibreSlicer requires OpenGL ES 2.0 capable graphics driver to run "
 "correctly, \n"
 "while OpenGL version %s, render %s, vendor %s was detected."
 msgstr ""
@@ -14325,17 +14325,17 @@ msgstr ""
 #: src/slic3r/GUI/OpenGLManager.cpp:384
 #, c-format, boost-format
 msgid ""
-"PrusaSlicer requires OpenGL %s capable graphics driver to run correctly, \n"
+"LibreSlicer requires OpenGL %s capable graphics driver to run correctly, \n"
 "while OpenGL version %s, render %s, vendor %s was detected."
 msgstr ""
 
 #: src/slic3r/GUI/OpenGLManager.cpp:387
 #, c-format, boost-format
 msgid ""
-"PrusaSlicer requires OpenGL 2.0 capable graphics driver to run correctly, \n"
+"LibreSlicer requires OpenGL 2.0 capable graphics driver to run correctly, \n"
 "while OpenGL version %s, render %s, vendor %s was detected."
 msgstr ""
-"PrusaSlicer 需要支援 OpenGL 2.0 的圖形驅動程式才能正常運作，\n"
+"LibreSlicer 需要支援 OpenGL 2.0 的圖形驅動程式才能正常運作，\n"
 "檢測到 OpenGL 版本 %s、算繪 %s、供應商 %s。"
 
 #: src/slic3r/GUI/OpenGLManager.cpp:391
@@ -14344,11 +14344,11 @@ msgstr "您可能需要更新顯示卡驅動程式。"
 
 #: src/slic3r/GUI/OpenGLManager.cpp:394
 msgid ""
-"As a workaround, you may run PrusaSlicer with a software rendered 3D "
+"As a workaround, you may run LibreSlicer with a software rendered 3D "
 "graphics by running prusa-slicer.exe with the --sw-renderer parameter."
 msgstr ""
 "解決方式是經由命令列視窗執行 prusa-slicer.exe --sw-renderer 來啟動帶有軟體渲"
-"染 3D 圖形功能的 PrusaSlicer。"
+"染 3D 圖形功能的 LibreSlicer。"
 
 #: src/slic3r/GUI/OpenGLManager.cpp:396
 msgid "Unsupported OpenGL version"
@@ -14671,11 +14671,11 @@ msgstr "是否詢問項目中未儲存的變更"
 #: src/slic3r/GUI/Plater.cpp:1827
 msgid ""
 "You will not be asked about it again, when: \n"
-"- Closing PrusaSlicer,\n"
+"- Closing LibreSlicer,\n"
 "- Loading or creating a new project"
 msgstr ""
 "在以下情況下，您不會再被問到：\n"
-"- 關閉 PrusaSlicer，\n"
+"- 關閉 LibreSlicer，\n"
 "- 匯入或建立新項目"
 
 #: src/slic3r/GUI/Plater.cpp:2294
@@ -14701,11 +14701,11 @@ msgstr "展開側邊欄"
 #: src/slic3r/GUI/Plater.cpp:2495
 msgid ""
 "The preset below was temporarily installed on the active instance of "
-"PrusaSlicer"
+"LibreSlicer"
 msgid_plural ""
 "The presets below were temporarily installed on the active instance of "
-"PrusaSlicer"
-msgstr[0] "下面的預設是臨時安裝在 PrusaSlicer 的啟用實例上"
+"LibreSlicer"
+msgstr[0] "下面的預設是臨時安裝在 LibreSlicer 的啟用實例上"
 
 #. TRN The placeholder is either "3MF" or "AMF"
 #: src/slic3r/GUI/Plater.cpp:2629
@@ -14740,15 +14740,15 @@ msgstr "模型的大小為零"
 #, c-format, boost-format
 msgid ""
 "The dimensions of the object from file %s seem to be defined in meters.\n"
-"The internal unit of PrusaSlicer is a millimeter. Do you want to recalculate "
+"The internal unit of LibreSlicer is a millimeter. Do you want to recalculate "
 "the dimensions of the object?"
 msgid_plural ""
 "The dimensions of some objects from file %s seem to be defined in meters.\n"
-"The internal unit of PrusaSlicer is a millimeter. Do you want to recalculate "
+"The internal unit of LibreSlicer is a millimeter. Do you want to recalculate "
 "the dimensions of these objects?"
 msgstr[0] ""
 "檔案 %s 中模型的尺寸似乎是以公尺(Metre)為單位定義的。\n"
-"PrusaSlicer 的內部單位是公釐(mm)。是否要重新計算模型的尺寸？"
+"LibreSlicer 的內部單位是公釐(mm)。是否要重新計算模型的尺寸？"
 
 #: src/slic3r/GUI/Plater.cpp:2708 src/slic3r/GUI/Plater.cpp:2730
 msgid "The object is too small"
@@ -14762,15 +14762,15 @@ msgstr "應用於其他的正在匯入的小模型。"
 #, c-format, boost-format
 msgid ""
 "The dimensions of the object from file %s seem to be defined in inches.\n"
-"The internal unit of PrusaSlicer is a millimeter. Do you want to recalculate "
+"The internal unit of LibreSlicer is a millimeter. Do you want to recalculate "
 "the dimensions of the object?"
 msgid_plural ""
 "The dimensions of some objects from file %s seem to be defined in inches.\n"
-"The internal unit of PrusaSlicer is a millimeter. Do you want to recalculate "
+"The internal unit of LibreSlicer is a millimeter. Do you want to recalculate "
 "the dimensions of these objects?"
 msgstr[0] ""
 "檔案 %s 中模型的尺寸似乎是以英寸(inches)為單位定義的。\n"
-"PrusaSlicer 的內部單位是公釐(mm)。是否要重新計算模型的尺寸？"
+"LibreSlicer 的內部單位是公釐(mm)。是否要重新計算模型的尺寸？"
 
 #: src/slic3r/GUI/Plater.cpp:2744
 msgid ""
@@ -14847,7 +14847,7 @@ msgstr ""
 #: src/slic3r/GUI/Plater.cpp:3139
 msgid ""
 "This action will break a cut information.\n"
-"After that PrusaSlicer can't guarantee model consistency"
+"After that LibreSlicer can't guarantee model consistency"
 msgstr ""
 
 #: src/slic3r/GUI/Plater.cpp:3142
@@ -15123,7 +15123,7 @@ msgid "Import 3D models"
 msgstr ""
 
 #: src/slic3r/GUI/Plater.cpp:5832
-msgid "Start a new instance of PrusaSlicer"
+msgid "Start a new instance of LibreSlicer"
 msgstr ""
 
 #: src/slic3r/GUI/Plater.cpp:5846
@@ -15168,7 +15168,7 @@ msgid "Import config only"
 msgstr "僅匯入設定"
 
 #: src/slic3r/GUI/Plater.cpp:6187
-msgid "Start new PrusaSlicer instance"
+msgid "Start new LibreSlicer instance"
 msgstr ""
 
 #: src/slic3r/GUI/Plater.cpp:6190
@@ -15339,7 +15339,7 @@ msgid ""
 "If this is enabled, Slic3r will prompt the last output directory instead of "
 "the one containing the input files."
 msgstr ""
-"如果啟用這個，PrusaSlicer 將提示最後一次輸出目錄而不是原來輸入這個檔案的目"
+"如果啟用這個，LibreSlicer 將提示最後一次輸出目錄而不是原來輸入這個檔案的目"
 "錄。"
 
 #: src/slic3r/GUI/Preferences.cpp:297
@@ -15350,7 +15350,7 @@ msgstr "自動置中零件"
 msgid ""
 "If this is enabled, Slic3r will auto-center objects around the print bed "
 "center."
-msgstr "如果啟用這個，PrusaSlicer 將以載台中心自動置中模型。"
+msgstr "如果啟用這個，LibreSlicer 將以載台中心自動置中模型。"
 
 #: src/slic3r/GUI/Preferences.cpp:302
 msgid "Background processing"
@@ -15361,7 +15361,7 @@ msgid ""
 "If this is enabled, Slic3r will pre-process objects as soon as they're "
 "loaded in order to save time when exporting G-code."
 msgstr ""
-"如果啟用此功能，PrusaSlicer 將在匯入模型後立即對其進行預先處理，以便在匯出 G-"
+"如果啟用此功能，LibreSlicer 將在匯入模型後立即對其進行預先處理，以便在匯出 G-"
 "code 時節省時間。"
 
 #: src/slic3r/GUI/Preferences.cpp:308
@@ -15387,12 +15387,12 @@ msgid ""
 msgstr "如果啟用這個，則允許從磁碟機重新匯入命令在調用時自動查詢並匯入檔案。"
 
 #: src/slic3r/GUI/Preferences.cpp:327
-msgid "If enabled, sets PrusaSlicer as default application to open .3mf files."
-msgstr "如果啟用，PrusaSlicer 將成為打開.3mf檔的預設應用程式。"
+msgid "If enabled, sets LibreSlicer as default application to open .3mf files."
+msgstr "如果啟用，LibreSlicer 將成為打開.3mf檔的預設應用程式。"
 
 #: src/slic3r/GUI/Preferences.cpp:332
-msgid "If enabled, sets PrusaSlicer as default application to open .stl files."
-msgstr "如果啟用，PrusaSlicer 將成為打開stl檔的預設應用程式。"
+msgid "If enabled, sets LibreSlicer as default application to open .stl files."
+msgstr "如果啟用，LibreSlicer 將成為打開stl檔的預設應用程式。"
 
 #: src/slic3r/GUI/Preferences.cpp:341
 msgid ""
@@ -15401,7 +15401,7 @@ msgid ""
 "When a new preset version becomes available it is offered at application "
 "startup."
 msgstr ""
-"如果啟用，PrusaSlicer 會在背景下載系統預設的更新。這些更新被下載到一個臨時位"
+"如果啟用，LibreSlicer 會在背景下載系統預設的更新。這些更新被下載到一個臨時位"
 "置。當新的版本可用時，它會在應用程式啟動時提供您使用。"
 
 #: src/slic3r/GUI/Preferences.cpp:346
@@ -15449,8 +15449,8 @@ msgid ""
 msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:371 src/slic3r/GUI/Preferences.cpp:375
-msgid "Allow just a single PrusaSlicer instance"
-msgstr "只允許一個 PrusaSlicer 執行實例"
+msgid "Allow just a single LibreSlicer instance"
+msgstr "只允許一個 LibreSlicer 執行實例"
 
 #: src/slic3r/GUI/Preferences.cpp:372
 msgid ""
@@ -15463,21 +15463,21 @@ msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:376
 msgid ""
-"If this is enabled, when starting PrusaSlicer and another instance of the "
-"same PrusaSlicer is already running, that instance will be reactivated "
+"If this is enabled, when starting LibreSlicer and another instance of the "
+"same LibreSlicer is already running, that instance will be reactivated "
 "instead."
 msgstr ""
-"如果啟用了此功能，則當啟動了 PrusaSlicer 且同一 PrusaSlicer 的另一個實例已在"
+"如果啟用了此功能，則當啟動了 LibreSlicer 且同一 LibreSlicer 的另一個實例已在"
 "執行時，該實例將被重新啟動。"
 
 #: src/slic3r/GUI/Preferences.cpp:384
 msgid ""
 "Always ask for unsaved changes in project, when: \n"
-"- Closing PrusaSlicer,\n"
+"- Closing LibreSlicer,\n"
 "- Loading or creating a new project"
 msgstr ""
 "在以下情況下，總是詢問項目中未儲存的變更：\n"
-"- 關閉 PrusaSlicer，\n"
+"- 關閉 LibreSlicer，\n"
 "- 匯入或建立新項目"
 
 #: src/slic3r/GUI/Preferences.cpp:392
@@ -15490,11 +15490,11 @@ msgstr "關閉應用程式或匯入新項目時要求儲存未儲存的預設變
 #: src/slic3r/GUI/Preferences.cpp:393
 msgid ""
 "Always ask for unsaved changes in presets, when: \n"
-"- Closing PrusaSlicer while some presets are modified,\n"
+"- Closing LibreSlicer while some presets are modified,\n"
 "- Loading a new project while some presets are modified"
 msgstr ""
 "在以下情況下，始終要求對預設進行未儲存的變更：\n"
-"- 在修改某些預設時關閉 PrusaSlicer，\n"
+"- 在修改某些預設時關閉 LibreSlicer，\n"
 "- 在修改某些預設時匯入新項目"
 
 #: src/slic3r/GUI/Preferences.cpp:399
@@ -15518,24 +15518,24 @@ msgid "Always ask for unsaved changes in presets when creating new project"
 msgstr "建立新項目時始終詢問未儲存的預設變更"
 
 #: src/slic3r/GUI/Preferences.cpp:411
-msgid "Associate .gcode files to PrusaSlicer G-code Viewer"
-msgstr "將 .gcode 檔案關聯到 PrusaSlicer 的 G-code 檢視器"
+msgid "Associate .gcode files to LibreSlicer G-code Viewer"
+msgstr "將 .gcode 檔案關聯到 LibreSlicer 的 G-code 檢視器"
 
 #: src/slic3r/GUI/Preferences.cpp:412
 msgid ""
-"If enabled, sets PrusaSlicer G-code Viewer as default application to open ."
+"If enabled, sets LibreSlicer G-code Viewer as default application to open ."
 "gcode files."
 msgstr ""
-"如果啟用，將以 PrusaSlicer 的 G-code 檢視器設定為打開 .gcode 檔案的預設應用程"
+"如果啟用，將以 LibreSlicer 的 G-code 檢視器設定為打開 .gcode 檔案的預設應用程"
 "式。"
 
 #: src/slic3r/GUI/Preferences.cpp:415
-msgid "Associate .bgcode files to PrusaSlicer G-code Viewer"
+msgid "Associate .bgcode files to LibreSlicer G-code Viewer"
 msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:416
 msgid ""
-"If enabled, sets PrusaSlicer G-code Viewer as default application to open ."
+"If enabled, sets LibreSlicer G-code Viewer as default application to open ."
 "bgcode files."
 msgstr ""
 
@@ -15556,8 +15556,8 @@ msgid "Show splash screen"
 msgstr "顯示啟動畫面"
 
 #: src/slic3r/GUI/Preferences.cpp:439
-msgid "If enabled, PrusaSlicer will be open at the position it was closed"
-msgstr "如果啟用，PrusaSlicer 將在上一次關閉時的位置打開"
+msgid "If enabled, LibreSlicer will be open at the position it was closed"
+msgstr "如果啟用，LibreSlicer 將在上一次關閉時的位置打開"
 
 #: src/slic3r/GUI/Preferences.cpp:444
 msgid "Clear Undo / Redo stack on new project"
@@ -15736,7 +15736,7 @@ msgid ""
 msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:639
-msgid "If enabled, PrusaSlicer will not open a hyperlinks in your browser."
+msgid "If enabled, LibreSlicer will not open a hyperlinks in your browser."
 msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:645
@@ -15744,7 +15744,7 @@ msgid "Allow downloads from Printables.com"
 msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:646
-msgid "If enabled, PrusaSlicer will be allowed to download from Printables.com"
+msgid "If enabled, LibreSlicer will be allowed to download from Printables.com"
 msgstr ""
 
 #: src/slic3r/GUI/Preferences.cpp:656
@@ -16442,13 +16442,13 @@ msgid ""
 "identify you later. To detect duplicate entries, a unique number derived "
 "from your system is sent, but the source information cannot be "
 "reconstructed. Apart from that, only general data about your OS, hardware "
-"and OpenGL installation are sent. PrusaSlicer is open source, if you want to "
+"and OpenGL installation are sent. LibreSlicer is open source, if you want to "
 "inspect the code actually performing the communication, see %1%."
 msgstr ""
 "我們不會對外發送與接收任何個人資訊，也不會發送和接收任何可以讓我們日後識別您"
 "身份的資訊。為了檢測重複的條目，系統會發送一個從您系統產生的唯一編號，但這個"
 "將無法重建來源資訊。除此之外，只會發送有關您的作業系統、硬體和 OpenGL 安裝的"
-"一般資料。 PrusaSlicer 是開源的，如果您想檢查實際執行通信的編碼，請參閱 %1%。"
+"一般資料。 LibreSlicer 是開源的，如果您想檢查實際執行通信的編碼，請參閱 %1%。"
 
 #: src/slic3r/GUI/SendSystemInfoDialog.cpp:624
 msgid "Show verbatim data that will be sent"
@@ -16487,8 +16487,8 @@ msgid "System Information"
 msgstr "系統資訊"
 
 #: src/slic3r/GUI/SysInfoDialog.cpp:166
-msgid "Blacklisted libraries loaded into PrusaSlicer process:"
-msgstr "匯入到 PrusaSlicer 處理程式中的黑名單："
+msgid "Blacklisted libraries loaded into LibreSlicer process:"
+msgstr "匯入到 LibreSlicer 處理程式中的黑名單："
 
 #: src/slic3r/GUI/SysInfoDialog.cpp:178
 msgid "Eigen vectorization supported:"
@@ -16837,14 +16837,14 @@ msgid ""
 "right of the Printer profiles combo box, by selecting the \"Add physical "
 "printer\" item in the Printer combo box. The Physical Printer profile editor "
 "opens also when clicking on the \"cog\" icon in the Printer settings tab. "
-"The Physical Printer profiles are being stored into PrusaSlicer/"
+"The Physical Printer profiles are being stored into LibreSlicer/"
 "physical_printer directory."
 msgstr ""
 "注意：此組所有的參數都移動到實體打印機設定（參見變更日誌）。\n"
 "\n"
 "按一下打印機設定檔組合框的「cog」圖示右側，經由選擇打印機組合框中的「添加實體"
 "打印機」項目建立新的實體打印機設定檔。按一下打印機設定選項卡中的「cog」圖示"
-"時，實體打印機設定檔編輯器也會打開。實體打印機設定檔存儲到PrusaSlicer /"
+"時，實體打印機設定檔編輯器也會打開。實體打印機設定檔存儲到LibreSlicer /"
 "physical_printer目錄中。"
 
 #: src/slic3r/GUI/Tab.cpp:2594
@@ -17366,16 +17366,16 @@ msgstr "下次切換預設時，不會詢問您預設中未儲存的變更"
 msgid ""
 "You will not be asked about the unsaved changes in presets the next time "
 "you: \n"
-"- Closing PrusaSlicer while some presets are modified,\n"
+"- Closing LibreSlicer while some presets are modified,\n"
 "- Loading a new project while some presets are modified"
 msgstr ""
 "下次您不會詢問有關預設中未儲存變更的資訊：\n"
-"- 在修改某些預設時關閉 PrusaSlicer，\n"
+"- 在修改某些預設時關閉 LibreSlicer，\n"
 "- 在修改某些預設時匯入新項目"
 
 #: src/slic3r/GUI/UnsavedChangesDialog.cpp:934
-msgid "PrusaSlicer will remember your action."
-msgstr "PrusaSlicer 會記住你的行動。"
+msgid "LibreSlicer will remember your action."
+msgstr "LibreSlicer 會記住你的行動。"
 
 #: src/slic3r/GUI/UnsavedChangesDialog.cpp:935
 #, boost-format
@@ -17627,11 +17627,11 @@ msgstr "設定更新"
 
 #: src/slic3r/GUI/UpdateDialogs.cpp:276
 msgid ""
-"PrusaSlicer is not using the newest configuration available.\n"
+"LibreSlicer is not using the newest configuration available.\n"
 "Configuration Wizard may not offer the latest printers, filaments and SLA "
 "materials to be installed."
 msgstr ""
-"PrusaSlicer 沒有可用的最新設定。\n"
+"LibreSlicer 沒有可用的最新設定。\n"
 "設定嚮導可能不提供要安裝的最新打印機、線材和 SLA 材料。"
 
 #: src/slic3r/GUI/UpdateDialogs.cpp:278
@@ -17758,7 +17758,7 @@ msgstr ""
 msgid "For more information please visit our wiki page:"
 msgstr "有關更多資訊，請參考我們的維基頁面："
 
-#. TRN %s = PrusaSlicer
+#. TRN %s = LibreSlicer
 #: src/slic3r/GUI/UpdateDialogs.cpp:478
 #, c-format, boost-format
 msgid "%s 1.40 configuration update"
@@ -17781,7 +17781,7 @@ msgstr "%s 沒有可用的設定更新。"
 msgid "App update"
 msgstr ""
 
-#. TRN %1% is PrusaSlicer
+#. TRN %1% is LibreSlicer
 #: src/slic3r/GUI/UpdateDialogs.cpp:515
 #, boost-format
 msgid "Your %1% is up to date."
@@ -18105,14 +18105,14 @@ msgstr "注意：FlashAir 需要韌體為 2.00.02 或更新版本並啟動上傳
 
 #: src/slic3r/Utils/Http.cpp:79
 msgid ""
-"Could not detect system SSL certificate store. PrusaSlicer will be unable to "
+"Could not detect system SSL certificate store. LibreSlicer will be unable to "
 "establish secure network connections."
-msgstr "無法檢測系統 SSL 憑證儲存。PrusaSlicer 將無法建立安全的網路連結。"
+msgstr "無法檢測系統 SSL 憑證儲存。LibreSlicer 將無法建立安全的網路連結。"
 
 #: src/slic3r/Utils/Http.cpp:84
 #, boost-format
-msgid "PrusaSlicer detected system SSL certificate store in: %1%"
-msgstr "PrusaSlicer 檢測系統 SSL 憑證儲存在： %1%"
+msgid "LibreSlicer detected system SSL certificate store in: %1%"
+msgstr "LibreSlicer 檢測系統 SSL 憑證儲存在： %1%"
 
 #: src/slic3r/Utils/Http.cpp:88
 #, boost-format
@@ -18125,10 +18125,10 @@ msgstr ""
 
 #: src/slic3r/Utils/Http.cpp:97
 msgid ""
-"CURL init has failed. PrusaSlicer will be unable to establish network "
+"CURL init has failed. LibreSlicer will be unable to establish network "
 "connections. See logs for additional details."
 msgstr ""
-"CURL 已經失敗了。PrusaSlicer 將無法建立網路連結。有關其他詳細資訊，請參閱日"
+"CURL 已經失敗了。LibreSlicer 將無法建立網路連結。有關其他詳細資訊，請參閱日"
 "誌。"
 
 #: src/slic3r/Utils/MKS.cpp:61
@@ -18331,12 +18331,12 @@ msgstr ""
 #: resources/data/hints.ini: [hint:Shapes gallery]
 msgid ""
 "Shapes gallery\n"
-"Did you know that PrusaSlicer has a Shapes Gallery? You can use the included "
+"Did you know that LibreSlicer has a Shapes Gallery? You can use the included "
 "models as modifiers, negative volumes or as printable objects. Right-click "
 "the platter and select<a>Add Shape - Gallery</a>."
 msgstr ""
 "形狀庫圖\n"
-"您知道 PrusaSlicer 有一個形狀圖庫嗎？您可以使用其中所包含的模型作為修改器、挖"
+"您知道 LibreSlicer 有一個形狀圖庫嗎？您可以使用其中所包含的模型作為修改器、挖"
 "空模型或直接當作打印模型。右鍵單擊花紋並選取<a>添加形狀 - 圖庫</a>。"
 
 #: resources/data/hints.ini: [hint:Arrange settings]
@@ -18354,12 +18354,12 @@ msgid ""
 "Negative volume\n"
 "Did you know that you can subtract one mesh from another using the Negative "
 "volume modifier? That way you can, for example, create easily resizable "
-"holes directly in PrusaSlicer. Read more in the documentation. (Requires "
+"holes directly in LibreSlicer. Read more in the documentation. (Requires "
 "Advanced or Expert mode.)"
 msgstr ""
 "挖空模型\n"
 "您是否知道可以使用挖空模型修改器從一個網格中減去另一個網格？例如，這樣您就可"
-"以直接在 PrusaSlicer 中建立易於調整大小的孔。在說明檔中可閱讀到更多內容。 "
+"以直接在 LibreSlicer 中建立易於調整大小的孔。在說明檔中可閱讀到更多內容。 "
 "（此功能需要高級或專家模式。）"
 
 #: resources/data/hints.ini: [hint:Simplify mesh]
@@ -18377,11 +18377,11 @@ msgstr ""
 msgid ""
 "Reload from disk\n"
 "Did you know that if you created a newer version of your model, you can "
-"simply reload it in PrusaSlicer? Right-click the model in the 3D view and "
+"simply reload it in LibreSlicer? Right-click the model in the 3D view and "
 "choose Reload from disk. Read more in the documentation."
 msgstr ""
 "從磁碟機重新匯入\n"
-"您知道嗎，如果您建立了模型的更新版本，您可以很簡單的在 PrusaSlicer 中重新匯入"
+"您知道嗎，如果您建立了模型的更新版本，您可以很簡單的在 LibreSlicer 中重新匯入"
 "它？在 3D 檢視裡面按滑鼠右鍵單擊模型並選擇從磁碟機重新匯入。在說明檔中可閱讀"
 "更多資訊。"
 
@@ -18493,10 +18493,10 @@ msgstr ""
 msgid ""
 "Search functionality\n"
 "Did you know that you use the<a>Search</a>tool to quickly find a specific "
-"PrusaSlicer setting? Or use the familiar shortcut <b>Ctrl+F</b>."
+"LibreSlicer setting? Or use the familiar shortcut <b>Ctrl+F</b>."
 msgstr ""
 "搜尋功能\n"
-"您知道您可以使用<a>搜尋</a>工具快速找到特定的 PrusaSlicer 設定嗎？或者您也可"
+"您知道您可以使用<a>搜尋</a>工具快速找到特定的 LibreSlicer 設定嗎？或者您也可"
 "以使用比較熟悉的快捷方式<b>Ctrl+F</b> 。"
 
 #: resources/data/hints.ini: [hint:Box selection]
@@ -18686,17 +18686,17 @@ msgstr ""
 #: resources/data/hints.ini: [hint:Fullscreen mode]
 msgid ""
 "Fullscreen mode\n"
-"Did you know that you can switch PrusaSlicer to fullscreen mode? Use the "
+"Did you know that you can switch LibreSlicer to fullscreen mode? Use the "
 "<b>F11</b> hotkey."
 msgstr ""
-"全螢幕模式 你知道你可以將 PrusaSlicer 切換到全螢幕模式嗎？使用<b>F11</b>熱"
+"全螢幕模式 你知道你可以將 LibreSlicer 切換到全螢幕模式嗎？使用<b>F11</b>熱"
 "鍵。"
 
 #: resources/data/hints.ini: [hint:Printables integration]
 msgid ""
 "Printables.com integration\n"
 "Did you know that when you are browsing Printables.com, you can send 3D "
-"model files to PrusaSlicer with a single click? Learn more in the "
+"model files to LibreSlicer with a single click? Learn more in the "
 "documentation."
 msgstr ""
 

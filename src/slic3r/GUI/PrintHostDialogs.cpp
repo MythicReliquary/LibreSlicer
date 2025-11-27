@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2018 - 2023 Oleksandra Iushchenko @YuSanka, Lukáš Matěna @lukasmatena, David Kocík @kocikdav, Vojtěch Bubník @bubnikv, Lukáš Hejl @hejllukas, Enrico Turri @enricoturri1966, Vojtěch Král @vojtechkral
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "PrintHostDialogs.hpp"
 
@@ -159,7 +159,7 @@ PrintHostSendDialog::PrintHostSendDialog(const fs::path &path, PrintHostPostUplo
 #ifdef __linux__
     // On Linux with GTK2 when text control lose the focus then selection (colored background) disappears but text color stay white
     // and as a result the text is invisible with light mode
-    // see https://github.com/prusa3d/PrusaSlicer/issues/4532
+    // see https://github.com/prusa3d/LibreSlicer/issues/4532
     // Workaround: Unselect text selection explicitly on kill focus
     txt_filename->Bind(wxEVT_KILL_FOCUS, [this](wxEvent& e) {
         e.Skip();

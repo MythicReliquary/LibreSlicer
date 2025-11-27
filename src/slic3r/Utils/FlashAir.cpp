@@ -2,7 +2,7 @@
 ///|/ Copyright (c) 2020 vintagepc
 ///|/ Copyright (c) 2019 Stephan Reichhelm @stephanr
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "FlashAir.hpp"
 

@@ -1,7 +1,7 @@
 ///|/ Copyright (c) Prusa Research 2020 - 2023 Vojtěch Bubník @bubnikv, Lukáš Matěna @lukasmatena, Pavel Mikuš @Godrak
 ///|/ Copyright (c) SuperSlicer 2023 Remi Durand @supermerill
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "SeamPlacer.hpp"
 
@@ -59,7 +59,7 @@ float compute_angle_penalty(float ccw_angle) {
     // ((ℯ^(((1)/(x^(2)*3+1)))-1)/(ℯ-1))*1+((1)/(2+ℯ^(-x)))
     // looks scary, but it is gaussian combined with sigmoid,
     // so that concave points have much smaller penalty over convex ones
-    // https://github.com/prusa3d/PrusaSlicer/tree/master/doc/seam_placement/corner_penalty_function.png
+    // https://github.com/prusa3d/LibreSlicer/tree/master/doc/seam_placement/corner_penalty_function.png
     return gauss(ccw_angle, 0.0f, 1.0f, 3.0f) +
             1.0f / (2 + std::exp(-ccw_angle));
 }

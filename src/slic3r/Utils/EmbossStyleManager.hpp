@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2022 Filip Sykala @Jony01
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef slic3r_EmbossStyleManager_hpp_
 #define slic3r_EmbossStyleManager_hpp_
@@ -42,7 +42,7 @@ public:
     /// Load font style list from config
     /// Also select actual activ font
     /// </summary>
-    /// <param name="app_config">Application configuration loaded from file "PrusaSlicer.ini"
+    /// <param name="app_config">Application configuration loaded from file "LibreSlicer.ini"
     /// + cfg is stored to privat variable</param>
     void init(AppConfig *app_config);
     

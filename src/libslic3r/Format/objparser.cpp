@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2017 - 2021 Lukáš Matěna @lukasmatena, Vojtěch Bubník @bubnikv, Tomáš Mészáros @tamasmeszaros, Enrico Turri @enricoturri1966
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include <stdlib.h>
 #include <string.h>
@@ -17,7 +17,7 @@ namespace ObjParser {
 
 // To fix issues with obj loading on macOS Sonoma, we use the following function instead of strtod that
 // was used before. Apparently the locales are not handled as they should. We already saw this before in
-// https://github.com/prusa3d/PrusaSlicer/issues/10380.
+// https://github.com/prusa3d/LibreSlicer/issues/10380.
 static double strtod_clocale(const char* str, char const** str_end)
 {
 	double val = 0.;

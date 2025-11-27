@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2019 - 2023 David Kocík @kocikdav, Lukáš Matěna @lukasmatena, Roman Beránek @zavorka, Vojtěch Bubník @bubnikv
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "RemovableDriveManager.hpp"
 #include "libslic3r/Platform.hpp"
@@ -880,7 +880,7 @@ void RemovableDriveManager::eject_drive()
 		child.wait(ec);
 		bool success = false;
 		if (ec) {
-            // The wait call can fail, as it did in https://github.com/prusa3d/PrusaSlicer/issues/5507
+            // The wait call can fail, as it did in https://github.com/prusa3d/LibreSlicer/issues/5507
             // It can happen even in cases where the eject is sucessful, but better report it as failed.
             // We did not find a way to reliably retrieve the exit code of the process.
 			BOOST_LOG_TRIVIAL(error) << "boost::process::child::wait() failed during Ejection. State of Ejection is unknown. Error code: " << ec.value();

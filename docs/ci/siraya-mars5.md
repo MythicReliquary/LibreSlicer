@@ -5,7 +5,7 @@ using the Siraya Tech calibration models.
 
 ## Overview
 
-The GitHub Actions workflow `.github/workflows/siraya-mars5.yml` builds a PrusaSlicer/UVTools
+The GitHub Actions workflow `.github/workflows/siraya-mars5.yml` builds a LibreSlicer/UVTools
 based toolchain and slices every STL declared in `third_party/siraya_test_models/manifest.json`.
 For each entry the pipeline:
 
@@ -21,7 +21,7 @@ For each entry the pipeline:
 
 | Tool            | Version pin (workflow)              | Purpose                                 |
 |-----------------|-------------------------------------|-----------------------------------------|
-| PrusaSlicer     | `PRUSASLICER_VERSION` env variable  | Headless slicing + SL1 export           |
+| LibreSlicer     | `PRUSASLICER_VERSION` env variable  | Headless slicing + SL1 export           |
 | UVTools         | `UVTOOLS_VERSION` env variable      | CTB conversion, validation, reporting   |
 | ImageMagick     | Ubuntu package `imagemagick`        | Preview rendering fallback              |
 | Python scripts  | `scripts/fetch_siraya_models.py`    | Model mirroring and hash verification   |

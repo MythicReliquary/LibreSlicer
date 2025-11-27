@@ -6,7 +6,7 @@
 ///|/ Copyright (c) 2015 Pavel Karoukin @hippich
 ///|/ Copyright (c) 2012 Henrik Brix Andersen @henrikbrixandersen
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "../Brand.hpp"
 #include "../BrandUrls.hpp"

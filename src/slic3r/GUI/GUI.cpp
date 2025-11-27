@@ -2,7 +2,7 @@
 ///|/ Copyright (c) 2018 Martin Loidl @LoidlM
 ///|/ Copyright (c) Slic3r 2015 Alessandro Ranellucci @alranel
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "GUI.hpp"
 #include "GUI_App.hpp"
@@ -322,7 +322,7 @@ static void add_config_substitutions(const ConfigSubstitutions& conf_substitutio
 static wxString substitution_message(const wxString& changes)
 {
 	return
-		_L("Most likely the configuration was produced by a newer version of PrusaSlicer or by some PrusaSlicer fork.") + " " +
+		_L("Most likely the configuration was produced by a newer version of LibreSlicer or by some LibreSlicer fork.") + " " +
 		_L("The following values were substituted:") + "\n" + changes + "\n\n" +
 		_L("Review the substitutions and adjust them if needed.");
 }

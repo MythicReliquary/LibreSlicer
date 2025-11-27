@@ -31,7 +31,7 @@
 
 ## Why LibreSlicer?
 
-LibreSlicer is Mythic Reliquary’s community build of the PrusaSlicer lineage with a resin-first focus and an AGPLv3 guarantee. You get the proven core engine with an explicit promise of:
+LibreSlicer is Mythic Reliquary’s community build of the LibreSlicer lineage with a resin-first focus and an AGPLv3 guarantee. You get the proven core engine with an explicit promise of:
 
 - **Predictable output** — validated SLA profiles, deterministic slicing defaults, and reproducible build scripts.
 - **Control & privacy** — no telemetry, offline workflow by default, scriptable CLI for production pipelines.
@@ -62,7 +62,7 @@ Every binary release is built from this repository, tagged, and accompanied by t
 - Multi-material FFF support, variable layer heights, advanced infill strategies, and post-processing hooks.
 - G-code flavor coverage: RepRap, Marlin, Klipper, MakerBot, Mach3, Machinekit, and more.
 - Continuous integration with Catch2-based smoke tests for resin profiles.
-- Creator-friendly defaults layered atop the PrusaSlicer feature set.
+- Creator-friendly defaults layered atop the LibreSlicer feature set.
 
 ## Roadmap & Launch Targets
 

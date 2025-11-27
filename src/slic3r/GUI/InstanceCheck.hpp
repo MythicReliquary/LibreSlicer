@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2020 - 2023 David Kocík @kocikdav, Roman Beránek @zavorka
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef slic3r_InstanceCheck_hpp_
 #define slic3r_InstanceCheck_hpp_
@@ -70,7 +70,7 @@ public:
 	//and sends them to plater via LoadFromOtherInstanceEvent
 	//security of messages: from message all existing paths are proccesed to load model 
 	//						win32 - anybody who has hwnd can send message.
-	//						mac - anybody who posts notification with name:@"OtherPrusaSlicerTerminating"
+	//						mac - anybody who posts notification with name:@"OtherLibreSlicerTerminating"
 	//						linux - instrospectable on dbus
 	void           handle_message(const std::string& message);
 #ifdef __APPLE__

@@ -1,7 +1,7 @@
 ///|/ Copyright (c) Prusa Research 2017 - 2023 Oleksandra Iushchenko @YuSanka, David Kocík @kocikdav, Lukáš Matěna @lukasmatena, Vojtěch Bubník @bubnikv, Enrico Turri @enricoturri1966, Vojtěch Král @vojtechkral
 ///|/ Copyright (c) 2019 John Drake @foxox
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef slic3r_Preset_hpp_
 #define slic3r_Preset_hpp_
@@ -296,7 +296,7 @@ struct ExternalPreset
 };
 
 // Substitutions having been performed during parsing a set of configuration files, for example when starting up
-// PrusaSlicer and reading the user Print / Filament / Printer profiles.
+// LibreSlicer and reading the user Print / Filament / Printer profiles.
 using PresetsConfigSubstitutions = std::vector<PresetConfigSubstitutions>;
 
 // Collections of presets of the same type (one of the Print, Filament or Printer type).

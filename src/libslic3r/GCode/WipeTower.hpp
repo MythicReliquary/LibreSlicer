@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2017 - 2023 Lukáš Matěna @lukasmatena, Vojtěch Bubník @bubnikv
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #ifndef slic3r_GCode_WipeTower_hpp_
 #define slic3r_GCode_WipeTower_hpp_
@@ -67,7 +67,7 @@ public:
         // Pass a polyline so that normal G-code generator can do a wipe for us.
         // The wipe cannot be done by the wipe tower because it has to pass back
         // a loaded extruder, so it would have to either do a wipe with no retraction
-        // (leading to https://github.com/prusa3d/PrusaSlicer/issues/2834) or do
+        // (leading to https://github.com/prusa3d/LibreSlicer/issues/2834) or do
         // an extra retraction-unretraction pair.
         std::vector<Vec2f> wipe_path;
 

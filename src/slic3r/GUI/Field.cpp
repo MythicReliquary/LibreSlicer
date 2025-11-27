@@ -2,7 +2,7 @@
 ///|/ Copyright (c) 2020 Pascal de Bruijn @pmjdebruijn
 ///|/ Copyright (c) 2018 - 2020 Martin Loidl @LoidlM
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "GUI.hpp"
 #include "GUI_App.hpp"
@@ -261,7 +261,7 @@ void Field::get_value_by_opt_type(wxString& str, const bool check_value/* = true
         const char dec_sep_alt = dec_sep == '.' ? ',' : '.';
         // Replace the first incorrect separator in decimal number, 
         // if this value doesn't "N/A" value in some language
-        // see https://github.com/prusa3d/PrusaSlicer/issues/6921
+        // see https://github.com/prusa3d/LibreSlicer/issues/6921
         if (!is_na_value && str.Replace(dec_sep_alt, dec_sep, false) != 0)
             set_value(str, false);
 
@@ -319,7 +319,7 @@ void Field::get_value_by_opt_type(wxString& str, const bool check_value/* = true
     case coFloatOrPercent: {
         if (m_opt.type == coFloatOrPercent && m_opt.opt_key == "first_layer_height" && !str.IsEmpty() && str.Last() == '%') {
             // Workaroud to avoid of using of the % for first layer height
-            // see https://github.com/prusa3d/PrusaSlicer/issues/7418
+            // see https://github.com/prusa3d/LibreSlicer/issues/7418
             wxString label = m_opt.full_label.empty() ? _(m_opt.label) : _(m_opt.full_label);
             show_error(m_parent, format_wxstr(_L("%s doesn't support percentage"), label));
             const wxString stVal = double_to_string(0.01, 2);

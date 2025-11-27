@@ -1,6 +1,6 @@
 ///|/ Copyright (c) Prusa Research 2022 - 2023 Pavel Mikuš @Godrak
 ///|/
-///|/ PrusaSlicer is released under the terms of the AGPLv3 or higher
+///|/ LibreSlicer is released under the terms of the AGPLv3 or higher
 ///|/
 #include "PrincipalComponents2D.hpp"
 #include "Point.hpp"
