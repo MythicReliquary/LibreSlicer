@@ -33,6 +33,10 @@
 
 namespace Slic3r {
 
+static constexpr const char* kInstanceCheckInterfaceRoot   = "org.libreslicer.libreslicer.InstanceCheck";
+static constexpr const char* kInstanceCheckInterfacePrefix = "org.libreslicer.libreslicer.InstanceCheck.Object";
+static constexpr const char* kInstanceCheckObjectPrefix    = "/org/libreslicer/libreslicer/InstanceCheck/Object";
+
 #ifdef __APPLE__
 	bool unlock_lockfile(const std::string& name, const std::string& path)
 	{
@@ -242,11 +246,9 @@ namespace instance_check_internal
 			DBusError 		err;
 			dbus_uint32_t 	serial = 0;
 			const char* sigval = message_text.c_str();
-			//std::string		interface_name = "com.prusa3d.prusaslicer.InstanceCheck";
-			std::string		interface_name = "com.prusa3d.prusaslicer.InstanceCheck.Object" + version;
+			std::string		interface_name = std::string(kInstanceCheckInterfacePrefix) + version;
 			std::string   	method_name = "AnotherInstance";
-			//std::string		object_name = "/com/prusa3d/prusaslicer/InstanceCheck";
-			std::string		object_name = "/com/prusa3d/prusaslicer/InstanceCheck/Object" + version;
+			std::string		object_name = std::string(kInstanceCheckObjectPrefix) + version;
 
 
 			// initialise the error value
@@ -548,7 +550,7 @@ namespace MessageHandlerDBusInternal
 	static void respond_to_introspect(DBusConnection *connection, DBusMessage *request) 
 	{
     	DBusMessage *reply;
-	    const char  *introspection_data =
+	    const std::string introspection_data =
 	        " <!DOCTYPE node PUBLIC \"-//freedesktop//DTD D-BUS Object Introspection 1.0//EN\" "
 	        "\"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd\">"
 	        " <!-- dbus-sharp 0.8.1 -->"
@@ -558,7 +560,7 @@ namespace MessageHandlerDBusInternal
 	        "       <arg name=\"data\" direction=\"out\" type=\"s\" />"
 	        "     </method>"
 	        "   </interface>"
-	        "   <interface name=\"com.prusa3d.prusaslicer.InstanceCheck\">"
+	        "   <interface name=\"" + std::string(kInstanceCheckInterfaceRoot) + "\">"
 	        "     <method name=\"AnotherInstance\">"
 	        "       <arg name=\"data\" direction=\"in\" type=\"s\" />"
 	        "     </method>"
@@ -567,9 +569,10 @@ namespace MessageHandlerDBusInternal
 	        "     </method>"
 	        "   </interface>"
 	        " </node>";
+        const char* introspection_ptr = introspection_data.c_str();
 	     
 	    reply = dbus_message_new_method_return(request);
-	    dbus_message_append_args(reply, DBUS_TYPE_STRING, &introspection_data, DBUS_TYPE_INVALID);
+	    dbus_message_append_args(reply, DBUS_TYPE_STRING, &introspection_ptr, DBUS_TYPE_INVALID);
 	    dbus_connection_send(connection, reply, NULL);
 	    dbus_message_unref(reply);
 	}
@@ -600,7 +603,7 @@ namespace MessageHandlerDBusInternal
 	{
 		const char* interface_name = dbus_message_get_interface(message);
 	    const char* member_name    = dbus_message_get_member(message);
-	    std::string our_interface  = "com.prusa3d.prusaslicer.InstanceCheck.Object" + wxGetApp().get_instance_hash_string();
+	    std::string our_interface  = std::string(kInstanceCheckInterfacePrefix) + wxGetApp().get_instance_hash_string();
 	    BOOST_LOG_TRIVIAL(trace) << "DBus message received: interface: " << interface_name << ", member: " << member_name;
 	    if (0 == strcmp("org.freedesktop.DBus.Introspectable", interface_name) && 0 == strcmp("Introspect", member_name)) {		
 	        respond_to_introspect(connection, message);
@@ -623,8 +626,8 @@ void OtherInstanceMessageHandler::listen()
     int 				 name_req_val;
     DBusObjectPathVTable vtable;
     std::string 		 instance_hash  = wxGetApp().get_instance_hash_string();
-	std::string			 interface_name = "com.prusa3d.prusaslicer.InstanceCheck.Object" + instance_hash;
-    std::string			 object_name 	= "/com/prusa3d/prusaslicer/InstanceCheck/Object" + instance_hash;
+	std::string			 interface_name = std::string(kInstanceCheckInterfacePrefix) + instance_hash;
+    std::string			 object_name 	= std::string(kInstanceCheckObjectPrefix) + instance_hash;
 
     //BOOST_LOG_TRIVIAL(debug) << "init dbus listen " << interface_name << " " << object_name;
     dbus_error_init(&err);

@@ -53,7 +53,7 @@ project(LibreSlicer LANGUAGES CXX)
 
 option(ENABLE_SLA "Enable resin/SLA slicing features" ON)
 
-option(LIBRESLICER_ENABLE_UPDATER "Enable the legacy PrusaSlicer application updater" OFF)
+option(LIBRESLICER_ENABLE_UPDATER "Enable the legacy upstream application updater" OFF)
 option(LIBRESLICER_ENABLE_UPDATE_CHECKER "Enable update notifications / dialogs" OFF)
 option(LIBRESLICER_ENABLE_TELEMETRY "Enable telemetry hooks" OFF)
 

@@ -4021,8 +4021,8 @@ msgstr ""
 "objektů."
 
 #: src/slic3r/GUI/GUI_App.cpp:298
-msgid "Developed by Prusa Research."
-msgstr "Vyvinula společnost Prusa Research."
+msgid "Developed for LibreSlicer by Mythic Reliquary."
+msgstr "Vyvinula společnost Mythic Reliquary."
 
 #: src/slic3r/GUI/Mouse3DController.cpp:469
 msgid "Device:"
@@ -18720,10 +18720,10 @@ msgstr "až do"
 
 #: src/slic3r/GUI/PhysicalPrinterDialog.cpp:753
 msgid ""
-"URL of PrusaConnect is different from https://connect.prusa3d.com. Do you "
+"URL of LibreConnect is different from https://connect.libreslicer.org. Do you "
 "want to continue?"
 msgstr ""
-"Adresa URL služby PrusaConnect se liší od adresy https://connect.prusa3d."
+"Adresa URL služby LibreConnect se liší od adresy https://connect.libreslicer.org"
 "com. Chcete pokračovat?"
 
 #: src/slic3r/GUI/DoubleSlider.cpp:1688 src/slic3r/GUI/GUI_Factories.cpp:915
@@ -19629,14 +19629,14 @@ msgid ""
 "32 bit build of LibreSlicer will likely not be able to utilize all the RAM "
 "available in the system.\n"
 "Please download and install a 64 bit build of LibreSlicer from https://www."
-"prusa3d.cz/prusaslicer/.\n"
+"libreslicer.org/download/.\n"
 "Do you wish to continue?"
 msgstr ""
 "Používáte 32bitovou aplikaci LibreSlicer v 64bitovém systému Windows.\n"
 "32bitovová aplikace LibreSliceru pravděpodobně nebude schopna využít "
 "veškerou dostupnou paměť RAM v systému.\n"
 "Stáhněte si a nainstalujte 64bitovou verzi LibreSliceru ze stránek https://"
-"www.prusa3d.cz/prusaslicer/.\n"
+"www.libreslicer.org/download/.\n"
 "Přejete si pokračovat?"
 
 #: src/slic3r/GUI/Plater.cpp:4209 src/slic3r/GUI/Plater.cpp:4215

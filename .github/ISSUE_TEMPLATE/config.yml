@@ -1,12 +1,12 @@
 contact_links:
-  - name: Do you need Support?
-    url: https://www.prusa3d.com/page/prusaslicer-support-form_233563/
-    about: If you are not sure whether what you are reporting is a bug, please contact our support team first. We are providing full 24/7 customer support.
-  - name: LibreSlicer Manual
-    url: https://help.prusa3d.com/en/article/customer-support_2287/
-    about: We have a comprehensive customer support page and help documentation that could be helpful for troubleshooting.
-  - name: PrusaPrinters Forum
-    url: https://forum.prusaprinters.org/forum/prusaslicer/
-    about: Please get in touch on our PrusaPrinters Community Forum! (Not an official support channel.)
-    
+  - name: Need help? Support & FAQ
+    url: https://libreslicer.org/support
+    about: Start here if you are unsure whether what you are seeing is a bug; includes FAQs and support contact.
+  - name: LibreSlicer Guide
+    url: https://libreslicer.org/guide
+    about: Documentation hub for setup, usage, and troubleshooting.
+  - name: Discussions
+    url: https://github.com/MythicReliquary/LibreSlicer/discussions
+    about: Ask questions, share ideas, or raise non-bug topics with the community.
+
 blank_issues_enabled: false

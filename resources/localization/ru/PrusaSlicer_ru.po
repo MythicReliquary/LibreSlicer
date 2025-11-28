@@ -12048,8 +12048,8 @@ msgstr ""
 "RepRap."
 
 #: src/slic3r/GUI/GUI_App.cpp:298
-msgid "Developed by Prusa Research."
-msgstr "Разработано Prusa Research."
+msgid "Developed for LibreSlicer by Mythic Reliquary."
+msgstr "Разработано Mythic Reliquary."
 
 #: src/slic3r/GUI/GUI_App.cpp:299
 msgid "Licensed under GNU AGPLv3."
@@ -12203,14 +12203,14 @@ msgid ""
 "32 bit build of LibreSlicer will likely not be able to utilize all the RAM "
 "available in the system.\n"
 "Please download and install a 64 bit build of LibreSlicer from https://www."
-"prusa3d.cz/prusaslicer/.\n"
+"libreslicer.org/download/.\n"
 "Do you wish to continue?"
 msgstr ""
 "Вы используете 32-битную сборку LibreSlicer на 64-битной Windows.\n"
 "32-битная сборка LibreSlicer, скорее всего, не сможет использовать всю "
 "доступную в системе оперативную память.\n"
 "Пожалуйста, загрузите и установите 64-битную сборку LibreSlicer с сайта "
-"https://www.prusa3d.cz/prusaslicer/.\n"
+"https://libreslicer.org/download/.\n"
 "Продолжить?"
 
 #: src/slic3r/GUI/GUI_App.cpp:1206
@@ -15510,10 +15510,10 @@ msgstr "Введите имя принтера."
 
 #: src/slic3r/GUI/PhysicalPrinterDialog.cpp:753
 msgid ""
-"URL of PrusaConnect is different from https://connect.prusa3d.com. Do you "
+"URL of LibreConnect is different from https://connect.libreslicer.org. Do you "
 "want to continue?"
 msgstr ""
-"URL-адрес PrusaConnect отличается от https://connect.prusa3d.com. Хотите "
+"URL-адрес LibreConnect отличается от https://connect.libreslicer.org. Хотите "
 "продолжить?"
 
 #: src/slic3r/GUI/PhysicalPrinterDialog.cpp:766

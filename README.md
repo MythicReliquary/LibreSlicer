@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">LibreSlicer</h1>
-<p align="center"><em>Creator-first resin slicer. No telemetry. Prusa heritage.</em></p>
+<p align="center"><em>Creator-first resin slicer. No telemetry. Community heritage.</em></p>
 
 <p align="center">
   <a href="https://github.com/MythicReliquary/LibreSlicer/releases">
@@ -36,7 +36,7 @@ LibreSlicer is Mythic Reliquary’s community build of the LibreSlicer lineage w
 - **Predictable output** — validated SLA profiles, deterministic slicing defaults, and reproducible build scripts.
 - **Control & privacy** — no telemetry, offline workflow by default, scriptable CLI for production pipelines.
 - **Compliance discipline** — every release ships matching source archives, third-party notices, and a maintained `SOURCE_OFFER`.
-- **Prusa compatibility** — upstream-friendly patches plus continued support for the broader Slic3r ecosystem.
+- **Upstream compatibility** — upstream-friendly patches plus continued support for the broader Slic3r ecosystem.
 
 ## Get LibreSlicer
 

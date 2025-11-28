@@ -56,7 +56,9 @@
 namespace Slic3r {
 namespace GUI {
 
-static const std::string SEND_SYSTEM_INFO_DOMAIN = "prusa3d.com";
+static constexpr bool kEnableSystemInfoUpload = false;
+
+static const std::string SEND_SYSTEM_INFO_DOMAIN = "libreslicer.org";
 static const std::string SEND_SYSTEM_INFO_URL = "https://files." + SEND_SYSTEM_INFO_DOMAIN + "/wp-json/v1/ps";
 
 
@@ -170,6 +172,9 @@ static bool check_internet_connection_win()
 // current version is newer. Only major and minor versions are compared.
 static bool should_dialog_be_shown()
 {
+    if (!kEnableSystemInfoUpload)
+        return false;
+
     std::string last_sent_version = wxGetApp().app_config->get("version_system_info_sent");
     Semver semver_current(SLIC3R_VERSION);
     Semver semver_last_sent;
@@ -746,7 +751,7 @@ bool SendSystemInfoDialog::send_info(wxString& message)
 // The only function callable from outside this unit.
 void show_send_system_info_dialog_if_needed()
 {
-    if (wxGetApp().is_gcode_viewer() || ! should_dialog_be_shown())
+    if (wxGetApp().is_gcode_viewer() || !kEnableSystemInfoUpload || ! should_dialog_be_shown())
         return;
 
     SendSystemInfoDialog dlg(wxGetApp().mainframe);

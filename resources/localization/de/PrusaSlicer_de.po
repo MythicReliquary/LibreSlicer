@@ -4060,8 +4060,8 @@ msgstr ""
 "Aufteilung in einzelne Objekte."
 
 #: src/slic3r/GUI/GUI_App.cpp:298
-msgid "Developed by Prusa Research."
-msgstr "Entwickelt von Prusa Research."
+msgid "Developed for LibreSlicer by Mythic Reliquary."
+msgstr "Entwickelt von Mythic Reliquary."
 
 #: src/slic3r/GUI/Mouse3DController.cpp:469
 msgid "Device:"
@@ -19019,10 +19019,10 @@ msgstr "bis zu"
 
 #: src/slic3r/GUI/PhysicalPrinterDialog.cpp:753
 msgid ""
-"URL of PrusaConnect is different from https://connect.prusa3d.com. Do you "
+"URL of LibreConnect is different from https://connect.libreslicer.org. Do you "
 "want to continue?"
 msgstr ""
-"Die URL von PrusaConnect unterscheidet sich von https://connect.prusa3d.com. "
+"Die URL von LibreConnect unterscheidet sich von https://connect.libreslicer.org. "
 "Möchten Sie fortfahren?"
 
 #: src/slic3r/GUI/DoubleSlider.cpp:1688 src/slic3r/GUI/GUI_Factories.cpp:915
@@ -19960,13 +19960,13 @@ msgid ""
 "32 bit build of LibreSlicer will likely not be able to utilize all the RAM "
 "available in the system.\n"
 "Please download and install a 64 bit build of LibreSlicer from https://www."
-"prusa3d.cz/prusaslicer/.\n"
+"libreslicer.org/download/.\n"
 "Do you wish to continue?"
 msgstr ""
 "Sie verwenden eine 32-Bit-Version von LibreSlicer unter 64-Bit-Windows.\n"
 "Ein 32-Bit-Build von LibreSlicer ist wahrscheinlich nicht in der Lage, das "
 "gesamte im System verfügbare RAM zu nutzen.\n"
-"Bitte laden Sie einen 64-Bit-Build von LibreSlicer von https://www.prusa3d."
+"Bitte laden Sie einen 64-Bit-Build von LibreSlicer von https://libreslicer.org/"
 "com/prusaslicer/ herunter und installieren Sie ihn.\n"
 "Möchten Sie fortfahren?"
 

@@ -1110,7 +1110,7 @@ bool PrusaLink::post_inner(PrintHostUpload upload_data, std::string url, const s
         .form_add_file("file", upload_data.source_path.string(), upload_filename.string())
         .on_complete([&](std::string body, unsigned status) {
             if (m_show_after_message) {
-                // PrusaConnect message
+                // LibreConnect message
                 wxString widebody = wxString::FromUTF8(body);
                 BOOST_LOG_TRIVIAL(debug) << boost::format("%1%: File uploaded: HTTP %2%: %3%") % name % status % widebody;
                 std::string message = m_show_after_message ? (boost::format("%1%") % widebody).str() : std::string();
@@ -1174,11 +1174,11 @@ void PrusaConnect::set_http_post_header_args(Http& http, PrintHostPostUploadActi
 
 wxString PrusaConnect::get_test_ok_msg() const
 {
-    return _(L("Connection to Prusa Connect works correctly."));
+    return _(L("Connection to LibreConnect works correctly."));
 }
 
 wxString PrusaConnect::get_test_failed_msg(wxString& msg) const
 {
-    return GUI::format_wxstr("%s: %s", _L("Could not connect to Prusa Connect"), msg);
+    return GUI::format_wxstr("%s: %s", _L("Could not connect to LibreConnect"), msg);
 }
 }

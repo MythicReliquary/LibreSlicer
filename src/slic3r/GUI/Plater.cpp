@@ -7535,8 +7535,8 @@ void Plater::send_gcode()
         upload_job.upload_data.group       = dlg.group();
         upload_job.upload_data.storage     = dlg.storage();
 
-        // Show "Is printer clean" dialog for PrusaConnect - Upload and print.
-        if (std::string(upload_job.printhost->get_name()) == "PrusaConnect" && upload_job.upload_data.post_action == PrintHostPostUploadAction::StartPrint) {
+        // Show "Is printer clean" dialog for LibreConnect - Upload and print.
+        if (std::string(upload_job.printhost->get_name()) == "LibreConnect" && upload_job.upload_data.post_action == PrintHostPostUploadAction::StartPrint) {
             GUI::MessageDialog dlg(nullptr, _L("Is the printer ready? Is the print sheet in place, empty and clean?"), _L("Upload and Print"), wxOK | wxCANCEL);
             if (dlg.ShowModal() != wxID_OK)
                 return;

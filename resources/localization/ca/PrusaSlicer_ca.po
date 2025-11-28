@@ -12007,8 +12007,8 @@ msgid "is based on Slic3r by Alessandro Ranellucci and the RepRap community."
 msgstr "està basat en Slic3r d'Alessandro Ranellucci i la comunitat RepRap."
 
 #: src/slic3r/GUI/GUI_App.cpp:298
-msgid "Developed by Prusa Research."
-msgstr "Desenvolupat per Prusa Research."
+msgid "Developed for LibreSlicer by Mythic Reliquary."
+msgstr "Desenvolupat per Mythic Reliquary."
 
 #: src/slic3r/GUI/GUI_App.cpp:299
 msgid "Licensed under GNU AGPLv3."
@@ -12165,14 +12165,14 @@ msgid ""
 "32 bit build of LibreSlicer will likely not be able to utilize all the RAM "
 "available in the system.\n"
 "Please download and install a 64 bit build of LibreSlicer from https://www."
-"prusa3d.cz/prusaslicer/.\n"
+"libreslicer.org/download/.\n"
 "Do you wish to continue?"
 msgstr ""
 "Està executant una versió de 32 bits de LibreSlicer a Windows de 64 bits.\n"
 "La versió de 32 bits de LibreSlicer probablement no podrà utilitzar tota la "
 "RAM disponible al sistema.\n"
 "Si us plau, descarrega i instal·la una versió de 64 bits de LibreSlicer des "
-"de https://www.prusa3d.cz/prusaslicer/.\n"
+"de https://libreslicer.org/download/.\n"
 "Voleu continuar?"
 
 #: src/slic3r/GUI/GUI_App.cpp:1206
@@ -15466,10 +15466,10 @@ msgstr "Heu d'introduir un nom d'impressora."
 
 #: src/slic3r/GUI/PhysicalPrinterDialog.cpp:753
 msgid ""
-"URL of PrusaConnect is different from https://connect.prusa3d.com. Do you "
+"URL of LibreConnect is different from https://connect.libreslicer.org. Do you "
 "want to continue?"
 msgstr ""
-"L'URL de PrusaConnect és diferent d'https://connect.prusa3d.com. Vols "
+"L'URL de LibreConnect és diferent d'https://connect.libreslicer.org. Vols "
 "continuar?"
 
 #: src/slic3r/GUI/PhysicalPrinterDialog.cpp:766

@@ -12,7 +12,7 @@ https://github.com/arduino/Arduino-stk500v2-bootloader
 
 The avrdude binary modified by Prusa3D could replace the avrdude bianary
 of arduino to program the RAMBo board. In that case the modified binary
-is identified by a "-prusa3d" suffix to the version information.
+is identified by a "-libreslicer" suffix to the version information.
 
 -------------------------------------------------------------------
 

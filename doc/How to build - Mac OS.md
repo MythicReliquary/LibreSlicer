@@ -94,7 +94,7 @@ Works on a fresh installation of MacOS Catalina 10.15.6
 brew update
 brew install cmake git gettext
 brew upgrade
-git clone https://github.com/prusa3d/LibreSlicer/
+git clone https://github.com/MythicReliquary/LibreSlicer/
 cd LibreSlicer/deps
 mkdir build
 cd build

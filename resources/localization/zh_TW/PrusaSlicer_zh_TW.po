@@ -11140,8 +11140,8 @@ msgid "is based on Slic3r by Alessandro Ranellucci and the RepRap community."
 msgstr "基於 Alessandro Ranellucci 和 RepRap 社區的 Slic3r。"
 
 #: src/slic3r/GUI/GUI_App.cpp:298
-msgid "Developed by Prusa Research."
-msgstr "由 Prusa Research 開發。"
+msgid "Developed for LibreSlicer by Mythic Reliquary."
+msgstr "由 Mythic Reliquary 開發。"
 
 #: src/slic3r/GUI/GUI_App.cpp:299
 msgid "Licensed under GNU AGPLv3."
@@ -11285,12 +11285,12 @@ msgid ""
 "32 bit build of LibreSlicer will likely not be able to utilize all the RAM "
 "available in the system.\n"
 "Please download and install a 64 bit build of LibreSlicer from https://www."
-"prusa3d.cz/prusaslicer/.\n"
+"libreslicer.org/download/.\n"
 "Do you wish to continue?"
 msgstr ""
 "您正在 64 位 Windows 上運行 32 位版本的 LibreSlicer。\n"
 "LibreSlicer 的 32 位構建可能無法利用系統中所有可用的 RAM。\n"
-"請從 https://www.prusa3d.cz/prusaslicer/ 下載並安裝 64 位版本的 "
+"請從 https://libreslicer.org/download/ 下載並安裝 64 位版本的 "
 "LibreSlicer。\n"
 "你想繼續嗎？"
 
@@ -14462,7 +14462,7 @@ msgstr "您必須輸入打印機名稱。"
 
 #: src/slic3r/GUI/PhysicalPrinterDialog.cpp:753
 msgid ""
-"URL of PrusaConnect is different from https://connect.prusa3d.com. Do you "
+"URL of LibreConnect is different from https://connect.libreslicer.org. Do you "
 "want to continue?"
 msgstr ""
 

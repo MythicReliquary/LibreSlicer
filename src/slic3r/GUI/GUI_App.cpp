@@ -1129,7 +1129,7 @@ bool GUI_App::on_init_inner()
         RichMessageDialog dlg(nullptr,
             _L("You are running a 32 bit build of LibreSlicer on 64-bit Windows."
                 "\n32 bit build of LibreSlicer will likely not be able to utilize all the RAM available in the system."
-                "\nPlease download and install a 64 bit build of LibreSlicer from https://www.prusa3d.cz/prusaslicer/."
+                "\nPlease download and install a 64 bit build of LibreSlicer from https://libreslicer.org/download."
                 "\nDo you wish to continue?"),
             "LibreSlicer", wxICON_QUESTION | wxYES_NO);
         if (dlg.ShowModal() != wxID_YES)
@@ -3552,7 +3552,7 @@ void GUI_App::on_version_read(wxCommandEvent& evt)
         , NotificationManager::NotificationLevel::ImportantNotificationLevel
         , Slic3r::format(_u8L("New release version %1% is available."), evt.GetString())
         , _u8L("See Download page.")
-        , [](wxEvtHandler* evnthndlr) {wxGetApp().open_web_page_localized("https://www.prusa3d.com/slicerweb"); return true; }
+        , [](wxEvtHandler* evnthndlr) {wxGetApp().open_web_page_localized(BrandUrls::kDownloads); return true; }
     );
     */
     // updater 

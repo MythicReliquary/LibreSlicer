@@ -11644,8 +11644,8 @@ msgid "is based on Slic3r by Alessandro Ranellucci and the RepRap community."
 msgstr "_Alessandro Ranellucci és a RepRap közösség Slic3r-én alapul."
 
 #: src/slic3r/GUI/GUI_App.cpp:298
-msgid "Developed by Prusa Research."
-msgstr "A Prusa Research fejlesztette ki."
+msgid "Developed for LibreSlicer by Mythic Reliquary."
+msgstr "A Mythic Reliquary fejlesztette ki."
 
 #: src/slic3r/GUI/GUI_App.cpp:299
 msgid "Licensed under GNU AGPLv3."
@@ -11798,14 +11798,14 @@ msgid ""
 "32 bit build of LibreSlicer will likely not be able to utilize all the RAM "
 "available in the system.\n"
 "Please download and install a 64 bit build of LibreSlicer from https://www."
-"prusa3d.cz/prusaslicer/.\n"
+"libreslicer.org/download/.\n"
 "Do you wish to continue?"
 msgstr ""
 "Ön a LibreSlicer 32 bites verzióját futtatja 64 bites Windows alatt.\n"
 "A LibreSlicer 32 bites változata valószínűleg nem fogja tudni kihasználni a "
 "rendszerben rendelkezésre álló összes RAM-ot.\n"
 "Kérjük, hogy töltse le és telepítse a LibreSlicer 64 bites verzióját a "
-"https://www.prusa3d.cz/prusaslicer/ oldalról.\n"
+"https://libreslicer.org/download/ oldalról.\n"
 "Szeretné folytatni?"
 
 #: src/slic3r/GUI/GUI_App.cpp:1206
@@ -15069,7 +15069,7 @@ msgstr ""
 
 #: src/slic3r/GUI/PhysicalPrinterDialog.cpp:753
 msgid ""
-"URL of PrusaConnect is different from https://connect.prusa3d.com. Do you "
+"URL of LibreConnect is different from https://connect.libreslicer.org. Do you "
 "want to continue?"
 msgstr ""
 

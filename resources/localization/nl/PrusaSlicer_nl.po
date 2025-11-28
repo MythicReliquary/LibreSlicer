@@ -11623,8 +11623,8 @@ msgstr ""
 "is gebaseerd op Slic3R van Allessandro Ranellucci en de RepRap-community."
 
 #: src/slic3r/GUI/GUI_App.cpp:298
-msgid "Developed by Prusa Research."
-msgstr "Ontwikkeld door Prusa Research."
+msgid "Developed for LibreSlicer by Mythic Reliquary."
+msgstr "Ontwikkeld door Mythic Reliquary."
 
 #: src/slic3r/GUI/GUI_App.cpp:299
 msgid "Licensed under GNU AGPLv3."
@@ -11780,14 +11780,14 @@ msgid ""
 "32 bit build of LibreSlicer will likely not be able to utilize all the RAM "
 "available in the system.\n"
 "Please download and install a 64 bit build of LibreSlicer from https://www."
-"prusa3d.cz/prusaslicer/.\n"
+"libreslicer.org/download/.\n"
 "Do you wish to continue?"
 msgstr ""
 "U draait een 32-bit versie van LibreSlicer op 64-bit Windows.\n"
 "32-bit versies van LibreSlicer kunnen probelemen veroorzaken met het "
 "beschikbare RAM-geheugen in het systeem.\n"
 "Download en installeer alstublieft een 64-bit versie van LibreSlicer van "
-"https://www.prusa3d.com/prusaslicer/.\n"
+"https://www.libreslicer.org/download/.\n"
 "Wilt u doorgaan?"
 
 #: src/slic3r/GUI/GUI_App.cpp:1206
@@ -15017,7 +15017,7 @@ msgstr "U moet een printernaam invoeren."
 
 #: src/slic3r/GUI/PhysicalPrinterDialog.cpp:753
 msgid ""
-"URL of PrusaConnect is different from https://connect.prusa3d.com. Do you "
+"URL of LibreConnect is different from https://connect.libreslicer.org. Do you "
 "want to continue?"
 msgstr ""
 

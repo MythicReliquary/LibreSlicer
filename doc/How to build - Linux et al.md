@@ -1,11 +1,11 @@
 
 # Building LibreSlicer on UNIX/Linux
 
-Please understand that LibreSlicer team cannot support compilation on all possible Linux distros. Namely, we cannot help troubleshoot OpenGL driver issues or dependency issues if compiled against distro provided libraries. **We can only support LibreSlicer statically linked against the dependencies compiled with the `deps` scripts**, the same way we compile LibreSlicer for our [binary builds](https://github.com/prusa3d/LibreSlicer/releases).
+Please understand that LibreSlicer team cannot support compilation on all possible Linux distros. Namely, we cannot help troubleshoot OpenGL driver issues or dependency issues if compiled against distro provided libraries. **We can only support LibreSlicer statically linked against the dependencies compiled with the `deps` scripts**, the same way we compile LibreSlicer for our [binary builds](https://github.com/MythicReliquary/LibreSlicer/releases).
 
 If you have some reason to link dynamically to your system libraries, you are free to do so, but we can not and will not troubleshoot any issues you possibly run into.
 
-Instead of compiling LibreSlicer from source code, one may also consider to install LibreSlicer [pre-compiled by contributors](https://github.com/prusa3d/LibreSlicer/wiki/LibreSlicer-on-Linux---binary-distributions).
+Instead of compiling LibreSlicer from source code, one may also consider to install LibreSlicer [pre-compiled by contributors](https://libreslicer.org/guide).
 
 ## Step by step guide
 
@@ -36,7 +36,7 @@ The names of the packages may be different on different distros.
 
 Cloning the repository is simple thanks to git and Github. Simply `cd` into wherever you want to clone LibreSlicer code base and run
 ```
-git clone https://www.github.com/prusa3d/LibreSlicer
+git clone https://github.com/MythicReliquary/LibreSlicer
 cd LibreSlicer
 ```
 This will download the source code into a new directory and `cd` into it. You can now optionally select a tag/branch/commit to build using `git checkout`. Otherwise, `master` branch will be built.
@@ -101,7 +101,7 @@ As already mentioned above, dynamic linking of dependencies is possible, but Lib
 
 The list of dependencies can be easily obtained by inspecting the CMake scripts in the `deps/` directory. Some of the dependencies don't have to be as recent as the versions listed - generally versions available on conservative Linux distros such as Debian stable, Ubuntu LTS releases or Fedora are likely sufficient. If you decide to build this way, it is your responsibility to make sure that CMake finds all required dependencies. It is possible to look at your distribution LibreSlicer package to see how the package maintainers solved the dependency issues.
 
-Note that you may need to use wxGTK with disabled EGL support for LibreSlicer to work correctly: see [#9774](https://github.com/prusa3d/LibreSlicer/issues/9774).
+Note that you may need to use wxGTK with disabled EGL support for LibreSlicer to work correctly: see [issue #9774](https://github.com/MythicReliquary/LibreSlicer/issues/9774) for the workaround.
 
 ## Miscellaneous
 
@@ -113,7 +113,7 @@ If you instead want LibreSlicer installed in a structure according to the File S
 
     cmake .. -DSLIC3R_FHS=1
 
-This will make LibreSlicer look for a fixed-location `share/slic3r-prusa3d` directory instead (note that the location becomes hardcoded).
+This will make LibreSlicer look for a fixed-location `share/LibreSlicer` directory instead (note that the location becomes hardcoded).
 
 You can then use the `make install` target to install LibreSlicer.
 

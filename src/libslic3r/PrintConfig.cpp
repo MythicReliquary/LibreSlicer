@@ -2203,7 +2203,7 @@ void PrintConfigDef::init_fff_params()
                    "the kind of the host.");
     def->set_enum<PrintHostType>({
         { "prusalink",      "PrusaLink" },
-        { "prusaconnect",   "PrusaConnect" },
+        { "prusaconnect",   "LibreConnect" },
         { "octoprint",      "OctoPrint" },
         { "moonraker",      "Klipper (via Moonraker)" },
         { "duet",           "Duet" },
