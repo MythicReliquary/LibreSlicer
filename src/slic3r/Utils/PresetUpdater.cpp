@@ -17,6 +17,7 @@
 #include <boost/filesystem/fstream.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
+#include <boost/system/error_code.hpp>
 #include <curl/curl.h>
 
 #include <wx/app.h>
@@ -261,7 +262,7 @@ bool PresetUpdater::priv::get_file(const std::string &url, const fs::path &targe
 	return res;
 }
 
-// Remove leftover paritally downloaded files, if any.
+// Remove leftover partially downloaded files, if any.
 void PresetUpdater::priv::prune_tmps() const
 {
 	if (cache_path.empty()) {
@@ -279,13 +280,35 @@ void PresetUpdater::priv::prune_tmps() const
 		return;
 	}
 
-	for (auto &dir_entry : boost::filesystem::directory_iterator(cache_path)) {
-		if (is_plain_file(dir_entry) && dir_entry.path().extension() == TMP_EXTENSION) {
-			BOOST_LOG_TRIVIAL(debug) << "Cache prune: " << dir_entry.path().string();
-			fs::remove(dir_entry.path());
+	boost::system::error_code dir_ec;
+	fs::directory_iterator dir_it(cache_path, dir_ec);
+	if (dir_ec) {
+		BOOST_LOG_TRIVIAL(warning) << "Cache prune skipped: failed to open cache directory (" << cache_path
+					       << ")" << dir_ec.message();
+		return;
+	}
+
+	for (fs::directory_iterator end_it; dir_it != end_it; dir_it.increment(dir_ec)) {
+		if (dir_ec) {
+			BOOST_LOG_TRIVIAL(warning) << "Cache prune aborted: iteration failure in " << cache_path << ": "
+						 << dir_ec.message();
+			return;
+		}
+
+		boost::system::error_code status_ec;
+		const fs::path &path = dir_it->path();
+		if (fs::is_regular_file(path, status_ec) && !status_ec && path.extension() == TMP_EXTENSION) {
+			BOOST_LOG_TRIVIAL(debug) << "Cache prune: " << path.string();
+			boost::system::error_code remove_ec;
+			fs::remove(path, remove_ec);
+			if (remove_ec) {
+				BOOST_LOG_TRIVIAL(warning) << "Cache prune skipped file (" << path << "): " << remove_ec.message();
+			}
 		}
 	}
 }
+
+
 
 void PresetUpdater::priv::get_missing_resource(const std::string& vendor, const std::string& filename, const std::string& url) const
 {
