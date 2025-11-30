@@ -4,7 +4,7 @@
 - Windows 10/11: Fully tested, stable
 - Linux (Ubuntu/Debian/Fedora): Builds and slices confirmed
 - macOS: Beta — build compiles, but runtime untested (community QA requested)
-- Rebrand finalized: UI, docs, and assets consistently use the LibreSlicer name, with installers and DMGs shipping the new icons/metadata.
+- Rebrand finalized: UI, docs, and assets consistently use the LibreSlicer name, with installers and DMGs shipping the refreshed icons and metadata.
 
 ## Platform coverage
 - Windows 10/11 ✅

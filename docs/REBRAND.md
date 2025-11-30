@@ -20,6 +20,7 @@
 We are **keeping the current repo slug** for continuity (GitHub auto-redirects are reliable if we later rename). New releases will use `libreslicer-vX.Y.Z` tags and include the finalized LibreSlicer branding baked into binaries and resource bundles.
 - Source art is in [`brand/`](../brand/) and compiled application icons live in [`resources/icons/`](../resources/icons/) (LibreSlicer*.png/ico/icns).
 - Installers, DMGs, and portable zips should all ship with LibreSlicer naming/metadata and the refreshed icons from `resources/icons/`.
+- Keep installer manifests pointing to the compiled `resources/icons/` outputs so bundle metadata stays aligned with the LibreSlicer name and art.
 
 ## Redirects & mapping
 All legacy `aegisslicer.org` links 301 to `libreslicer.org`.  
