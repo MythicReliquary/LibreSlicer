@@ -53,6 +53,24 @@ We publish the exact toolchain setup used for every tagged build:
 - [macOS how-to](doc/How%20to%20build%20-%20Mac%20OS.md) — upstream instructions until the v1.1 pipeline lands.
 - [Reproducibility checklist](REPRODUCIBLE-BUILD.md) — hashes, environment variables, packaging scripts.
 
+### Verify a Linux build and slice
+
+- Ensure toolchain deps (including `CGAL`) are installed per the Linux guide above, then configure a build:
+
+  ```bash
+  cmake -S . -B build
+  cmake --build build --parallel
+  ```
+
+- Download the PrusaSlicer and UVTools AppImages from the latest release and place them in `tools/` as `PrusaSlicer.AppImage` and `uvtools.AppImage` (mark them executable).
+- Run the resin smoke test to confirm CLI slicing end-to-end:
+
+  ```bash
+  ./scripts/ci_slice_and_validate.sh --stl tests/data/20mm_cube.obj --outdir out/linux_smoke
+  ```
+
+  The script will generate `.sl1`/`.ctb` artifacts plus a UVTools report that confirms the slice.
+
 Every binary release is built from this repository, tagged, and accompanied by the corresponding source archive listed in [`COMPLIANCE/SOURCE_OFFER.md`](COMPLIANCE/SOURCE_OFFER.md).
 
 ## Feature Snapshot
