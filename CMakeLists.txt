@@ -60,7 +60,12 @@ if(WIN32)
 endif()
 
 # CGAL (CONFIG mode). Add 'Core' if you depend on exact arithmetic kernels.
-find_package(CGAL CONFIG REQUIRED COMPONENTS Core)
+# Be explicit when it is missing so local builds and CI runs fail with guidance
+# instead of the generic CMake package-not-found banner.
+find_package(CGAL CONFIG QUIET COMPONENTS Core)
+if (NOT CGAL_FOUND)
+    message(FATAL_ERROR "CGAL (with Core) not found. Install it via vcpkg (\"./vcpkg install cgal\") or run the bundled deps build (see doc/How to build - Linux et al.md), then point CGAL_DIR or CMAKE_PREFIX_PATH at the install prefix.")
+endif()
 
 message(STATUS "CGAL_DIR     : ${CGAL_DIR}")
 message(STATUS "VCPKG_ROOT   : ${VCPKG_ROOT}")
