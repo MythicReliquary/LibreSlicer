@@ -270,12 +270,27 @@ void PresetUpdater::priv::prune_tmps() const
 		return;
 	}
 
-	if (!fs::exists(cache_path)) {
+	boost::system::error_code stat_ec;
+	const bool cache_exists = fs::exists(cache_path, stat_ec);
+	if (stat_ec) {
+		BOOST_LOG_TRIVIAL(warning) << "Cache prune skipped: unable to stat cache path (" << cache_path << "): "
+							   << stat_ec.message();
+		return;
+	}
+
+	if (!cache_exists) {
 		BOOST_LOG_TRIVIAL(debug) << "Cache prune skipped: cache path missing";
 		return;
 	}
 
-	if (!fs::is_directory(cache_path)) {
+	const bool cache_is_dir = fs::is_directory(cache_path, stat_ec);
+	if (stat_ec) {
+		BOOST_LOG_TRIVIAL(warning) << "Cache prune skipped: unable to inspect cache path (" << cache_path << "): "
+							   << stat_ec.message();
+		return;
+	}
+
+	if (!cache_is_dir) {
 		BOOST_LOG_TRIVIAL(warning) << "Cache prune skipped: cache path is not a directory (" << cache_path << ')';
 		return;
 	}
@@ -284,20 +299,26 @@ void PresetUpdater::priv::prune_tmps() const
 	fs::directory_iterator dir_it(cache_path, dir_ec);
 	if (dir_ec) {
 		BOOST_LOG_TRIVIAL(warning) << "Cache prune skipped: failed to open cache directory (" << cache_path
-					       << ")" << dir_ec.message();
+							   << "): " << dir_ec.message();
 		return;
 	}
 
 	for (fs::directory_iterator end_it; dir_it != end_it; dir_it.increment(dir_ec)) {
 		if (dir_ec) {
 			BOOST_LOG_TRIVIAL(warning) << "Cache prune aborted: iteration failure in " << cache_path << ": "
-						 << dir_ec.message();
+							   << dir_ec.message();
 			return;
 		}
 
 		boost::system::error_code status_ec;
 		const fs::path &path = dir_it->path();
-		if (fs::is_regular_file(path, status_ec) && !status_ec && path.extension() == TMP_EXTENSION) {
+		const bool is_regular = fs::is_regular_file(path, status_ec);
+		if (status_ec) {
+			BOOST_LOG_TRIVIAL(debug) << "Cache prune skipped entry (" << path << "): " << status_ec.message();
+			continue;
+		}
+
+		if (is_regular && path.extension() == TMP_EXTENSION) {
 			BOOST_LOG_TRIVIAL(debug) << "Cache prune: " << path.string();
 			boost::system::error_code remove_ec;
 			fs::remove(path, remove_ec);
@@ -307,9 +328,6 @@ void PresetUpdater::priv::prune_tmps() const
 		}
 	}
 }
-
-
-
 void PresetUpdater::priv::get_missing_resource(const std::string& vendor, const std::string& filename, const std::string& url) const
 {
 	if (filename.empty() || vendor.empty())
