@@ -27,6 +27,7 @@
 - Documentation hub: [libreslicer.org/guide](https://libreslicer.org/guide)
 - Transparent Commons tip jar: [libreslicer.org/support](https://libreslicer.org/support)
 - One-pager overview: [`docs/ONE_PAGER.md`](docs/ONE_PAGER.md)
+- Rebrand checklist: [`docs/REBRAND.md`](docs/REBRAND.md) · verify with `./scripts/verify_rebrand.sh`
 - Transparency ledger & roadmap: see [KNOWN_ISSUES.md](KNOWN_ISSUES.md) and pinned GitHub issues
 
 ## Why LibreSlicer?

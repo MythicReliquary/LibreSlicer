@@ -22,6 +22,10 @@ We are **keeping the current repo slug** for continuity (GitHub auto-redirects a
 - Installers, DMGs, and portable zips should all ship with LibreSlicer naming/metadata and the refreshed icons from `resources/icons/`.
 - Keep installer manifests pointing to the compiled `resources/icons/` outputs so bundle metadata stays aligned with the LibreSlicer name and art.
 
+### Verify the rebrand is complete
+- Run `./scripts/verify_rebrand.sh` to ensure no legacy "Aegis Slicer" references remain outside of this notice and the historical release notes.
+- Add new ignore globs to the script if you need to preserve historical mentions in additional archival documents.
+
 ## Redirects & mapping
 All legacy `aegisslicer.org` links 301 to `libreslicer.org`.  
 Slug-by-slug mapping lives here:
