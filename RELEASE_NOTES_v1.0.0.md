@@ -2,7 +2,7 @@
 
 ## Highlights
 - Windows 10/11: Fully tested, stable
-- Linux (Ubuntu/Debian/Fedora): Builds and slices confirmed
+- Linux (Ubuntu/Debian/Fedora): Builds and slices confirmed via the resin smoke test (PrusaSlicer + UVTools AppImages)
 - macOS: Beta — build compiles, but runtime untested (community QA requested)
 - Rebrand finalized: UI, docs, and assets consistently use the LibreSlicer name, with installers and DMGs shipping the refreshed icons and metadata.
 

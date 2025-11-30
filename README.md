@@ -63,7 +63,12 @@ We publish the exact toolchain setup used for every tagged build:
   ```
 
   If CGAL is missing, install it via [vcpkg](https://github.com/microsoft/vcpkg) from the repo root (`./vcpkg install cgal`) or
-  run the bundled dependency build in `deps/` as described in the Linux guide, then re-run `cmake`.
+  run the bundled dependency build in `deps/` as described in the Linux guide, then re-run `cmake`. For a local vcpkg install,
+  point CMake at the CGAL config path explicitly:
+
+  ```bash
+  cmake -S . -B build -DCGAL_DIR="${PWD}/vcpkg_installed/x64-linux/share/CGAL"
+  ```
 
 - Download the PrusaSlicer and UVTools AppImages from the latest release and place them in `tools/` as `PrusaSlicer.AppImage` and `uvtools.AppImage` (mark them executable).
 - Run the resin smoke test to confirm CLI slicing end-to-end:

@@ -64,7 +64,7 @@ endif()
 # instead of the generic CMake package-not-found banner.
 find_package(CGAL CONFIG QUIET COMPONENTS Core)
 if (NOT CGAL_FOUND)
-    message(FATAL_ERROR "CGAL (with Core) not found. Install it via vcpkg (\"./vcpkg install cgal\") or run the bundled deps build (see doc/How to build - Linux et al.md), then point CGAL_DIR or CMAKE_PREFIX_PATH at the install prefix.")
+    message(FATAL_ERROR "CGAL (with Core) not found. Install it via vcpkg (\"./vcpkg install cgal\") or run the bundled deps build (see doc/How to build - Linux et al.md), then point CGAL_DIR or CMAKE_PREFIX_PATH at the install prefix (for vcpkg: \"-DCGAL_DIR=${CMAKE_SOURCE_DIR}/vcpkg_installed/x64-linux/share/CGAL\" if installed in-tree).")
 endif()
 
 message(STATUS "CGAL_DIR     : ${CGAL_DIR}")
