@@ -8,7 +8,7 @@
 “LibreSlicer” states our values in the name: creator-first, open core (AGPLv3), and no telemetry. Same code lineage, same team—clearer direction.
 
 ## What changed (and what didn’t)
-- **Changed:** Name, website domain, on-page branding, release tags, docs.
+- **Changed:** Name, website domain, on-page branding, release tags, docs, and in-app resources.
 - **Unchanged:** License (AGPLv3 for the Supporter Build), funding model (Transparent Commons), and clean-room Hephaestus Pro track.
 
 ## Timeline
@@ -17,7 +17,9 @@
 - **Nov 3–9, 2025:** Transparency Patch #1 includes rebrand ledger entry.
 
 ## Repository & releases
-We are **keeping the current repo slug** for continuity (GitHub auto-redirects are reliable if we later rename). New releases will use `libreslicer-vX.Y.Z` tags.
+We are **keeping the current repo slug** for continuity (GitHub auto-redirects are reliable if we later rename). New releases will use `libreslicer-vX.Y.Z` tags and include the finalized LibreSlicer branding baked into binaries and resource bundles.
+- Source art is in [`brand/`](../brand/) and compiled application icons live in [`resources/icons/`](../resources/icons/) (LibreSlicer*.png/ico/icns).
+- Installers, DMGs, and portable zips should all ship with LibreSlicer naming/metadata and the refreshed icons from `resources/icons/`.
 
 ## Redirects & mapping
 All legacy `aegisslicer.org` links 301 to `libreslicer.org`.  
