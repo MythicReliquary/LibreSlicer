@@ -264,14 +264,27 @@ bool PresetUpdater::priv::get_file(const std::string &url, const fs::path &targe
 // Remove leftover paritally downloaded files, if any.
 void PresetUpdater::priv::prune_tmps() const
 {
-	if (!fs::exists(cache_path) || !fs::is_directory(cache_path))
+	if (cache_path.empty()) {
+		BOOST_LOG_TRIVIAL(debug) << "Cache prune skipped: cache path not set";
 		return;
+	}
 
-	for (auto &dir_entry : boost::filesystem::directory_iterator(cache_path))
-			if (is_plain_file(dir_entry) && dir_entry.path().extension() == TMP_EXTENSION) {
-				BOOST_LOG_TRIVIAL(debug) << "Cache prune: " << dir_entry.path().string();
-				fs::remove(dir_entry.path());
-			}
+	if (!fs::exists(cache_path)) {
+		BOOST_LOG_TRIVIAL(debug) << "Cache prune skipped: cache path missing";
+		return;
+	}
+
+	if (!fs::is_directory(cache_path)) {
+		BOOST_LOG_TRIVIAL(warning) << "Cache prune skipped: cache path is not a directory (" << cache_path << ')';
+		return;
+	}
+
+	for (auto &dir_entry : boost::filesystem::directory_iterator(cache_path)) {
+		if (is_plain_file(dir_entry) && dir_entry.path().extension() == TMP_EXTENSION) {
+			BOOST_LOG_TRIVIAL(debug) << "Cache prune: " << dir_entry.path().string();
+			fs::remove(dir_entry.path());
+		}
+	}
 }
 
 void PresetUpdater::priv::get_missing_resource(const std::string& vendor, const std::string& filename, const std::string& url) const
